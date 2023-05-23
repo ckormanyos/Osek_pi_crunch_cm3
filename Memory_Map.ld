@@ -50,7 +50,7 @@ SECTIONS
     KEEP(*(.isr_vector))
   } > VEC = 0xAAAA
 
-  .= 0x08000400;
+  . = 0x08000400;
 
   /* Program code (text) */
   .text :
@@ -125,7 +125,7 @@ SECTIONS
     *(.ARM.attributes)
   } > ROM
 
-  .= 0x20000000;
+  . = 0x20000400;
 
   /* The ROM-to-RAM initialized data section */
   .data :
