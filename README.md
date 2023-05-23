@@ -9,13 +9,13 @@ Osek_pi_crunch_cm3
 This repository uses an OSEK-like OS on bare-metal ARM(R) Cortex(R)-M3 to calculate $\pi$
 with a spigot algorithm.
 
-Osek_pi_crunch_cm3 fascinating, educational and fun project
+Osek_pi_crunch_cm3 is a fascinating, educational and fun project
 that computes a up to $100,001$ decimal digits of $\pi$
 on a bare-metal ARM(R) Cortex(R)-M3 system.
 
 The backbone real-time operating system is taken directly
 from the OSEK-like OS implemented in
-[Chalandi/OSEK_Raspberry_Pi_Zero](https://github.com/Chalandi/OSEK_Raspberry_Pi_Zero)
+[Chalandi/OSEK](https://github.com/Chalandi/OSEK)
 
 # Software Details
 
@@ -23,27 +23,28 @@ For the $\pi$-algorithm, we use a (slow) quadratic pi-spigot algorithm
 of order $N^2$ in this project. The spigot calculation
 is slower than other well-known algorithms (such as AGM).
 
-The calculation memory grows linearly with the digit count
-and required about 1.4 Mbyte RAM for the full $10^{5}$-decimal-digit
-calculation. Since this is significantly more memory than available
-on-chip, slow external SRAM SPI serial memory is used.
+The calculation memory grows linearly with the digit count.
+It requires about 1.4 Mbyte RAM for the full $10^{5}$ decimal-digit
+calculation. Since this is significantly more RAM than is
+available on-chip, a slow external serial SPI SRAM is used.
 
-GNU/GCC `gcc-arm-non-eabi` is used for the target system.
-Development on `*nix` is supported via GNUmake/shell-script.
+GNU/GCC `gcc-arm-non-eabi` is used for target system
+development on `*nix`. The build system is based on
+Standard GNUmake/shell-script.
 
 # Prototype Project
 
-This repo features a fully-worked-out pi-crunch-metal prototype example project
-running on an ARM(R) Cortex(R)-M3 controller fitted on the
+This repo features a fully-worked-out prototype example project.
+The prototype runs on an ARM(R) Cortex(R)-M3 controller fitted on the
 SMT32F100RB-NUCLEO board. The board is driven in OS-less, bare-metal mode.
 
-The hardware setup is pictured in the image below.
-Calculatin on successful completion toggles pin PB9
-in order to provide a measure of success viewable with a digital oscilloscope.
-Blinky at 1/2 Hz on the two user-LEDs indicates system-OK and
-numerical correctness of the current, finished spigot calculation.
+Upon successful calculation completion, the blinky
+application toggles pin PB9.
+This provides a measure of success viewable with a digital oscilloscope.
 
-![](./images/Osek_pi_crunch_cm3.jpg)
+Perpetual blinky at 1/2 Hz on the two user-LEDs indicate system-OK and
+numerical correctness of the current, finished spigot calculation.
+This provides a clear, visual success-indication.
 
 Bit banging is used to implement an all-software SPI-compatible
 driver which controls the external SRAM memory chip.
@@ -58,12 +59,17 @@ are shown in the table below.
 | PA09          | 6         | CLK (chip-serial-clock)    |
 | PA08          | 5         | SI (chip-serial-in)        |
 
-# Special Highlight on Serial SPI SRAM driver
+The hardware setup is pictured in the image below.
+
+![](./images/Osek_pi_crunch_cm3.jpg)
+
+# _Bonus_ Generic Serial SPI SRAM driver
 
 The serial SRAM driver is a nice _by_-_product_ of this project.
 
-It has been written in a fully generic, multi-chip, variable-page-size
-form in the file
+It has been written in C++14 utilizing a fully generic,
+multi-chip, variable-page-size, template form.
+This driver can be found in the file
 [mcal_memory_sram_generic_spi.h](./Application/ref_app/src/mcal_memory/mcal_memory_sram_generic_spi.h).
 
 Using this SRAM driver requires providing an independent
