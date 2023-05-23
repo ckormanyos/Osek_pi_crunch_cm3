@@ -50,11 +50,15 @@ featuring the two user LEDs (green and blue) toggling at 1/2 Hz.
 This prvides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
+# Hardware Setup
+
+The hardware setup is pictured in the image below.
+
+![](./images/Osek_pi_crunch_cm3.jpg)
+
 Bit banging is used to implement an all-software SPI-compatible
 driver which controls the external SRAM memory chip, needed to hold
 the large data array used for the calculation's intermediate steps.
-
-# Hardware Setup
 
 The output pin connections from the board to the SRAM chip
 are shown in the table below.
@@ -65,10 +69,6 @@ are shown in the table below.
 | PA10          | 2         | SO (chip-serial-out)       |
 | PA09          | 6         | CLK (chip-serial-clock)    |
 | PA08          | 5         | SI (chip-serial-in)        |
-
-The hardware setup is pictured in the image below.
-
-![](./images/Osek_pi_crunch_cm3.jpg)
 
 # _Bonus_ Generic Serial SPI SRAM driver
 
