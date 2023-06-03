@@ -10,7 +10,7 @@ This repository uses an OSEK-like OS on bare-metal ARM(R) Cortex(R)-M3 to calcul
 with a spigot algorithm.
 
 Osek_pi_crunch_cm3 is a fascinating, educational and fun project
-that computes a up to $100,001$ decimal digits of $\pi$
+that computes up to $100,001$ decimal digits of $\pi$
 on a bare-metal ARM(R) Cortex(R)-M3 system.
 
 The backbone real-time operating system is taken directly
@@ -45,9 +45,9 @@ in the low-priority idle task (`Idle`). Upon successful calculation completion,
 pin PB9 is toggled. This provides a measure of success viewable
 with a digital oscilloscope.
 
-Simultaneously task `T1` exercises a perpetual, ssimple blinky show
+Simultaneously task `T1` exercises a perpetual, simple blinky show
 featuring the two user LEDs (green and blue) toggling at 1/2 Hz.
-This prvides clear visual indication of both system-OK as well as
+This provides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
 # Hardware Setup
@@ -56,9 +56,10 @@ The hardware setup is pictured in the image below.
 
 ![](./images/Osek_pi_crunch_cm3.jpg)
 
-Bit banging is used to implement an all-software SPI-compatible
-driver which controls the external SRAM memory chip, needed to hold
-the large data array used for the calculation's intermediate steps.
+Bit banging is used to implement an all-software, SPI-compatible
+driver which controls the external SRAM memory chip. A significant
+amount of external SRAM is needed to hold the potentially very large
+data array used for the $\pi$-calculation's intermediate storage.
 
 The output pin connections from the board to the SRAM chip
 are shown in the table below.
