@@ -34,6 +34,26 @@ GNU/GCC `gcc-arm-non-eabi` is used for target system
 development on `*nix`. The build system is based on
 Standard GNUmake/shell-script.
 
+## Building the Application
+
+### Build with GNUmake on `*nix`
+
+Build on `*nix*` is easy using an installed `gcc-arm-none-eabi`
+
+```sh
+cd Osek_pi_crunch_cm3
+./Build.sh
+```
+
+The build results including ELF-file, HEX-mask, MAP-file
+can be found in the `Output` directory following the GNUmake build.
+
+If `gcc-arm-none-eabi` is not present, then it can be installed (if needed).
+
+```sh
+sudo apt install gcc-arm-none-eabi
+```
+
 # Prototype Project
 
 This repo features a fully-worked-out prototype example project.
