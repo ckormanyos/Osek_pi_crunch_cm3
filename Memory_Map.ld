@@ -24,7 +24,7 @@ OUTPUT_FORMAT("elf32-littlearm", "elf32-littlearm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
 
 /******************************************************************************************
- Internal flash configuration
+ Memory configuration
 ******************************************************************************************/
 
 __initial_stack_pointer = 0x20002000 - 4;
