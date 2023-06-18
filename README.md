@@ -103,3 +103,15 @@ This driver can be found in the file
 Using this SRAM driver requires providing an independent
 SPI driver having particular interface functions such as `send()`,
 `send_n()` and `recv()`.
+
+
+# Licensing
+
+The operating system [OSEK](./Application/OSEK) and timer files in the [MCAL](./Application/MCAL)
+are licensed under [GPL](./gpl-3.0.txt).
+This is consistent with the licensing found in and adopted from
+[Chalandi/OSEK](https://github.com/Chalandi/OSEK).
+
+The supporting files in [ref_app](./Application/ref_app) and
+the [pi_spigot](./Application/pi_spigot) application itself
+are licensed under [BSL](./LICENSE_1_0.txt).
