@@ -64,10 +64,7 @@ namespace local
 
   auto pi_output_digits10 = static_cast<std::uint32_t>(UINT8_C(0));
 
-  using benchmark_port_type = ::mcal::port::port_pin<std::uint32_t,
-                                                     std::uint32_t,
-                                                     mcal::reg::gpiob_odr,
-                                                     UINT32_C(9)>;
+  using benchmark_port_type = ::mcal::benchmark::benchmark_port_type;
 
   constexpr auto pi_spigot_input_start_address = static_cast<mcal_sram_uintptr_t>(UINT8_C(0));
 
@@ -95,7 +92,6 @@ auto pi_led_toggle(void) -> void
 
 auto pi_main() -> int
 {
-  #if 1
   local::benchmark_port_type::toggle_pin();
 
   local::pi_spigot_instance.calculate(local::pi_spigot_input.data(), nullptr, &local::pi_spigot_hash);
@@ -143,18 +139,6 @@ auto pi_main() -> int
   ++local::pi_count_of_calculations;
 
   return (result_is_ok ? 0 : -1);
-
-  #else
-
-  *local::pi_spigot_input.begin() = static_cast<std::uint32_t>(UINT8_C(0x01020408));
-  volatile std::uint32_t pi_spigot_dw_read_back = *local::pi_spigot_input.cbegin();
-
-  const auto result_write_read_is_ok =
-    (pi_spigot_dw_read_back == static_cast<std::uint32_t>(UINT8_C(0x01020408)));
-
-  return result_write_read_is_ok ? 0 : 1;
-
-  #endif
 }
 
 #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)

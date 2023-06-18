@@ -20,9 +20,10 @@
 // *****************************************************************************
 
 #include <stdbool.h>
+#include <stdint.h>
 
-#include "OsAPIs.h"
-#include "TCB.h"
+#include <OsAPIs.h>
+#include <TCB.h>
 
 static bool pi_result_is_ok = true;
 
@@ -45,15 +46,15 @@ TASK(T1)
 
   const OsEventMaskType OsWaitEventMask = (OsEventMaskType) EVT_BLINK_LED;
 
-  (void)OS_SetRelAlarm(ALARM_BLINK_LED, 0, 997);
+  (void) OS_SetRelAlarm(ALARM_BLINK_LED, (OsTickType) UINT8_C(0), (OsTickType) UINT16_C(997));
 
   for(;;)
   {
-    OsEventMaskType Events = (OsEventMaskType) 0U;
-
     if(E_OK == OS_WaitEvent(OsWaitEventMask))
     {
-      (void) OS_GetEvent((OsTaskType)T1, &Events);
+      OsEventMaskType Events = (OsEventMaskType) UINT8_C(0);
+
+      (void) OS_GetEvent((OsTaskType) T1, &Events);
 
       if((Events & EVT_BLINK_LED) == EVT_BLINK_LED)
       {
@@ -64,12 +65,12 @@ TASK(T1)
     }
     else
     {
-      OS_TerminateTask(); /* In case of error we switch off the task */
+      OS_TerminateTask();
     }
 
     if(!pi_result_is_ok)
     {
-      OS_TerminateTask(); /* In case of error we switch off the task */
+      OS_TerminateTask();
     }
   }
 }
@@ -78,17 +79,14 @@ TASK(Idle)
 {
   for(;;)
   {
-    OS_Schedule();
-
     extern int pi_main(void);
 
     const int pi_result = pi_main();
 
-    pi_result_is_ok = (pi_result == 0);
+    pi_result_is_ok = ((pi_result == (int) INT8_C(0)) && pi_result_is_ok);
 
     if(!pi_result_is_ok)
     {
-      /* In case of error we switch off the task */
       OS_TerminateTask();
     }
   }
