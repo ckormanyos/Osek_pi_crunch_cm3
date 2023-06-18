@@ -107,7 +107,7 @@ SPI driver having particular interface functions such as `send()`,
 
 # Licensing
 
-The operating system [OSEK](./Application/OSEK) and timer files in the [MCAL](./Application/MCAL)
+The operating system [OSEK](./Application/OS) and timer files in the [MCAL](./Application/MCAL)
 are licensed under [GPL](./gpl-3.0.txt).
 This is consistent with the licensing found in and adopted from
 [Chalandi/OSEK](https://github.com/Chalandi/OSEK).
