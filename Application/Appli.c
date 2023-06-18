@@ -20,6 +20,7 @@
 // *****************************************************************************
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #include <OsAPIs.h>
 #include <TCB.h>
