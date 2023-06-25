@@ -79,7 +79,7 @@ The hardware setup is pictured in the image below.
 Bit banging is used to implement an all-software, SPI-compatible
 driver which controls the external SRAM memory chip. A significant
 amount of external SRAM is needed to hold the potentially very large
-data array used for the $\pi$-calculation's intermediate storage.
+data array used for intermediate storage in the $\pi$ calculation.
 
 The output pin connections from the board to the SRAM chip
 are shown in the table below.
