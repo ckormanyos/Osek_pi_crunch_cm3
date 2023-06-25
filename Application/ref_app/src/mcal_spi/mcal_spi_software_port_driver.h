@@ -21,7 +21,7 @@
            typename port_pin_miso_type,
            const std::uint_fast16_t nop_count,
            const bool has_disable_enable_interrupts>
-  class spi_software_port_driver : public util::communication_buffer_depth_one_byte
+  class spi_software_port_driver : public ::util::communication_buffer_depth_one_byte
   {
   private:
     // Consider:
@@ -40,7 +40,7 @@
     //   on (or shortly after) the leading edge of the
     //   clock cycle.
 
-    using base_class_type = util::communication_buffer_depth_one_byte;
+    using base_class_type = ::util::communication_buffer_depth_one_byte;
 
   public:
     spi_software_port_driver()
@@ -59,7 +59,7 @@
 
     auto send(const std::uint8_t byte_to_send) -> bool override
     {
-      base_class_type::recv_buffer = static_cast<typename base_class_type::buffer_type>(UINT8_C(0));
+      base_class_type::recv_buffer = static_cast<typename base_class_type::buffer_value_type>(UINT8_C(0));
 
       for(auto bit_mask  = static_cast<std::uint_fast8_t>(UINT8_C(0x80));
                bit_mask != static_cast<std::uint_fast8_t>(UINT8_C(0));
@@ -76,11 +76,32 @@
         if(port_pin_miso_type::read_input_value())
         {
           base_class_type::recv_buffer =
-            static_cast<base_class_type::buffer_type>(base_class_type::recv_buffer | bit_mask);
+            static_cast<base_class_type::buffer_value_type>(base_class_type::recv_buffer | bit_mask);
         }
 
         port_pin_sck__type::set_pin_low();
       }
+
+      return true;
+    }
+
+    auto send_n(base_class_type::send_iterator_type first,
+                base_class_type::send_iterator_type last) -> bool override
+    {
+      while(first != last)
+      {
+        const auto byte_to_send = static_cast<base_class_type::buffer_value_type>(*first++);
+
+        static_cast<void>(send(byte_to_send));
+      }
+
+      return true;
+    }
+
+    auto recv(std::uint8_t& byte_to_recv) -> bool override
+    {
+      // Read the (single byte from the) receive buffer.
+      byte_to_recv = base_class_type::recv_buffer;
 
       return true;
     }

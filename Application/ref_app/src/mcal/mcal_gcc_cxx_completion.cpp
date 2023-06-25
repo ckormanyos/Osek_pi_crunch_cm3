@@ -5,7 +5,6 @@
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <chrono>
 #include <cstddef>
 
 #include <mcal_cpu.h>

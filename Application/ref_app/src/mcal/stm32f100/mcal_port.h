@@ -1,12 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2007 - 2020.
+//  Copyright Christopher Kormanyos 2007 - 2023.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MCAL_PORT_2012_06_27_H_
-  #define MCAL_PORT_2012_06_27_H_
+#ifndef MCAL_PORT_2012_06_27_H
+  #define MCAL_PORT_2012_06_27_H
+
+  #include <cstdint>
 
   #include <mcal_reg.h>
 
@@ -14,8 +16,8 @@
   {
     namespace port
     {
-      typedef void config_type;
-      void init(const config_type*);
+      using config_type = void;
+      auto init(const config_type*) -> void;
 
       template<typename addr_type,
                typename reg_type,
@@ -30,11 +32,14 @@
           // Clear all the port pin control bits in the new register value.
           // Set the port pin control bits for output, push-pull, 50MHz in the new register value.
           // Set the port for digital output.
-          mcal::reg::reg_access_static<
-            addr_type,
-            reg_type,
-            pdir,
-            reg_type(0x3UL << pdir_shift)>::template reg_msk<reg_type(0xFUL << pdir_shift)>();
+
+          using local_reg_access_static_type =
+            mcal::reg::reg_access_static<addr_type,
+                                         reg_type,
+                                         pdir,
+                                         static_cast<reg_type>(static_cast<reg_type>(UINT8_C(0x3)) << pdir_shift)>;
+
+          local_reg_access_static_type::template reg_msk<static_cast<reg_type>(static_cast<reg_type>(UINT8_C(0xF)) << pdir_shift)>();
         }
 
         static void set_direction_input()
@@ -43,11 +48,13 @@
           // Clear all the port pin control bits in the new register value.
           // Set the port pin control bits for input in the new register value.
           // Set the port for digital input.
-          mcal::reg::reg_access_static<
-            addr_type,
-            reg_type,
-            pdir,
-            reg_type(0x4UL << pdir_shift)>::template reg_msk<reg_type(0xFUL << pdir_shift)>();
+          using local_reg_access_static_type =
+            mcal::reg::reg_access_static<addr_type,
+                                         reg_type,
+                                         pdir,
+                                         static_cast<reg_type>(static_cast<reg_type>(UINT8_C(0x4)) << pdir_shift)>;
+
+          local_reg_access_static_type::template reg_msk<static_cast<reg_type>(static_cast<reg_type>(UINT8_C(0xF)) << pdir_shift)>();
         }
 
         static void set_pin_high()
@@ -75,12 +82,12 @@
         }
 
       private:
-        static constexpr addr_type pdir = addr_type(port - addr_type((bpos >= 8U) ? 8U : 12U));
-        static constexpr addr_type pinp = addr_type(port - 4U);
+        static constexpr addr_type pdir = static_cast<addr_type>(port - static_cast<addr_type>((bpos >= static_cast<reg_type>(UINT8_C(8))) ? static_cast<addr_type>(UINT8_C(8)) : static_cast<addr_type>(UINT8_C(12))));
+        static constexpr addr_type pinp = static_cast<addr_type>(port - static_cast<addr_type>(UINT8_C(4)));
 
-        static constexpr reg_type pdir_shift = reg_type((bpos - reg_type((bpos >= 8U) ? 8U : 0U)) * 4U);
+        static constexpr reg_type pdir_shift = static_cast<reg_type>((bpos - static_cast<reg_type>((bpos >= static_cast<reg_type>(UINT8_C(8))) ? static_cast<reg_type>(UINT8_C(8)) : static_cast<reg_type>(UINT8_C(0)))) * static_cast<reg_type>(UINT8_C(4)));
       };
     }
   }
 
-#endif // MCAL_PORT_2012_06_27_H_
+#endif // MCAL_PORT_2012_06_27_H

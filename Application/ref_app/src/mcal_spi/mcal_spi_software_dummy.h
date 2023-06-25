@@ -12,10 +12,10 @@
 
   namespace mcal { namespace spi {
 
-  class spi_software_dummy : public util::communication_buffer_depth_one_byte
+  class spi_software_dummy : public ::util::communication_buffer_depth_one_byte
   {
   private:
-    using base_class_type = util::communication_buffer_depth_one_byte;
+    using base_class_type = ::util::communication_buffer_depth_one_byte;
 
   public:
     // This class implements a dummy SPI with no real functionality.
@@ -29,6 +29,27 @@
       static_cast<void>(byte_to_send);
 
       base_class_type::recv_buffer = 0U;
+
+      return true;
+    }
+
+    auto send_n(base_class_type::send_iterator_type first,
+                base_class_type::send_iterator_type last) -> bool override
+    {
+      while(first != last)
+      {
+        const auto byte_to_send = static_cast<base_class_type::buffer_value_type>(*first++);
+
+        static_cast<void>(send(byte_to_send));
+      }
+
+      return true;
+    }
+
+    auto recv(std::uint8_t& byte_to_recv) -> bool override
+    {
+      // Read the (single byte from the) receive buffer.
+      byte_to_recv = base_class_type::recv_buffer;
 
       return true;
     }

@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2014 - 2023.
+//  Copyright Christopher Kormanyos 2007 - 2023.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MCAL_IRQ_2014_09_20_H_
-  #define MCAL_IRQ_2014_09_20_H_
+#ifndef MCAL_IRQ_2014_09_20_H
+  #define MCAL_IRQ_2014_09_20_H
 
   namespace mcal
   {
@@ -26,4 +26,4 @@
     }
   }
 
-#endif // MCAL_IRQ_2014_09_20_H_
+#endif // MCAL_IRQ_2014_09_20_H
