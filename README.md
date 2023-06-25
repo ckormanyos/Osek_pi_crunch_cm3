@@ -94,17 +94,18 @@ are shown in the table below.
 # _Bonus_ Generic Serial SPI SRAM driver
 
 The serial SRAM driver is a nice _by_-_product_ of this project.
-
-It has been written in C++14 utilizing a fully generic,
-multi-chip, variable-page-size, template form.
 This driver can be found in the file
 [mcal_memory_sram_generic_spi.h](./Application/ref_app/src/mcal_memory/mcal_memory_sram_generic_spi.h).
+It has been written in C++14 utilizing a fully generic,
+multi-chip, variable-page-size, template form.
 
-Using this SRAM driver requires providing an independent
-SPI driver having particular interface functions such as
+The serial SRAM driver provides a simple interface having functions
 `read()`/`write()` and `read_n()`/`write_n()` for reading
 and writing single-byte or multiple-byte streams.
 
+Using this SRAM driver requires providing an independent
+SPI driver having particular interface functions such as
+`send()`/`send_n()` and `recv()`.
 
 # Licensing
 
