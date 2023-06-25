@@ -101,8 +101,9 @@ This driver can be found in the file
 [mcal_memory_sram_generic_spi.h](./Application/ref_app/src/mcal_memory/mcal_memory_sram_generic_spi.h).
 
 Using this SRAM driver requires providing an independent
-SPI driver having particular interface functions such as `send()`,
-`send_n()` and `recv()`.
+SPI driver having particular interface functions such as
+`read()`/`write()` and `read_n()`/`write_n()` for reading
+and writing single-byte or multiple-byte streams.
 
 
 # Licensing
