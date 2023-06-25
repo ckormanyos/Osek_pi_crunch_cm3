@@ -42,11 +42,7 @@ namespace local
                                                   static_cast<std::uint32_t>(UINT32_C(8))>;
 } // namespace local;
 
-void mcal::spi::init(const config_type*)
-{
-}
-
-util::communication_base& mcal::spi::spi_channels()
+auto mcal::spi::spi_channels() -> util::communication_buffer_depth_one_byte&
 {
   using mcal_spi_channel0_type =
     mcal::spi::spi_software_port_driver<local::port_pin_sck__type,
@@ -58,12 +54,5 @@ util::communication_base& mcal::spi::spi_channels()
 
   static mcal_spi_channel0_type com0;
 
-  static util::communication_base* com_channel_pointers[local::mcal_spi_channel_count] =
-  {
-    &com0
-  };
-
-  static util::communication_multi_channel<local::mcal_spi_channel_count> com_channels(com_channel_pointers);
-
-  return com_channels;
+  return com0;
 }

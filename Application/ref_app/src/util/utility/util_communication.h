@@ -13,13 +13,39 @@
   #include <cstddef>
   #include <cstdint>
 
+  #include <mcal_memory/mcal_memory_sram_types.h>
   #include <util/utility/util_noncopyable.h>
+
+  namespace mcal { namespace spi {
+
+  // Forward declaration of the mcal::spi::spi_software_port_driver class.
+  template<typename port_pin_sck__type,
+           typename port_pin_mosi_type,
+           typename port_pin_csn__type,
+           typename port_pin_miso_type,
+           const std::uint_fast16_t nop_count,
+           const bool has_disable_enable_interrupts>
+  class spi_software_port_driver;
+
+  } } // namespace mcal::spi
+
+  namespace mcal { namespace memory { namespace sram {
+
+  template<const mcal_sram_uintptr_t ByteSizeTotal,
+           const mcal_sram_uintptr_t PageGranularity>
+  class mcal_memory_sram_generic_spi;
+
+  } } } // namespace mcal::memory::sram
 
   namespace util
   {
     class communication_base : private util::noncopyable
     {
     public:
+      using buffer_value_type = std::uint8_t;
+
+      using send_iterator_type = const buffer_value_type*;
+
       virtual ~communication_base() = default;
 
       virtual auto recv(std::uint8_t& byte_to_recv) -> bool = 0;
@@ -27,97 +53,38 @@
       virtual auto   select() -> void = 0;
       virtual auto deselect() -> void = 0;
 
-      virtual auto select_channel(const std::size_t) -> bool { return true; }
-
-      template<typename send_iterator_type>
-      auto send_n(send_iterator_type first, send_iterator_type last) -> bool
-      {
-        auto send_result = true;
-
-        while((first != last) && send_result)
-        {
-          using send_value_type = typename std::iterator_traits<send_iterator_type>::value_type;
-
-          send_result = (this->send(static_cast<std::uint8_t>(send_value_type(*first++))) && send_result);
-        }
-
-        return send_result;
-      }
+      virtual auto send_n(send_iterator_type first, send_iterator_type last) -> bool = 0;
 
       virtual auto send(const std::uint8_t byte_to_send) -> bool = 0;
 
     protected:
       communication_base() = default;
-
-    private:
-      template<const std::size_t channel_count>
-      friend class communication_multi_channel;
     };
 
     class communication_buffer_depth_one_byte : public communication_base
     {
+    private:
+      using base_class_type = communication_base;
+
     public:
-      using buffer_type = std::uint8_t;
-
       ~communication_buffer_depth_one_byte() override = default;
-
-    protected:
-      buffer_type recv_buffer { };
 
       communication_buffer_depth_one_byte() = default;
 
     private:
-      auto recv(std::uint8_t& byte_to_recv) -> bool override
-      {
-        byte_to_recv = recv_buffer;
+      base_class_type::buffer_value_type recv_buffer { };
 
-        return true;
-      }
-    };
+      template<typename port_pin_sck__type,
+               typename port_pin_mosi_type,
+               typename port_pin_csn__type,
+               typename port_pin_miso_type,
+               const std::uint_fast16_t nop_count,
+               const bool has_disable_enable_interrupts>
+      friend class mcal::spi::spi_software_port_driver;
 
-    template<const std::size_t channel_count>
-    class communication_multi_channel : public communication_base
-    {
-    public:
-      explicit communication_multi_channel(communication_base** p_com_channels)
-      {
-        std::copy(p_com_channels, p_com_channels + channel_count, my_com_channels.begin());
-      }
-
-      ~communication_multi_channel() override = default;
-
-      auto send(const std::uint8_t byte_to_send) -> bool override
-      {
-        return my_com_channels[my_index]->send(byte_to_send);
-      }
-
-      auto recv(std::uint8_t& byte_to_recv) -> bool override
-      {
-        return my_com_channels[my_index]->recv(byte_to_recv);
-      }
-
-      auto   select() -> void override { my_com_channels[my_index]->select(); }
-      auto deselect() -> void override { my_com_channels[my_index]->deselect(); }
-
-      auto select_channel(const std::size_t index) -> bool override
-      {
-        const auto select_channel_is_ok = (index < channel_count);
-
-        if(select_channel_is_ok)
-        {
-          my_index = index;
-        }
-
-        return select_channel_is_ok;
-      }
-
-    private:
-      std::array<communication_base*, channel_count> my_com_channels { };
-      std::size_t my_index { };
-
-      communication_multi_channel() = delete;
-
-      static_assert(channel_count > 0U, "Error channel_count must be greater than zero.");
+      template<const mcal_sram_uintptr_t ByteSizeTotal,
+               const mcal_sram_uintptr_t PageGranularity>
+      friend class mcal::memory::sram::mcal_memory_sram_generic_spi;
     };
   }
 
