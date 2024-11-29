@@ -1,4 +1,10 @@
-﻿name: Osek_pi_crunch_cm3
+﻿##############################################################################
+#  Copyright Christopher Kormanyos 2023 - 2024.
+#  Distributed under the Boost Software License,
+#  Version 1.0. (See accompanying file LICENSE_1_0.txt
+#  or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+name: Osek_pi_crunch_cm3
 on:
   push:
     branches:
@@ -11,11 +17,13 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: '0'
       - name: update-tools
-        run: sudo sudo apt-get update -y;sudo apt-get install -y gcc-arm-none-eabi
+        run: |
+          sudo sudo apt-get update -y
+          sudo apt-get install -y gcc-arm-none-eabi
       - name: target-gcc-arm-none-eabi
         run: |
           bash Build.sh
