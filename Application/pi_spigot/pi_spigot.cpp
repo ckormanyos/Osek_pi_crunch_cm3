@@ -20,18 +20,19 @@
 // cd /mnt/c/Users/ckorm/Documents/Ks/uC_Software/Boards/Osek_pi_crunch_cm3
 // ./Build.sh
 
-#include <mcal_memory/mcal_memory_sram_array.h>
 #include <pi_calc_cfg.h>
-
-#if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
-#include <iomanip>
-#include <iostream>
-#endif // PI_CRUNCH_METAL_STANDALONE_MAIN
 
 #include <math/checksums/hash/hash_sha1.h>
 #include <math/pi_spigot/pi_spigot.h>
 #include <mcal_benchmark.h>
+#include <mcal_memory/mcal_memory_sram_array.h>
 #include <util/utility/util_baselexical_cast.h>
+
+#if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#endif // PI_CRUNCH_METAL_STANDALONE_MAIN
 
 namespace local
 {
@@ -74,15 +75,15 @@ namespace local
 
 extern "C"
 {
-  auto mcal_led_toggle(void) -> void;
+  auto mcal_led_toggle() -> void;
 
   auto pi_main() -> int;
 
-  auto pi_led_toggle(void) -> void;
+  auto pi_led_toggle() -> void;
 }
 
 extern "C"
-auto pi_led_toggle(void) -> void
+auto pi_led_toggle() -> void
 {
   ::mcal_led_toggle();
 }
@@ -126,24 +127,28 @@ auto pi_main() -> int
     #error Error: Wrong pi_spigot digit configuration
     #endif
 
-  auto hash_result = typename local::hash_type::result_type { };
+  using local_hash_type = local::hash_type;
+  using local_hash_result_type = typename local_hash_type::result_type;
+
+  local_hash_result_type hash_result { };
 
   local::pi_spigot_hash.get_result(hash_result.data());
 
-  const auto result_is_ok =
-    std::equal(hash_result.cbegin(), hash_result.cend(), hash_control.cbegin());
+  const bool result_is_ok { std::equal(hash_result.cbegin(), hash_result.cend(), hash_control.cbegin()) };
 
   ++local::pi_count_of_calculations;
 
-  return (result_is_ok ? 0 : -1);
+  const int result_of_pi_main { (result_is_ok ? static_cast<int>(INT8_C(0)) : static_cast<int>(INT8_C(-1))) };
+
+  return result_of_pi_main;
 }
 
 #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
 
 extern "C"
-auto mcal_init(void) -> void;
+auto mcal_init() -> void;
 
-auto main(void) -> int
+auto main() -> int
 {
   ::mcal_init();
 
@@ -154,15 +159,17 @@ auto main(void) -> int
   const auto result_is_ok = (result_pi_main == 0);
 
   {
-    const auto flg = std::cout.flags();
+    std::stringstream strm { };
 
-    std::cout << "digits10:     "                   << local::pi_spigot_type::result_digit() << '\n';
-    std::cout << "result_is_ok: " << std::boolalpha << result_is_ok;
+    strm << "digits10:     " << local::pi_spigot_type::result_digit() << '\n';
+         << "result_is_ok: " << std::boolalpha << result_is_ok;
 
-    std::cout.flags(flg);
+    std::cout << strm.str() << std::endl;
   }
 
-  return (result_is_ok ? 0 : -1);
+  const int result_of_main { (result_is_ok ? static_cast<int>(INT8_C(0)) : static_cast<int>(INT8_C(-1))) };
+
+  return result_of_main;
 }
 
 #else
