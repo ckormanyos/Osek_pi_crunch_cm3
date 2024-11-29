@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2023.
+//  Copyright Christopher Kormanyos 2023 - 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,8 +13,8 @@
   #endif
 
   //#define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_100_DIGITS
-  #define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_1K_DIGITS
-  //#define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_10K_DIGITS
+  //#define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_1K_DIGITS
+  #define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_10K_DIGITS
   //#define PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_100K_DIGITS
 
   #if (defined(_MSC_VER) && defined(_DEBUG) && !defined(PI_CRUNCH_METAL_CFG_PI_SPIGOT_USE_10K_DIGITS))
