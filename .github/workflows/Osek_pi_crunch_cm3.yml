@@ -28,3 +28,17 @@ jobs:
         run: |
           bash Build.sh
           ls -la ./Output/Osek_pi_crunch_cm3.elf ./Output/Osek_pi_crunch_cm3.hex
+  target-gcc-native:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: target-gcc-native
+        run: |
+          g++ -std=c++20 -Werror -Wall -Wextra -Wpedantic -O3 -DPI_CRUNCH_METAL_STANDALONE_MAIN -I./Application/ref_app/src -I./Application ./Application/pi_spigot/pi_spigot.cpp -o pi_spigot.exe
+          ls -la ./pi_spigot.exe
+          ./pi_spigot.exe

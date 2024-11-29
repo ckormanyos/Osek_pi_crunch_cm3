@@ -20,15 +20,22 @@
 // cd /mnt/c/Users/ckorm/Documents/Ks/uC_Software/Boards/Osek_pi_crunch_cm3
 // ./Build.sh
 
+// To build pi_spigot.cpp on LINUX host:
+// cd /mnt/c/Users/ckorm/Documents/Ks/uC_Software/Boards/Osek_pi_crunch_cm3
+// g++ -std=c++20 -Werror -Wall -Wextra -Wpedantic -O3 -DPI_CRUNCH_METAL_STANDALONE_MAIN -I./Application/ref_app/src -I./Application ./Application/pi_spigot/pi_spigot.cpp -o pi_spigot.exe
+
 #include <pi_calc_cfg.h>
 
 #include <math/checksums/hash/hash_sha1.h>
 #include <math/pi_spigot/pi_spigot.h>
+#if !defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
 #include <mcal_benchmark.h>
 #include <mcal_memory/mcal_memory_sram_array.h>
+#endif
 #include <util/utility/util_baselexical_cast.h>
 
 #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
+#include <array>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -62,13 +69,24 @@ namespace local
 
   auto pi_output_digits10 = static_cast<std::uint32_t>(UINT8_C(0));
 
+  #if !defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
   using benchmark_port_type = ::mcal::benchmark::benchmark_port_type;
+  #endif
+
+  #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
+  using mcal_sram_uintptr_t = std::uintptr_t;
+  #endif
 
   constexpr auto pi_spigot_input_start_address = static_cast<mcal_sram_uintptr_t>(UINT8_C(0));
 
+  #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
+  using pi_spigot_input_container_type = std::array<std::uint32_t,
+                                                    pi_spigot_type::input_static_size>;
+  #else
   using pi_spigot_input_container_type = mcal::memory::sram::array<std::uint32_t,
                                                                    pi_spigot_type::input_static_size,
                                                                    pi_spigot_input_start_address>;
+  #endif
 
   pi_spigot_input_container_type pi_spigot_input;
 } // namespace local
@@ -90,7 +108,9 @@ auto pi_led_toggle() -> void
 
 auto pi_main() -> int
 {
+  #if !defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
   local::benchmark_port_type::toggle_pin();
+  #endif
 
   local::pi_spigot_instance.calculate(local::pi_spigot_input.data(), nullptr, &local::pi_spigot_hash);
 
@@ -146,7 +166,13 @@ auto pi_main() -> int
 #if defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
 
 extern "C"
-auto mcal_init() -> void;
+{
+  auto mcal_init      () -> void;
+  auto mcal_led_toggle() -> void;
+
+  auto mcal_init      () -> void { }
+  auto mcal_led_toggle() -> void { }
+}
 
 auto main() -> int
 {
@@ -161,7 +187,7 @@ auto main() -> int
   {
     std::stringstream strm { };
 
-    strm << "digits10:     " << local::pi_spigot_type::result_digit() << '\n';
+    strm << "digits10:     " << local::pi_spigot_type::result_digit() << '\n'
          << "result_is_ok: " << std::boolalpha << result_is_ok;
 
     std::cout << strm.str() << std::endl;
