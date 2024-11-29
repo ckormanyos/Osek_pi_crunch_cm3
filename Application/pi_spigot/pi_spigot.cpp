@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////////
 //                                                               //
 //  Copyright Iliass Mahjoub 2022.                               //
-//  Copyright Christopher Kormanyos 2019 - 2023.                 //
+//  Copyright Christopher Kormanyos 2019 - 2024.                 //
 //  Distributed under the Boost Software License,                //
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt          //
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)             //
@@ -17,7 +17,7 @@
 // In this embedded software adaptation of this work,
 // we limit the decimal digit count to about 100k or fewer.
 
-// cd /mnt/c/Users/User/Documents/Ks/uC_Software/Boards/Osek_pi_crunch_cm3
+// cd /mnt/c/Users/ckorm/Documents/Ks/uC_Software/Boards/Osek_pi_crunch_cm3
 // ./Build.sh
 
 #include <mcal_memory/mcal_memory_sram_array.h>
