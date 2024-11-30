@@ -23,6 +23,10 @@
 # Defines
 ############################################################################################
 
+ifeq ($(PI_SPIGOT_DIGITS),)
+PI_SPIGOT_DIGITS  := 10000
+endif
+
 PRJ_NAME   = Osek_pi_crunch_cm3
 
 OUTPUT_DIR = $(CURDIR)/Output
@@ -54,34 +58,37 @@ PYTHON    = python3
 # C Compiler flags
 ############################################################################################
 
-OPS_BASE     = -Wall                                          \
-               -Wextra                                        \
-               -Wpedantic                                     \
-               -Wconversion                                   \
-               -Wsign-conversion                              \
-               -Wshadow                                       \
-               -Wno-variadic-macros                           \
-               -O2                                            \
-               -mcpu=cortex-m3                                \
-               -mtune=cortex-m3                               \
-               -mthumb                                        \
-               -mfloat-abi=soft                               \
-               -mno-unaligned-access                          \
-               -mno-long-calls                                \
-               -fno-exceptions                                \
-               -gdwarf-2
+OPS_BASE     = -Wall                                                          \
+               -Wextra                                                        \
+               -Wpedantic                                                     \
+               -Wconversion                                                   \
+               -Wsign-conversion                                              \
+               -Wshadow                                                       \
+               -Wno-variadic-macros                                           \
+               -O2                                                            \
+               -mcpu=cortex-m3                                                \
+               -mtune=cortex-m3                                               \
+               -mthumb                                                        \
+               -mfloat-abi=soft                                               \
+               -mno-unaligned-access                                          \
+               -mno-long-calls                                                \
+               -fno-exceptions                                                \
+               -gdwarf-2                                                      \
+               -DPI_CRUNCH_METAL_DISABLE_IOSTREAM                             \
+               -DPI_CRUNCH_METAL_PI_SPIGOT_DIGITS=$(PI_SPIGOT_DIGITS)
 
-COPS         = -x c                                           \
-               -fno-inline-functions                          \
-               $(OPS_BASE)                                    \
-               -std=c99
+
+COPS         = -x c                                                 \
+               -fno-inline-functions                                \
+               $(OPS_BASE)                                          \
+               -std=c17
 
 ############################################################################################
 # C++ Compiler flags
 ############################################################################################
 
 CPPOPS       = -x c++                                               \
-               -std=c++14                                           \
+               -std=c++20                                           \
                $(OPS_BASE)                                          \
                -fno-rtti                                            \
                -fno-use-cxa-atexit                                  \
