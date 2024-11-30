@@ -26,19 +26,29 @@ jobs:
           sudo apt-get install -y gcc-arm-none-eabi
       - name: target-gcc-arm-none-eabi
         run: |
-          bash Build.sh
+          bash Build.sh 10000
           ls -la ./Output/Osek_pi_crunch_cm3.elf ./Output/Osek_pi_crunch_cm3.hex
   target-gcc-native:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        digits10: [ 100, 1000, 10000, 100000 ]
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: '0'
       - name: target-gcc-native
         run: |
-          g++ -std=c++20 -Werror -Wall -Wextra -Wpedantic -O3 -DPI_CRUNCH_METAL_STANDALONE_MAIN -I./Application/ref_app/src -I./Application ./Application/pi_spigot/pi_spigot.cpp -o pi_spigot.exe
+          echo Compile and link pi_spigot.exe
+          echo
+          g++ -std=c++20 -Werror -Wall -Wextra -Wpedantic -O3 -DPI_CRUNCH_METAL_STANDALONE_MAIN -DPI_CRUNCH_METAL_PI_SPIGOT_DIGITS=${{ matrix.digits10 }} -I./Application/ref_app/src -I./Application ./Application/pi_spigot/pi_spigot.cpp -o pi_spigot.exe
+          echo Verify existence of pi_spigot.exe
+          echo
           ls -la ./pi_spigot.exe
+          echo Execute pi_spigot.exe
+          echo
           ./pi_spigot.exe
