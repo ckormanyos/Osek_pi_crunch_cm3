@@ -1,11 +1,11 @@
 // *****************************************************************************
 // Filename    : SysTickTimer.c
 // 
-// Core        : STM32F100RB Cortex™-M3  
+// Core        : STM32F100RB Cortex(R)-M3
 // 
 // Board       : STM32VLDISCOVERY
 //
-// Compiler    : ARM® Compiler v5.06 for μVision (Keil)
+// Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
 //
 // Author      : Chalandi Amine
 //
@@ -18,23 +18,20 @@
 // License     : GNU General Public License v3.0
 //
 // *****************************************************************************
-#include"SysTickTimer.h"
-
-
+#include <SysTickTimer.h>
 
 stStkCtrl* StkCtrl = (stStkCtrl*)STK_CTRL_PTR;
 
-
 void SysTickTimer_Init(void)
 {
-	STK_CTRL = 0;
-	STK_LOAD = SYS_TICK_1MS;
-	STK_VAL  = 0;
-	StkCtrl->ClockSrc = SYS_TICK_CLKSRC_AHB;
-	StkCtrl->TickInt = SYS_TICK_ENABLE_INT;	
+  STK_CTRL = 0;
+  STK_LOAD = SYS_TICK_1MS;
+  STK_VAL  = 0;
+  StkCtrl->ClockSrc = SYS_TICK_CLKSRC_AHB;
+  StkCtrl->TickInt = SYS_TICK_ENABLE_INT;
 }
 
 void SysTickTimer_Start(void)
 {
-	StkCtrl->Enable = SYS_TICK_ENABLE_TIMER;
+  StkCtrl->Enable = SYS_TICK_ENABLE_TIMER;
 }

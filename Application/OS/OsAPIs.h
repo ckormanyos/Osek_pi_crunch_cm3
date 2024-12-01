@@ -17,17 +17,17 @@
 //  
 // *****************************************************************************
 
-#ifndef __OSAPIS_H__
-#define __OSAPIS_H__
+#ifndef OSAPIS_2017_12_27_H
+#define OSAPIS_2017_12_27_H
 
-#include"OsTypes.h"
-#include"OsInternal.h"
+#include <OsTypes.h>
+#include <OsInternal.h>
 
 OsStatusType OS_ActivateTask(OsTaskType TaskID);
 OsStatusType OS_TerminateTask(void);
 OsStatusType OS_ChainTask(OsTaskType TaskID);
 OsStatusType OS_Schedule(void);
-	
+
 OsStatusType OS_GetTaskID(OsTaskRefType TaskID);
 OsStatusType OS_GetTaskState(OsTaskType TaskID, OsTaskStateRefType State);
 
@@ -39,8 +39,6 @@ void OS_ResumeAllInterrupts(void);
 void OS_SuspendOSInterrupts(void);
 void OS_ResumeOSInterrupts(void);
 
-
-
 OsStatusType OS_GetResource(OsResourceType ResID);
 OsStatusType OS_ReleaseResource(OsResourceType ResID);
 OsStatusType OS_SetEvent(OsTaskType TaskID, OsEventMaskType Mask);
@@ -48,14 +46,11 @@ OsStatusType OS_ClearEvent(OsEventMaskType Mask);
 OsStatusType OS_GetEvent(OsTaskType TaskID, OsEventMaskRefType Event);
 OsStatusType OS_WaitEvent(OsEventMaskType Mask);
 
-
 OsStatusType OS_GetAlarmBase(OsAlarmType AlarmID, OsAlarmBaseRefType Info);
 OsStatusType OS_GetAlarm(OsAlarmType AlarmID, OsTickRefType Tick);
 OsStatusType OS_SetRelAlarm(OsAlarmType AlarmID, OsTickType increment, OsTickType cycle);
 OsStatusType OS_SetAbsAlarm(OsAlarmType AlarmID, OsTickType start, OsTickType cycle);
 OsStatusType OS_CancelAlarm(OsAlarmType AlarmID);
-
-
 
 OsAppModeType OS_GetActiveApplicationMode(void);
 void OS_StartOS(OsAppModeType Mode);
@@ -67,5 +62,4 @@ extern void PostTaskHook(void);
 extern void StartupHook(void);
 extern void ShutdownHook(OsStatusType Error);
 
-#endif
-
+#endif // OSAPIS_2017_12_27_H

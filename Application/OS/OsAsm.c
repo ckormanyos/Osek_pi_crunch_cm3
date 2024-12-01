@@ -18,7 +18,7 @@
 // *****************************************************************************************************************
 
 #if defined(__GNUC__) && !defined(__CC_ARM)
-#include "types.h"
+#include <types.h>
 #elif defined(__CC_ARM)
 #else
 #error Error: Compiler inline assembly dialect is not supported
@@ -87,7 +87,7 @@ __asm void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr)
 #endif
 {
 #if defined(__GNUC__) && !defined(__CC_ARM)
-	(void) CurrentSpPtr;
+  (void) CurrentSpPtr;
   __asm("str r13,[r0]");
   __asm("bx lr");
 #elif defined(__CC_ARM)
@@ -116,7 +116,7 @@ __asm void OsGetPSR(volatile unsigned int* CurrentPsr)
 #endif
 {
 #if defined(__GNUC__) && !defined(__CC_ARM)
-	(void) CurrentPsr;
+  (void) CurrentPsr;
   __asm ("mrs r1, psr");
   __asm ("str r1,[r0]");
   __asm ("bx lr");
@@ -147,10 +147,10 @@ __asm void OsCat2IsrWrapper(void)
 #endif
 {
 #if defined(__GNUC__) && !defined(__CC_ARM)
-	extern void OsStoreStackPointer(uint32);
-	extern uint32 OsGetSavedStackPointer(void);
-	extern uint32 OsIsrCallDispatch(uint32);
-	extern void OsRunCat2Isr(void);
+  extern void OsStoreStackPointer(uint32);
+  extern uint32 OsGetSavedStackPointer(void);
+  extern uint32 OsIsrCallDispatch(uint32);
+  extern void OsRunCat2Isr(void);
 
   #ifndef OS_NESTED_INT
   __asm("cpsid i");

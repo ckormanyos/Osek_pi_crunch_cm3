@@ -17,20 +17,20 @@
 //  
 // *****************************************************************************
 
-#ifndef __TCB_H__
-#define __TCB_H__
+#ifndef TCB_2017_12_27_H
+#define TCB_2017_12_27_H
 
-#include"OsTypes.h"
+#include <OsTypes.h>
 
 /***************************************************/
 /*            X Macro System Generation            */
 /***************************************************/
 #define OS_GEN_ENUM
-#include"OsCfg.h"
+#include <OsCfg.h>
 #undef OS_GEN_ENUM
 
 #define OS_GEN_FUNC_PROTO
-#include"OsCfg.h"
+#include <OsCfg.h>
 #undef OS_GEN_FUNC_PROTO
 
 /* OS Config */
@@ -45,4 +45,4 @@ extern volatile Ocb_t OCB_Cfg;
 #define RES_SCHEDULER_PRIO (uint32)0x7FFFFFFFu
 #define RES_TRACE_PRIO     (uint32)1u
 
-#endif
+#endif // TCB_2017_12_27_H

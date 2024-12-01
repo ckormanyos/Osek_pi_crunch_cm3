@@ -44,17 +44,17 @@
 namespace local
 {
   #if defined(PI_CRUNCH_METAL_PI_SPIGOT_DIGITS)
-  #if (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_100_DIGITS)
-  constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(101));
-  #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_1K_DIGITS)
-  constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(1001));
-  #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_10K_DIGITS)
-  constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(10001));
-  #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_100K_DIGITS)
-  constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(100001));
-  #endif
+    #if (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_100_DIGITS)
+    constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(101));
+    #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_1K_DIGITS)
+    constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(1001));
+    #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_10K_DIGITS)
+    constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(10001));
+    #elif (PI_CRUNCH_METAL_PI_SPIGOT_DIGITS == PI_CRUNCH_METAL_PI_SPIGOT_USE_100K_DIGITS)
+    constexpr auto result_digit = static_cast<std::uint32_t>(UINT32_C(100001));
+    #endif
   #else
-  #error Error: Please define PI_CRUNCH_METAL_PI_SPIGOT_DIGITS
+    #error Error: Please define PI_CRUNCH_METAL_PI_SPIGOT_DIGITS
   #endif
 
   constexpr auto loop_digit = static_cast<std::uint32_t>(UINT8_C(9));
