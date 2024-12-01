@@ -66,7 +66,7 @@ pin PB9 is toggled. This provides a measure of success viewable
 with a digital oscilloscope.
 
 Simultaneously task `T1` exercises a perpetual, simple blinky show
-featuring the two user LEDs (green and blue) toggling at 1/2 Hz.
+featuring the two user LEDs (green and blue) toggling at $\frac{1}{2}~\text{Hz}$.
 This provides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
@@ -86,12 +86,12 @@ are shown in the table below.
 
 | NUCLEO PIN    | SRAM PIN  | SPI Function               |
 | ------------- | --------- | -------------------------- |
-| PA11          | 1         | CE (chip-select-not)       |
-| PA10          | 2         | SO (chip-serial-out)       |
-| PA09          | 6         | CLK (chip-serial-clock)    |
-| PA08          | 5         | SI (chip-serial-in)        |
+| `PA11`        | $1$       | `CE` (chip-select-not)       |
+| `PA10`        | $2$       | `SO` (chip-serial-out)       |
+| `PA09`        | $6$       | `CLK` (chip-serial-clock)    |
+| `PA08`        | $5$       | `SI` (chip-serial-in)        |
 
-# _Bonus_ Generic Serial SPI SRAM driver
+# Generic Serial SPI SRAM _Bonus_ Driver
 
 The serial SRAM driver is a nice _by_-_product_ of this project.
 This driver can be found in the file
@@ -117,3 +117,7 @@ This is consistent with the licensing found in and adopted from
 The supporting files in [ref_app](./Application/ref_app) and
 the [pi_spigot](./Application/pi_spigot) application itself
 are licensed under [BSL](./LICENSE_1_0.txt).
+
+`Win*`-ported `*nix` tools in [`wbin`](./build/tools/UnxUtils/usr/local/wbin) originate from [UnxTools](https://sourceforge.net/projects/unxutils) and include their own [distribution statements](./build/tools/UnxUtils).
+
+The `Win*`-ported GNUmake is taken from [`ckormanyos/make-4.2.1-msvc-build`](https://github.com/ckormanyos/make-4.2.1-msvc-build).
