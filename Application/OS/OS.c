@@ -101,7 +101,7 @@ void OS_StartOS(OsAppModeType Mode)
     OCB_Cfg.OsLockDispatcher = 0;
 
     /* Save the system stack ptr */
-    OsGetCurrentSP(&OCB_Cfg.OsSystemStackPtr);    
+    OsGetCurrentSP(&OCB_Cfg.OsSystemStackPtr);
 
     /* Call the dispatcher */
     OS_DISPATCH();

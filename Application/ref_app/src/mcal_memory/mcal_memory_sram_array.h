@@ -8,12 +8,12 @@
 #ifndef MCAL_MEMORY_SRAM_ARRAY_2020_04_26_H_
   #define MCAL_MEMORY_SRAM_ARRAY_2020_04_26_H_
 
+  #include <mcal_memory/mcal_memroy_sram_iterator.h>
+
   #include <algorithm>
   #include <cstddef>
   #include <iterator>
   #include <type_traits>
-
-  #include <mcal_memory/mcal_memroy_sram_iterator.h>
 
   // Implement most of std::array for read-only program memory.
   // See ISO/IEC 14882:2011 Chapter 23.3.2.

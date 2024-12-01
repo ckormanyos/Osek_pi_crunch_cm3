@@ -105,7 +105,7 @@ OsStatusType OS_SetRelAlarm(OsAlarmType AlarmID, OsTickType increment, OsTickTyp
     {
       /* Cyclic alarm */
       OCB_Cfg.pAlarm[AlarmID]->Alarmtype       = ALARM_CYCLIC;
-      OCB_Cfg.pAlarm[AlarmID]->AlarmCategory   = ALARM_RELATIVE;      
+      OCB_Cfg.pAlarm[AlarmID]->AlarmCategory   = ALARM_RELATIVE;
       OCB_Cfg.pAlarm[AlarmID]->InitCycles      = cycle;
       OCB_Cfg.pAlarm[AlarmID]->InitTicks       = increment;
       OCB_Cfg.pAlarm[AlarmID]->Status          = ALARM_BUSY;

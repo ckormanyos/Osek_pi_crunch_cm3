@@ -8,10 +8,10 @@
 #ifndef MCAL_MEMORY_SRAM_ACCESS_2020_04_10_H
   #define MCAL_MEMORY_SRAM_ACCESS_2020_04_10_H
 
+  #include <mcal_memory_sram.h>
+
   #include <cstdint>
   #include <type_traits>
-
-  #include <mcal_memory_sram.h>
 
   namespace mcal { namespace memory { namespace sram {
 

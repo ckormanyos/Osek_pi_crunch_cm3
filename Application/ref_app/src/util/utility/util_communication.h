@@ -8,13 +8,13 @@
 #ifndef UTIL_COMMUNICATION_2012_05_31_H
   #define UTIL_COMMUNICATION_2012_05_31_H
 
+  #include <mcal_memory/mcal_memory_sram_types.h>
+  #include <util/utility/util_noncopyable.h>
+
   #include <algorithm>
   #include <array>
   #include <cstddef>
   #include <cstdint>
-
-  #include <mcal_memory/mcal_memory_sram_types.h>
-  #include <util/utility/util_noncopyable.h>
 
   namespace mcal { namespace spi {
 

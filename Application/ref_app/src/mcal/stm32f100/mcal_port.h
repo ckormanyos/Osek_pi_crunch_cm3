@@ -8,8 +8,6 @@
 #ifndef MCAL_PORT_2012_06_27_H
   #define MCAL_PORT_2012_06_27_H
 
-  #include <cstdint>
-
   #include <mcal_reg.h>
 
   namespace mcal

@@ -8,8 +8,6 @@
 #ifndef HASH_STREAM_BASE_2023_04_30_H
   #define HASH_STREAM_BASE_2023_04_30_H
 
-  #include <limits>
-
   #include <math/checksums/hash/hash_detail.h>
 
   namespace math { namespace checksums { namespace hash {

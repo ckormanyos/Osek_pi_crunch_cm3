@@ -8,11 +8,11 @@
 #ifndef MCAL_HELPER_2020_05_21_H
   #define MCAL_HELPER_2020_05_21_H
 
-  #include <cstdint>
-  #include <type_traits>
-
   #include <mcal_cpu.h>
   #include <mcal_irq.h>
+
+  #include <cstdint>
+  #include <type_traits>
 
   namespace mcal { namespace helper {
 

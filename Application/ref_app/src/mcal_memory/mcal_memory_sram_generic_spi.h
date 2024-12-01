@@ -8,12 +8,12 @@
 #ifndef MCAL_MEMORY_SRAM_GENERIC_SPI_2020_04_11_H
   #define MCAL_MEMORY_SRAM_GENERIC_SPI_2020_04_11_H
 
-  #include <array>
-
   #include <mcal_cpu.h>
   #include <mcal_memory/mcal_memory_sram_types.h>
   #include <util/utility/util_communication.h>
   #include <util/utility/util_noncopyable.h>
+
+  #include <array>
 
   namespace mcal { namespace memory { namespace sram {
 
