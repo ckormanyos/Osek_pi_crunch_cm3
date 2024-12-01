@@ -87,16 +87,19 @@
       {
         if(single_page(address, count))
         {
-          const auto addr_chan =
-            static_cast<std::uint32_t>
-            (
-              address % static_cast<std::uint32_t>(byte_size_total())
-            );
+          const std::uint32_t
+            addr_chan
+            {
+              static_cast<std::uint32_t>
+              (
+                address % static_cast<std::uint32_t>(byte_size_total())
+              )
+            };
 
           using local_cmd_array_type = std::array<std::uint8_t, static_cast<std::size_t>(UINT8_C(4))>;
 
-          const auto cmd =
-            local_cmd_array_type
+          const local_cmd_array_type
+            cmd
             {
               read_cmd,
               static_cast<std::uint8_t>(addr_chan >> 16U),
@@ -224,7 +227,7 @@
 
     static constexpr auto byte_size_total() noexcept -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(ByteSizeTotal); }
 
-    static constexpr auto page_granularity() -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(PageGranularity); }
+    static constexpr auto page_granularity() noexcept -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(PageGranularity); }
 
     static constexpr auto single_page(std::uint32_t address, std::size_t count) noexcept -> bool
     {

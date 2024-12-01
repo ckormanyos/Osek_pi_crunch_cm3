@@ -51,8 +51,7 @@ NM        = $(TOOLCHAIN)-nm
 OBJDUMP   = $(TOOLCHAIN)-objdump
 OBJCOPY   = $(TOOLCHAIN)-objcopy
 READELF   = $(TOOLCHAIN)-readelf
-
-PYTHON    = python3
+SED       = sed
 
 ############################################################################################
 # C Compiler flags
@@ -65,7 +64,7 @@ OPS_BASE     = -Wall                                                          \
                -Wsign-conversion                                              \
                -Wshadow                                                       \
                -Wno-variadic-macros                                           \
-               -O2                                                            \
+               -Os                                                            \
                -mcpu=cortex-m3                                                \
                -mtune=cortex-m3                                               \
                -mthumb                                                        \
@@ -88,7 +87,7 @@ COPS         = -x c                                                 \
 ############################################################################################
 
 CPPOPS       = -x c++                                               \
-               -std=c++20                                           \
+               -std=c++14                                           \
                $(OPS_BASE)                                          \
                -fno-rtti                                            \
                -fno-use-cxa-atexit                                  \
@@ -148,12 +147,12 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
 ############################################################################################
 # Include Paths
 ############################################################################################
-INC_FILES := $(SRC_DIR)/Application/OS/HwPlatform/STM32                                  \
-             $(SRC_DIR)/Application/OS                                                   \
-             $(SRC_DIR)/Application/MCAL                                                 \
-             $(SRC_DIR)/Application                                                      \
-             $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100                           \
-             $(SRC_DIR)/Application/ref_app/src
+C_INCLUDES := $(SRC_DIR)/Application/OS/HwPlatform/STM32                                  \
+              $(SRC_DIR)/Application/OS                                                   \
+              $(SRC_DIR)/Application/MCAL                                                 \
+              $(SRC_DIR)/Application                                                      \
+              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100                           \
+              $(SRC_DIR)/Application/ref_app/src
 
 ############################################################################################
 # Rules
@@ -181,18 +180,18 @@ clean :
 
 $(OBJ_DIR)/%.o : %.c
 	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
-	@-$(CC) $(COPS) $(addprefix -I, $(INC_FILES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
-	@-$(PYTHON) $(CC_ERR_FORMAT_SCRIPT) $(OBJ_DIR)/$(basename $(@F)).err -COLOR
+	@-$(CC) $(COPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.c:\([0-9]*\),|.c(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.s
 	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@$(AS) $(ASOPS) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err >$(OBJ_DIR)/$(basename $(@F)).lst
-	@-$(PYTHON) $(CC_ERR_FORMAT_SCRIPT) $(OBJ_DIR)/$(basename $(@F)).err -COLOR
+	@-$(SED) -e 's|:\([0-9]*\):|(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.cpp
 	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
-	@$(CPP) $(CPPOPS) $(addprefix -I, $(INC_FILES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
-	@-$(PYTHON) $(CC_ERR_FORMAT_SCRIPT) $(OBJ_DIR)/$(basename $(@F)).err -COLOR
+	@$(CPP) $(CPPOPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.hpp:\([0-9]*\),|.hpp(\1) :|' -e 's|.cpp:\([0-9]*\),|.cpp(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OUTPUT_DIR)/$(PRJ_NAME).elf : $(FILES_O) $(LD_SCRIPT)
 	@$(LD) $(LOPS) $(FILES_O) -o $(OUTPUT_DIR)/$(PRJ_NAME).elf

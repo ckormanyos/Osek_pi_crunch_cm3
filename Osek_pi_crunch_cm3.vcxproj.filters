@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{94c7cdf9-9b8c-4471-b9c1-acff3dba86d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\MCAL">
+      <UniqueIdentifier>{70431b02-6466-40c0-8aee-0907de97c645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\OS">
+      <UniqueIdentifier>{7bf90449-dac5-40f5-acbb-785663db4230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\OS\HwPlatform">
+      <UniqueIdentifier>{9bdd520c-d17b-4335-888c-ac9b7974184e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\OS\HwPlatform\STM32">
+      <UniqueIdentifier>{620e5443-03df-4719-8acc-12ef0114f896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\pi_spigot">
+      <UniqueIdentifier>{7cf017f3-ac8c-47ad-b2d3-dfe52c568b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app">
+      <UniqueIdentifier>{95d90dbc-2a50-4f50-ba2c-f662c31564ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src">
+      <UniqueIdentifier>{ba696408-254f-4698-9b55-6d22e01e9bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\mcal">
+      <UniqueIdentifier>{276b5ff4-0977-4ca4-8443-ccbe7812b4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\mcal\stm32f100">
+      <UniqueIdentifier>{7a801851-5363-4464-9bd7-676382a7bc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\math">
+      <UniqueIdentifier>{5dc59bdf-bc70-409d-96a1-03dffbf13070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\math\checksums">
+      <UniqueIdentifier>{446bde78-6653-4220-83cf-a3cbd383bfdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\math\checksums\hash">
+      <UniqueIdentifier>{59222568-fe01-450e-abdf-849719c76189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\math\pi_spigot">
+      <UniqueIdentifier>{cc95a8b8-94fa-4e4f-bc03-1eadf0a902a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\mcal_led">
+      <UniqueIdentifier>{58938052-0147-4b64-84bf-ced9347f0a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\mcal_memory">
+      <UniqueIdentifier>{60795cc9-e05b-453d-9f67-59be0dd07328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\util">
+      <UniqueIdentifier>{adbf0357-bda4-439c-b2f5-017c91f30671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\util\utility">
+      <UniqueIdentifier>{fad72341-eea6-4964-86f7-3de6698751af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\mcal_spi">
+      <UniqueIdentifier>{5abb6850-f1f9-4e00-a881-39c1ea7fd6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".github">
+      <UniqueIdentifier>{629c5495-ffdf-4082-bf59-bc3f1d74eb5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".github\workflows">
+      <UniqueIdentifier>{8bbfe4fe-cdca-4324-8d7e-b66ecc0fbd10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_doc">
+      <UniqueIdentifier>{f5dbb060-51fc-432c-aeba-3b48da452814}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Appli.c">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\IntVect.c">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SysStartup.c">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\MCAL\SysTickTimer.c">
+      <Filter>Application\MCAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\OS.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\OsAlarm.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\OsAsm.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\OsEvt.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\OsTask.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\OS\TCB.c">
+      <Filter>Application\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\pi_spigot\pi_spigot.cpp">
+      <Filter>Application\pi_spigot</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\mcal.cpp">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\mcal_gcc_cxx_completion.cpp">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_lcd.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_led.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_port.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\pi_calc_cfg.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\types.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\MCAL\SysTickTimer.h">
+      <Filter>Application\MCAL</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\OsAPIs.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\OsCfg.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\OsGenMac.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\OsInternal.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\OsTypes.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\TCB.h">
+      <Filter>Application\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\OS\HwPlatform\STM32\HwPltfm.h">
+      <Filter>Application\OS\HwPlatform\STM32</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\mcal.h">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_helper.h">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_reg_access_dynamic.h">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_reg_access_static.h">
+      <Filter>Application\ref_app\src\mcal</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_led.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port_pin_dummy.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_reg.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_benchmark.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_cpu.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_irq.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\math\pi_spigot\pi_spigot.h">
+      <Filter>Application\ref_app\src\math\pi_spigot</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_detail.h">
+      <Filter>Application\ref_app\src\math\checksums\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_sha1.h">
+      <Filter>Application\ref_app\src\math\checksums\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_stream_base.h">
+      <Filter>Application\ref_app\src\math\checksums\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_base.h">
+      <Filter>Application\ref_app\src\math\checksums\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_boolean_state_base.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_console.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_port.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_port_inverted.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_pwm.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_base.h">
+      <Filter>Application\ref_app\src\mcal_led</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_array.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_generic_spi.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_ptr.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_ref.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_types.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memroy_sram_iterator.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_const_address_ptr.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_nonconst_address_ptr.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_access.h">
+      <Filter>Application\ref_app\src\mcal_memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_spi\mcal_spi_software_dummy.h">
+      <Filter>Application\ref_app\src\mcal_spi</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_spi\mcal_spi_software_port_driver.h">
+      <Filter>Application\ref_app\src\mcal_spi</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_communication.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_dynamic_array.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_noncopyable.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_time.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_two_part_data_manipulation.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_utype_helper.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\utility\util_baselexical_cast.h">
+      <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\workflows\Osek_pi_crunch_cm3.yml">
+      <Filter>.github\workflows</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>_doc</Filter>
+    </None>
+    <None Include="Makefile" />
+    <None Include="Memory_Map.ld" />
+    <None Include="Build.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="gpl-3.0.txt" />
+    <Text Include="LICENSE_1_0.txt" />
+  </ItemGroup>
+</Project>

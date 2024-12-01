@@ -52,7 +52,7 @@ auto mcal::spi::spi_channels() -> util::communication_buffer_depth_one_byte&
                                         static_cast<std::uint_fast16_t>(UINT8_C(0)),
                                         true>;
 
-  static mcal_spi_channel0_type com0;
+  static mcal_spi_channel0_type com0 { };
 
   return com0;
 }
