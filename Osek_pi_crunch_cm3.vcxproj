@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="target stm32f100|x64">
+      <Configuration>target stm32f100</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{EA56A43B-7F6F-4ADD-9697-F818DDDF386D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='target stm32f100|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='target stm32f100|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='target stm32f100|x64'">
+    <NMakeBuildCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeBuildCommandLine>
+    <NMakeOutput>Osek_pi_crunch_cm3.exe</NMakeOutput>
+    <NMakeCleanCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Appli.c" />
+    <ClCompile Include="Application\IntVect.c" />
+    <ClCompile Include="Application\MCAL\SysTickTimer.c" />
+    <ClCompile Include="Application\OS\OS.c" />
+    <ClCompile Include="Application\OS\OsAlarm.c" />
+    <ClCompile Include="Application\OS\OsAsm.c" />
+    <ClCompile Include="Application\OS\OsEvt.c" />
+    <ClCompile Include="Application\OS\OsTask.c" />
+    <ClCompile Include="Application\OS\TCB.c" />
+    <ClCompile Include="Application\pi_spigot\pi_spigot.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\mcal.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\mcal_gcc_cxx_completion.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_lcd.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_led.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_port.cpp" />
+    <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.cpp" />
+    <ClCompile Include="Application\SysStartup.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\MCAL\SysTickTimer.h" />
+    <ClInclude Include="Application\OS\HwPlatform\STM32\HwPltfm.h" />
+    <ClInclude Include="Application\OS\OsAPIs.h" />
+    <ClInclude Include="Application\OS\OsCfg.h" />
+    <ClInclude Include="Application\OS\OsGenMac.h" />
+    <ClInclude Include="Application\OS\OsInternal.h" />
+    <ClInclude Include="Application\OS\OsTypes.h" />
+    <ClInclude Include="Application\OS\TCB.h" />
+    <ClInclude Include="Application\pi_calc_cfg.h" />
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_base.h" />
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_detail.h" />
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_sha1.h" />
+    <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_stream_base.h" />
+    <ClInclude Include="Application\ref_app\src\math\pi_spigot\pi_spigot.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\mcal.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_helper.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_reg_access_dynamic.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\mcal_reg_access_static.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_benchmark.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_cpu.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_irq.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_led.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port_pin_dummy.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_reg.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_base.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_boolean_state_base.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_console.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_port.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_port_inverted.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_pwm.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_const_address_ptr.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_nonconst_address_ptr.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_access.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_array.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_generic_spi.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_ptr.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_ref.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memory_sram_types.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_memory\mcal_memroy_sram_iterator.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_spi\mcal_spi_software_dummy.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_spi\mcal_spi_software_port_driver.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_baselexical_cast.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_communication.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_dynamic_array.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_noncopyable.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_time.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_two_part_data_manipulation.h" />
+    <ClInclude Include="Application\ref_app\src\util\utility\util_utype_helper.h" />
+    <ClInclude Include="Application\types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\workflows\Osek_pi_crunch_cm3.yml" />
+    <None Include="Build.sh" />
+    <None Include="Makefile" />
+    <None Include="Memory_Map.ld" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="gpl-3.0.txt" />
+    <Text Include="LICENSE_1_0.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -148,18 +148,16 @@
 
     auto send(const std::uint8_t byte_to_send) -> bool override
     {
-      for(auto bit_mask  = static_cast<std::uint_fast8_t>(UINT8_C(0x80));
-               bit_mask != static_cast<std::uint_fast8_t>(UINT8_C(0));
-               bit_mask  = static_cast<std::uint_fast8_t>(bit_mask >> static_cast<unsigned>(UINT8_C(1))))
-      {
-        const auto bit_is_high =
-          (static_cast<std::uint_fast8_t>(byte_to_send & bit_mask) != static_cast<std::uint_fast8_t>(UINT8_C(0)));
+      const std::uint_fast8_t by { static_cast<std::uint_fast8_t>(byte_to_send) };
 
-        (bit_is_high ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low());
-
-        port_pin_sck__type::set_pin_high();
-        port_pin_sck__type::set_pin_low();
-      }
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x80))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x40))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x20))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x10))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x08))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x04))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x02))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
+      (static_cast<std::uint_fast8_t>(by & static_cast<std::uint_fast8_t>(UINT8_C(0x01))) != static_cast<std::uint_fast8_t>(UINT8_C(0))) ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low(); port_pin_sck__type::set_pin_high(); port_pin_sck__type::set_pin_low();
 
       return true;
     }
