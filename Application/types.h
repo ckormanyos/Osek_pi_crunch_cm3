@@ -30,10 +30,9 @@ typedef void (*pTaskFunc)(void);
 
 typedef enum
 {
-	FALSE = 0,
-	TRUE
-}boolean;
+  FALSE,
+  TRUE
+}
+boolean;
 
-
-#endif
-
+#endif // __TYPES_H__

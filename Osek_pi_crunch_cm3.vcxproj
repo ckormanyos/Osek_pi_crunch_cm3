@@ -32,6 +32,7 @@
     <NMakeCleanCommandLine>.\Build.bat 1000 clean</NMakeCleanCommandLine>
     <NMakeReBuildCommandLine>.\Build.bat 1000 all</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>$(SolutionDir)/Application/OS/HwPlatform/STM32;$(SolutionDir)/Application/OS;$(SolutionDir)/Application/MCAL;$(SolutionDir)/Application;$(SolutionDir)/Application/ref_app/src/mcal/stm32f100;$(SolutionDir)/Application/ref_app/src</NMakeIncludeSearchPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
