@@ -8,8 +8,9 @@
 #ifndef UTIL_TWO_PART_DATA_MANIPULATION_2010_06_13_H_
   #define UTIL_TWO_PART_DATA_MANIPULATION_2010_06_13_H_
 
-  #include <limits>
   #include <util/utility/util_utype_helper.h>
+
+  #include <limits>
 
   namespace util
   {

@@ -11,13 +11,13 @@
 #ifndef PI_SPIGOT_2022_06_08_H
   #define PI_SPIGOT_2022_06_08_H
 
+  #include <math/checksums/hash/hash_base.h>
+
   #include <algorithm>
   #include <array>
   #include <functional>
   #include <iterator>
   #include <type_traits>
-
-  #include <math/checksums/hash/hash_base.h>
 
   #if (__cplusplus >= 201703L)
   namespace math::constants {

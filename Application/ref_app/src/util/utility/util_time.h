@@ -8,10 +8,10 @@
 #ifndef UTIL_TIME_2010_04_10_H
   #define UTIL_TIME_2010_04_10_H
 
+  #include <mcal_gpt.h>
+
   #include <cstdint>
   #include <limits>
-
-  #include <mcal_gpt.h>
 
   namespace util
   {

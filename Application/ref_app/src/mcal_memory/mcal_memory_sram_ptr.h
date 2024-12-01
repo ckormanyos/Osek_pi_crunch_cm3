@@ -8,9 +8,9 @@
 #ifndef MCAL_MEMORY_SRAM_PTR_2020_04_09_H_
   #define MCAL_MEMORY_SRAM_PTR_2020_04_09_H_
 
-  #include <iterator>
-
   #include <mcal_memory/mcal_memory_sram_ref.h>
+
+  #include <iterator>
 
   // Implement a specialized pointer type for sram memory.
 

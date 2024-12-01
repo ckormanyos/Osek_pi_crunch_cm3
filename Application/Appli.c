@@ -19,11 +19,11 @@
 // 
 // *****************************************************************************
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include <OsAPIs.h>
 #include <TCB.h>
+
+#include <stdbool.h>
+#include <stdint.h>
 
 static bool pi_result_is_ok = true;
 

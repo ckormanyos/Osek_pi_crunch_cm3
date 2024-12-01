@@ -8,11 +8,11 @@
 #ifndef MCAL_MEMORY_SRAM_ITERATOR_2020_04_27_H_
   #define MCAL_MEMORY_SRAM_ITERATOR_2020_04_27_H_
 
-  #include <iterator>
-
   #include <mcal_memory/mcal_memory_const_address_ptr.h>
   #include <mcal_memory/mcal_memory_nonconst_address_ptr.h>
   #include <mcal_memory/mcal_memory_sram_ptr.h>
+
+  #include <iterator>
 
   // Implement specialized iterator types for read/write SRAM memory
   // (such as a serial SRAM chip or a parallel SRAM brick).
