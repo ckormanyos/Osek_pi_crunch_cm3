@@ -17,7 +17,7 @@
 //  
 // ******************************************************************************************************
 
-#include"TCB.h"
+#include <TCB.h>
 
 #if !defined(__GNUC__)
 #pragma diag_suppress 1296,1,191,188
@@ -28,13 +28,13 @@
 /***************************************************/
 
 #define OS_GEN_DATA_STRUCT
-#include"OsCfg.h"
+#include <OsCfg.h>
 #undef OS_GEN_DATA_STRUCT
 
 #define OS_GEN_TCB
-#include"OsCfg.h"
+#include <OsCfg.h>
 #undef OS_GEN_TCB
 
 #define OS_GEN_OCB
-#include"OsCfg.h"
+#include <OsCfg.h>
 #undef OS_GEN_OCB

@@ -17,10 +17,10 @@
 //  
 // *****************************************************************************
 
-#ifndef __OS_INTERNAL_H__
-#define __OS_INTERNAL_H__
+#ifndef OS_INTERNAL_2017_12_27_H
+#define OS_INTERNAL_2017_12_27_H
 
-#include"types.h"
+#include <types.h>
 
 extern void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr);
 extern void OsGetPSR(volatile unsigned int* CurrentPsr);
@@ -28,4 +28,4 @@ extern void OsGetPSR(volatile unsigned int* CurrentPsr);
 boolean OsIsInterruptContext(void);
 boolean OsIsCat2IntContext(void);
 
-#endif
+#endif // OS_INTERNAL_2017_12_27_H

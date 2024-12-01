@@ -17,11 +17,11 @@
 //  
 // *****************************************************************************
 
-#ifndef __OS_TYPES_H__
-#define __OS_TYPES_H__
+#ifndef OS_TYPES_2017_12_27_H
+#define OS_TYPES_2017_12_27_H
 
-#include"types.h"
-#include"HwPltfm.h"
+#include <types.h>
+#include <HwPltfm.h>
 
 typedef enum
 {
@@ -31,19 +31,22 @@ typedef enum
   RUNNING,
   SUSPENDED,
   INVALID_STATE
-}OsTaskStateType;
+}
+OsTaskStateType;
 
 typedef enum
 {
   BASIC,
   EXTENDED
-}OsTasksType;
+}
+OsTasksType;
 
 typedef enum
 {
   NONE_PREEMPT,
   FULL_PREEMPT
-}OsTasksSchedType;
+}
+OsTasksSchedType;
 
 typedef enum
 {
@@ -71,33 +74,37 @@ typedef enum
   E_OS_SYS_API_ERROR         = 23,
   E_OS_SYS_ALARM_MANAGEMENT  = 24,
   E_OS_SYS_WARNING           = 25
-}OsStatusType;
+}
+OsStatusType;
 
 typedef enum
 {
   ALARM_SET_EVENT,
   ALARM_ACTIVE_TASK,
   ALARM_CALLBACK
-  
-}OsAlarmAction;
+}
+OsAlarmAction;
 
 typedef enum
 {
   ALARM_FREE,
   ALARM_BUSY
-}AlarmStatus;
+}
+AlarmStatus;
 
 typedef enum
 {
   ALARM_ONE_SHOT,
   ALARM_CYCLIC
-}AlarmTypes;
+}
+AlarmTypes;
 
 typedef enum
 {
   ALARM_RELATIVE,
   ALARM_ABSOLUTE
-}AlarmCatgys;
+}
+AlarmCatgys;
 
 /* OS TYPES */
 typedef unsigned int OsTaskType;
@@ -129,7 +136,8 @@ typedef struct
   uint32            NbOfActiv;
   OsTasksType       TaskType;
   OsTasksSchedType  TaskSchedType;
-}Tcb_t;
+}
+Tcb_t;
 
 typedef struct
 {
@@ -144,14 +152,16 @@ typedef struct
   AlarmCatgys            AlarmCategory;
   OsTickType             AlarmCheckPoint;
   pTaskFunc              CallBackFunc;
-}Alarm_t;
+}
+Alarm_t;
 
 typedef struct
 {
   const uint32 ResCeilingPrio;
   uint32 CurrentOccupiedTask;
   const uint32* AuthorizedTask;
-}Resource_t;
+}
+Resource_t;
 
 typedef Alarm_t** OsAlarmBaseRefType;
 
@@ -168,13 +178,15 @@ typedef struct
   uint32        OsIsrInterruptLevel;
   uint32        OsSystemStackPtr;
   uint32        OsCurrentSystemStackPtr;
-}Ocb_t;
+}
+Ocb_t;
 
 typedef struct
 {
   uint32 IsrNum;
   pFunc  IsrFunc;
-}Isr_t;
+}
+Isr_t;
 
 #define TASK(x) void Task##x##Func(void)
 #define ISR(x)  void Os##x##Isr(void)
@@ -197,4 +209,4 @@ typedef struct
 #define APP_MODE_DEFAULT (OsAppModeType)0
 #define APP_MODE APP_MODE_DEFAULT
 
-#endif
+#endif // OS_TYPES_2017_12_27_H

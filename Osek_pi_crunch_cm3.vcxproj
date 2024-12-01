@@ -31,7 +31,7 @@
     <NMakeOutput>Osek_pi_crunch_cm3.exe</NMakeOutput>
     <NMakeCleanCommandLine>.\Build.bat 1000 clean</NMakeCleanCommandLine>
     <NMakeReBuildCommandLine>.\Build.bat 1000 all</NMakeReBuildCommandLine>
-    <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions>__GNUC__=13;PI_CRUNCH_METAL_DISABLE_IOSTREAM;__attribute__()=</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath>$(SolutionDir)/Application/OS/HwPlatform/STM32;$(SolutionDir)/Application/OS;$(SolutionDir)/Application/MCAL;$(SolutionDir)/Application;$(SolutionDir)/Application/ref_app/src/mcal/stm32f100;$(SolutionDir)/Application/ref_app/src</NMakeIncludeSearchPath>
   </PropertyGroup>
   <ItemDefinitionGroup>

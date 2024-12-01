@@ -13,8 +13,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef TYPES_2017_12_27_H
+#define TYPES_2017_12_27_H
 
 typedef unsigned char uint8;
 typedef signed char sint8;
@@ -35,4 +35,4 @@ typedef enum
 }
 boolean;
 
-#endif // __TYPES_H__
+#endif // TYPES_2017_12_27_H

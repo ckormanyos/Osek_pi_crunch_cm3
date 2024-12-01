@@ -1,11 +1,11 @@
 // *****************************************************************************
 // Filename    : SysTickTimer.h
 // 
-// Core        : STM32F100RB Cortex™-M3  
+// Core        : STM32F100RB Cortex(R)-M3
 // 
 // Board       : STM32VLDISCOVERY
 //
-// Compiler    : ARM® Compiler v5.06 for μVision (Keil)
+// Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
 //
 // Author      : Chalandi Amine
 //
@@ -18,29 +18,30 @@
 // License     : GNU General Public License v3.0
 //
 // *****************************************************************************
-#ifndef __SYSTICKTIMER_H__
-#define __SYSTICKTIMER_H__
+#ifndef SYSTICKTIMER_2017_12_27_H
+#define SYSTICKTIMER_2017_12_27_H
 
-#include"types.h"
+#include <types.h>
 
 #define SYS_TICK_BASE_REG (unsigned int)(0xE000E010)
-	
-#define STK_CTRL   *((unsigned int*)(SYS_TICK_BASE_REG + 0x00))	
-#define STK_LOAD   *((unsigned int*)(SYS_TICK_BASE_REG + 0x04))	
-#define STK_VAL    *((unsigned int*)(SYS_TICK_BASE_REG + 0x08))	
-#define STK_CALIB  *((unsigned int*)(SYS_TICK_BASE_REG + 0x0C))
-	
-#define STK_CTRL_PTR  ((unsigned int*)(SYS_TICK_BASE_REG + 0x00))
+
+#define STK_CTRL   *((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x00))
+#define STK_LOAD   *((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x04))
+#define STK_VAL    *((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x08))
+#define STK_CALIB  *((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x0C))
+
+#define STK_CTRL_PTR  ((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x00))
 
 typedef struct
 {
-	unsigned int Enable:1;
-	unsigned int TickInt:1;
-	unsigned int ClockSrc:1;
-	unsigned int :13;
-	unsigned int CountFlag:1;
-	unsigned int :15;	
-}stStkCtrl;
+  unsigned int Enable:1;
+  unsigned int TickInt:1;
+  unsigned int ClockSrc:1;
+  unsigned int :13;
+  unsigned int CountFlag:1;
+  unsigned int :15;
+}
+stStkCtrl;
 
 #define SYS_TICK_CLKSRC_AHB   1
 #define SYS_TICK_ENABLE_INT   1
@@ -50,4 +51,4 @@ typedef struct
 void SysTickTimer_Init(void);
 void SysTickTimer_Start(void);
 
-#endif
+#endif // SYSTICKTIMER_2017_12_27_H

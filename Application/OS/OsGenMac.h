@@ -13,13 +13,12 @@
 //  
 // *****************************************************************************************************************
 
-#ifndef _OS_GEN_MAC_H_
-#define _OS_GEN_MAC_H_
+#ifndef OS_GEN_MAC_2017_12_27_H
+#define OS_GEN_MAC_2017_12_27_H
 
+#endif // OS_GEN_MAC_2017_12_27_H
 
-#endif
-
-#include"OsTypes.h"
+#include <OsTypes.h>
 
 #ifdef OS_CONFIG_BEGIN
 #undef OS_CONFIG_BEGIN
@@ -89,7 +88,6 @@
 #undef OS_CONFIG_END
 #endif
 
-
 #if defined(OS_GEN_ENUM)
 
 #define OS_CONFIG_BEGIN
@@ -130,33 +128,25 @@
 
 #define OS_CONFIG_BEGIN
 
-#define OS_TASK_BEGIN                                                            
-#define OS_TASK_DEF(Name,Prio,StackSize,NbOfActiv,AutoStart,TaskType,SchedType)  
-#define OS_TASK_END                                                              
+#define OS_TASK_BEGIN
+#define OS_TASK_DEF(Name,Prio,StackSize,NbOfActiv,AutoStart,TaskType,SchedType)
+#define OS_TASK_END
 
+#define OS_EVENT_BEGIN
+#define OS_EVENT_DEF(Event, Mask)
+#define OS_EVENT_END
 
-#define OS_EVENT_BEGIN                                                           
-#define OS_EVENT_DEF(Event, Mask)                                                
-#define OS_EVENT_END                                                             
+#define OS_ALARM_BEGIN
+#define OS_ALARM_DEF(Name,Action,Event,AutoStart,task,Callback)
+#define OS_ALARM_END
 
-
-
-#define OS_ALARM_BEGIN                                                           
-#define OS_ALARM_DEF(Name,Action,Event,AutoStart,task,Callback)                  
-#define OS_ALARM_END                                                             
-
-
-
-#define OS_RESOURCE_BEGIN                                                        
-#define OS_RESOURCE_DEF(Name,CeilingPrio,...)                     
-#define OS_RESOURCE_END                                                          
-
+#define OS_RESOURCE_BEGIN
+#define OS_RESOURCE_DEF(Name,CeilingPrio,...)
+#define OS_RESOURCE_END
 
 #define OS_INTERRUPT_BEGIN                                                      extern Isr_t IsrLookupTable[];
 #define OS_INTERRUPT_CAT2_DEF(IsrNbr,IsrFunc)                                   extern void Os##IsrFunc##Isr(void);
-#define OS_INTERRUPT_END                                                         
-
-
+#define OS_INTERRUPT_END
 
 #define OS_CONFIG_END
 
@@ -207,14 +197,14 @@
 #define OS_RESOURCE_END                                                             0};
 
 #define OS_INTERRUPT_BEGIN
-#define OS_INTERRUPT_CAT2_DEF(IsrNbr,IsrFunc)                                      
+#define OS_INTERRUPT_CAT2_DEF(IsrNbr,IsrFunc)
 #define OS_INTERRUPT_END
 
 #define OS_CONFIG_END
 
 #elif defined(OS_GEN_OCB)
 
-#define OS_CONFIG_BEGIN                                                           volatile Ocb_t OCB_Cfg = { 
+#define OS_CONFIG_BEGIN                                                           volatile Ocb_t OCB_Cfg = {
 
 #define OS_TASK_BEGIN                                                             &CCB_Cfg[0],
 #define OS_TASK_DEF(Name,Prio,StackSize,NbOfActiv,AutoStart,TaskType,SchedType)  
@@ -225,15 +215,15 @@
 #define OS_EVENT_END
 
 #define OS_ALARM_BEGIN                                                            &Alarm_Cfg[0],
-#define OS_ALARM_DEF(Name,Action,Event,AutoStart,task,Callback)                  
+#define OS_ALARM_DEF(Name,Action,Event,AutoStart,task,Callback)
 #define OS_ALARM_END
 
 #define OS_RESOURCE_BEGIN                                                         &Res_Cfg[0],
-#define OS_RESOURCE_DEF(Name,CeilingPrio, ...)                     
+#define OS_RESOURCE_DEF(Name,CeilingPrio, ...)
 #define OS_RESOURCE_END
 
 #define OS_INTERRUPT_BEGIN
-#define OS_INTERRUPT_CAT2_DEF(IsrNbr,IsrFunc)                                    
+#define OS_INTERRUPT_CAT2_DEF(IsrNbr,IsrFunc)
 #define OS_INTERRUPT_END
 
 #define OS_CONFIG_END                                                             0,0,0,0,0,0,0,0};
@@ -241,7 +231,6 @@
 #else
 #error "OS generation error: Wrong way to include OsGenMac.h"
 #endif
-
 
 #ifdef OS_GEN_ENUM
 #undef OS_GEN_ENUM
@@ -262,6 +251,3 @@
 #ifdef OS_GEN_OCB
 #undef OS_GEN_OCB
 #endif
-
-
-
