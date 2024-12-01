@@ -27,10 +27,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='target stm32f100|x64'">
-    <NMakeBuildCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>.\Build.bat 1000 all</NMakeBuildCommandLine>
     <NMakeOutput>Osek_pi_crunch_cm3.exe</NMakeOutput>
-    <NMakeCleanCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>echo Windows build not yet supported &amp;&amp; echo.</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>.\Build.bat 1000 clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>.\Build.bat 1000 all</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".github\workflows\Osek_pi_crunch_cm3.yml" />
+    <None Include="Build.bat" />
     <None Include="Build.sh" />
     <None Include="Makefile" />
     <None Include="Memory_Map.ld" />

@@ -20,6 +20,20 @@
 # ******************************************************************************************
 
 ############################################################################################
+# operating system
+############################################################################################
+
+ifeq ($(TYP_OS),)
+
+ifeq ($(OS),Windows_NT)
+TYP_OS       := WIN
+else
+TYP_OS       := NIX
+endif
+
+endif
+
+############################################################################################
 # Defines
 ############################################################################################
 
@@ -40,18 +54,68 @@ LD_SCRIPT            = $(SRC_DIR)/Memory_Map.ld
 # Toolchain
 ############################################################################################
 
-TOOLCHAIN = arm-none-eabi
+ifeq ($(TYP_OS),WIN)
+EXEEXT        := .exe
+endif
 
-AS        = $(TOOLCHAIN)-g++
-CC        = $(TOOLCHAIN)-g++
-CPP       = $(TOOLCHAIN)-g++
-CPPFILT   = $(TOOLCHAIN)-c++filt
-LD        = $(TOOLCHAIN)-g++
-NM        = $(TOOLCHAIN)-nm
-OBJDUMP   = $(TOOLCHAIN)-objdump
-OBJCOPY   = $(TOOLCHAIN)-objcopy
-READELF   = $(TOOLCHAIN)-readelf
-SED       = sed
+ifeq ($(TYP_OS),NIX)
+EXEEXT        :=
+endif
+
+TOOLCHAIN      = arm-none-eabi
+
+AS            := $(TOOLCHAIN)-g++
+CC            := $(TOOLCHAIN)-g++
+CPP           := $(TOOLCHAIN)-g++
+CPPFILT       := $(TOOLCHAIN)-c++filt
+LD            := $(TOOLCHAIN)-g++
+NM            := $(TOOLCHAIN)-nm
+OBJDUMP       := $(TOOLCHAIN)-objdump
+OBJCOPY       := $(TOOLCHAIN)-objcopy
+READELF       := $(TOOLCHAIN)-readelf
+GNUECHO       := echo
+MKDIR         := mkdir
+RM            := rm
+SED           := sed
+
+ifeq ($(TYP_OS),WIN)
+
+EXEEXT        := .exe
+
+PATH_TOOLS    := $(CURDIR)/build/tools
+
+PATH_CC       := $(PATH_TOOLS)/Util/msys64/usr/local/gcc-13.3.1-arm-none-eabi/bin
+PATH_UTILS    := $(PATH_TOOLS)/UnxUtils/usr/local/wbin
+
+AS            := $(subst /,\,$(PATH_CC)/$(AS)$(EXEEXT))
+CC            := $(subst /,\,$(PATH_CC)/$(CC)$(EXEEXT))
+CPP           := $(subst /,\,$(PATH_CC)/$(CPP)$(EXEEXT))
+CPPFILT       := $(subst /,\,$(PATH_CC)/$(CPPFILT)$(EXEEXT))
+LD            := $(subst /,\,$(PATH_CC)/$(LD)$(EXEEXT))
+NM            := $(subst /,\,$(PATH_CC)/$(NM)$(EXEEXT))
+OBJDUMP       := $(subst /,\,$(PATH_CC)/$(OBJDUMP)$(EXEEXT))
+OBJCOPY       := $(subst /,\,$(PATH_CC)/$(OBJCOPY)$(EXEEXT))
+READELF       := $(subst /,\,$(PATH_CC)/$(READELF)$(EXEEXT))
+GNUECHO       := $(subst /,\,$(PATH_UTILS)/$(GNUECHO)$(EXEEXT))
+MKDIR         := $(subst /,\,$(PATH_UTILS)/$(MKDIR)$(EXEEXT))
+RM            := $(subst /,\,$(PATH_UTILS)/$(RM)$(EXEEXT))
+SED           := $(subst /,\,$(PATH_UTILS)/$(SED)$(EXEEXT))
+
+endif
+
+############################################################################################
+# OS-independent abstratcion of the null-device
+############################################################################################
+
+ifeq ($(TYP_OS),WIN)
+NULL_DEVICE     := NUL
+$(NULL_DEVICE)  := NUL
+endif
+
+ifeq ($(TYP_OS),NIX)
+NULL_DEVICE     := /dev/null
+$(NULL_DEVICE)  := /dev/null
+endif
 
 ############################################################################################
 # C Compiler flags
@@ -172,24 +236,28 @@ all : clean $(OUTPUT_DIR)/$(PRJ_NAME).elf
 
 .PHONY : clean
 clean :
-	@-rm -f $(OBJ_DIR)/*.o            2>/dev/null || true
-	@-rm -f $(OBJ_DIR)/*.err          2>/dev/null || true
-	@-rm -rf $(OUTPUT_DIR)            2>/dev/null || true
-	@-mkdir -p $(subst \,/,$(OBJ_DIR))
-	@-mkdir -p $(subst \,/,$(OUTPUT_DIR))
+	@-$(GNUECHO)
+	@-$(GNUECHO) +++ cleaning all
+	@-$(MKDIR) -p $(OUTPUT_DIR)
+	@-$(MKDIR) -p $(OBJ_DIR)
+	@-$(RM) -r $(OUTPUT_DIR) 2>$(NULL_DEVICE)
+	@-$(RM) -r $(OBJ_DIR) 2>$(NULL_DEVICE)
+	@-$(MKDIR) -p $(OUTPUT_DIR)
+	@-$(MKDIR) -p $(OBJ_DIR)
+
 
 $(OBJ_DIR)/%.o : %.c
-	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
+	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@-$(CC) $(COPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
 	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.c:\([0-9]*\),|.c(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.s
-	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
+	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@$(AS) $(ASOPS) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err >$(OBJ_DIR)/$(basename $(@F)).lst
 	@-$(SED) -e 's|:\([0-9]*\):|(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.cpp
-	@-echo +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
+	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@$(CPP) $(CPPOPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
 	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.hpp:\([0-9]*\),|.hpp(\1) :|' -e 's|.cpp:\([0-9]*\),|.cpp(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
 

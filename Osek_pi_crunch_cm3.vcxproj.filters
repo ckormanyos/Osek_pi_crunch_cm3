@@ -298,6 +298,7 @@
     <None Include="Makefile" />
     <None Include="Memory_Map.ld" />
     <None Include="Build.sh" />
+    <None Include="Build.bat" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="gpl-3.0.txt" />
