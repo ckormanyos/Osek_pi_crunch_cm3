@@ -59,14 +59,19 @@
 
     auto send(const std::uint8_t byte_to_send) -> bool override
     {
-      base_class_type::recv_buffer = static_cast<typename base_class_type::buffer_value_type>(UINT8_C(0));
+      using value_type = typename base_class_type::buffer_value_type;
+
+      base_class_type::recv_buffer = static_cast<value_type>(UINT8_C(0));
 
       for(auto bit_mask  = static_cast<std::uint_fast8_t>(UINT8_C(0x80));
                bit_mask != static_cast<std::uint_fast8_t>(UINT8_C(0));
                bit_mask  = static_cast<std::uint_fast8_t>(bit_mask >> static_cast<unsigned>(UINT8_C(1))))
       {
-        const auto bit_is_high =
-          (static_cast<std::uint_fast8_t>(static_cast<std::uint_fast8_t>(byte_to_send) & bit_mask) != static_cast<std::uint_fast8_t>(UINT8_C(0)));
+        const bool
+          bit_is_high
+          {
+            (static_cast<std::uint_fast8_t>(static_cast<std::uint_fast8_t>(byte_to_send) & bit_mask) != static_cast<std::uint_fast8_t>(UINT8_C(0)))
+          };
 
         (bit_is_high ? port_pin_mosi_type::set_pin_high() : port_pin_mosi_type::set_pin_low());
 
@@ -76,7 +81,10 @@
         if(port_pin_miso_type::read_input_value())
         {
           base_class_type::recv_buffer =
-            static_cast<base_class_type::buffer_value_type>(base_class_type::recv_buffer | bit_mask);
+            static_cast<value_type>
+            (
+              static_cast<std::uint_fast8_t>(base_class_type::recv_buffer) | bit_mask
+            );
         }
 
         port_pin_sck__type::set_pin_low();
