@@ -67,6 +67,18 @@
     <Filter Include="_doc">
       <UniqueIdentifier>{f5dbb060-51fc-432c-aeba-3b48da452814}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\ref_app\src\Cdd">
+      <UniqueIdentifier>{c7c86512-4162-480e-92ae-58e694948a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\Cdd\CddSerLCD">
+      <UniqueIdentifier>{a76d8c25-e857-48b1-9e27-4aabff542d77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\Cdd\CddSpi">
+      <UniqueIdentifier>{3734e954-a6e0-40a6-ac07-d9c9e2368025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ref_app\src\util\Util">
+      <UniqueIdentifier>{247014a3-8475-4cee-9587-083c10a33a19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Appli.c">
@@ -125,6 +137,18 @@
     </ClCompile>
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp">
       <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.c">
+      <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.cpp">
+      <Filter>Application\ref_app\src\Cdd\CddSpi</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ref_app\src\util\Util\UtilTimer.cpp">
+      <Filter>Application\ref_app\src\util\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\pi_spigot\pi_spigot_callback.cpp">
+      <Filter>Application\pi_spigot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +310,15 @@
     </ClInclude>
     <ClInclude Include="Application\ref_app\src\util\utility\util_baselexical_cast.h">
       <Filter>Application\ref_app\src\util\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.h">
+      <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.h">
+      <Filter>Application\ref_app\src\Cdd\CddSpi</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\util\Util\UtilTimer.h">
+      <Filter>Application\ref_app\src\util\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

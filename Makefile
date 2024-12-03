@@ -43,12 +43,11 @@ endif
 
 PRJ_NAME   = Osek_pi_crunch_cm3
 
-OUTPUT_DIR = $(CURDIR)/Output
-OBJ_DIR    = $(CURDIR)/Tmp/Obj
-SRC_DIR    = $(CURDIR)
+OUTPUT_DIR := $(CURDIR)/Output
+OBJ_DIR    := $(CURDIR)/Tmp/Obj
+SRC_DIR    := $(CURDIR)
 
-CC_ERR_FORMAT_SCRIPT = CompilerErrorFormater.py
-LD_SCRIPT            = $(SRC_DIR)/Memory_Map.ld
+LD_SCRIPT  := $(SRC_DIR)/Memory_Map.ld
 
 ############################################################################################
 # Toolchain
@@ -199,6 +198,9 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/SysStartup                                            \
              $(SRC_DIR)/Application/MCAL/SysTickTimer                                     \
              $(SRC_DIR)/Application/pi_spigot/pi_spigot                                   \
+             $(SRC_DIR)/Application/pi_spigot/pi_spigot_callback                          \
+             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSerLCD/CddSerLCD                   \
+             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSpi/CddSpi                         \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal                                 \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal_gcc_cxx_completion              \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_gpt                   \
@@ -206,6 +208,7 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_memory_sram           \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_port                  \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_spi                   \
+             $(SRC_DIR)/Application/ref_app/src/util/Util/UtilTimer                       \
              $(SRC_DIR)/Application/OS/OS                                                 \
              $(SRC_DIR)/Application/OS/OsAlarm                                            \
              $(SRC_DIR)/Application/OS/OsEvt                                              \
@@ -221,6 +224,7 @@ C_INCLUDES := $(SRC_DIR)/Application/OS/HwPlatform/STM32                        
               $(SRC_DIR)/Application/MCAL                                                 \
               $(SRC_DIR)/Application                                                      \
               $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100                           \
+              $(SRC_DIR)/Application/ref_app/src/util                                     \
               $(SRC_DIR)/Application/ref_app/src
 
 ############################################################################################

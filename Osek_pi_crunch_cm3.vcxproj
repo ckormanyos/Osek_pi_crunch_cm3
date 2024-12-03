@@ -32,7 +32,7 @@
     <NMakeCleanCommandLine>.\Build.bat 1000 clean</NMakeCleanCommandLine>
     <NMakeReBuildCommandLine>.\Build.bat 1000 all</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>__GNUC__=13;PI_CRUNCH_METAL_DISABLE_IOSTREAM;__attribute__()=</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath>$(SolutionDir)/Application/OS/HwPlatform/STM32;$(SolutionDir)/Application/OS;$(SolutionDir)/Application/MCAL;$(SolutionDir)/Application;$(SolutionDir)/Application/ref_app/src/mcal/stm32f100;$(SolutionDir)/Application/ref_app/src</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(SolutionDir)/Application/OS/HwPlatform/STM32;$(SolutionDir)/Application/OS;$(SolutionDir)/Application/MCAL;$(SolutionDir)/Application;$(SolutionDir)/Application/ref_app/src/mcal/stm32f100;$(SolutionDir)/Application/ref_app/src/util;$(SolutionDir)/Application/ref_app/src</NMakeIncludeSearchPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
@@ -47,6 +47,9 @@
     <ClCompile Include="Application\OS\OsTask.c" />
     <ClCompile Include="Application\OS\TCB.c" />
     <ClCompile Include="Application\pi_spigot\pi_spigot.cpp" />
+    <ClCompile Include="Application\pi_spigot\pi_spigot_callback.cpp" />
+    <ClCompile Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.c" />
+    <ClCompile Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\mcal.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\mcal_gcc_cxx_completion.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp" />
@@ -55,6 +58,7 @@
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_port.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.cpp" />
+    <ClCompile Include="Application\ref_app\src\util\Util\UtilTimer.cpp" />
     <ClCompile Include="Application\SysStartup.c" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +71,8 @@
     <ClInclude Include="Application\OS\OsTypes.h" />
     <ClInclude Include="Application\OS\TCB.h" />
     <ClInclude Include="Application\pi_calc_cfg.h" />
+    <ClInclude Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.h" />
+    <ClInclude Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_base.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_detail.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_sha1.h" />
@@ -110,6 +116,7 @@
     <ClInclude Include="Application\ref_app\src\util\utility\util_time.h" />
     <ClInclude Include="Application\ref_app\src\util\utility\util_two_part_data_manipulation.h" />
     <ClInclude Include="Application\ref_app\src\util\utility\util_utype_helper.h" />
+    <ClInclude Include="Application\ref_app\src\util\Util\UtilTimer.h" />
     <ClInclude Include="Application\types.h" />
   </ItemGroup>
   <ItemGroup>

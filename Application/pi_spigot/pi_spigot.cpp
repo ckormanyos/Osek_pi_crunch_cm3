@@ -108,13 +108,22 @@ auto pi_led_toggle() -> void
   ::mcal_led_toggle();
 }
 
+extern auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void;
+extern std::uint32_t& pi_count_of_calculations();
+
 auto pi_main() -> int
 {
   #if !defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
   local::benchmark_port_type::toggle_pin();
   #endif
 
-  local::pi_spigot_instance.calculate(local::pi_spigot_input.data(), nullptr, &local::pi_spigot_hash);
+  local::pi_spigot_instance.calculate(local::pi_spigot_input.data(), pi_lcd_progress, &local::pi_spigot_hash);
+
+  std::uint32_t cnt = pi_count_of_calculations();
+
+  ++cnt;
+
+  pi_count_of_calculations() = cnt;
 
   // Check the hash result of the pi calculation.
   const auto hash_control =
