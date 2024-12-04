@@ -71,7 +71,7 @@ This provides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
 LCD visualization uses the
-[SerLCD 20x4 from SparkFun}(https://www.sparkfun.com/products/16398).
+[SerLCD 20x4 from SparkFun](https://www.sparkfun.com/products/16398).
 The LCD driver software
 in the C-language has been adopted from
 [imahjoub/STM32L432_FlashMaster](https://github.com/imahjoub/STM32L432_FlashMaster).
