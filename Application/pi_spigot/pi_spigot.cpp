@@ -67,8 +67,6 @@ namespace local
 
   hash_type pi_spigot_hash;
 
-  auto pi_count_of_calculations = static_cast<std::uint32_t>(UINT8_C(0));
-
   auto pi_output_digits10 = static_cast<std::uint32_t>(UINT8_C(0));
 
   #if !defined(PI_CRUNCH_METAL_STANDALONE_MAIN)
@@ -109,7 +107,7 @@ auto pi_led_toggle() -> void
 }
 
 extern auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void;
-extern std::uint32_t& pi_count_of_calculations();
+extern auto pi_count_of_calculations() -> std::uint32_t&;
 
 auto pi_main() -> int
 {
@@ -164,8 +162,6 @@ auto pi_main() -> int
   local::pi_spigot_hash.get_result(hash_result.data());
 
   const bool result_is_ok { std::equal(hash_result.cbegin(), hash_result.cend(), hash_control.cbegin()) };
-
-  ++local::pi_count_of_calculations;
 
   const int result_of_pi_main { (result_is_ok ? static_cast<int>(INT8_C(0)) : static_cast<int>(INT8_C(-1))) };
 
