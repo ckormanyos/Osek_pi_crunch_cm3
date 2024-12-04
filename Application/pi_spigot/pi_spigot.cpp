@@ -180,7 +180,7 @@ auto pi_count_of_calculations() -> std::uint32_t&
   return my_count;
 }
 
-auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void { }
+auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void { static_cast<void>(pi_output_digits10); }
 
 extern "C"
 {
