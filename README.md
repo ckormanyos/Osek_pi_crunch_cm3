@@ -70,6 +70,12 @@ featuring the two user LEDs (green and blue) toggling at $\frac{1}{2}~\text{Hz}$
 This provides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
+LCD visualization uses the
+[SerLCD 20x4 from SparkFun}(https://www.sparkfun.com/products/16398).
+The LCD driver software
+in the C-language has been adopted from
+[imahjoub/STM32L432_FlashMaster](https://github.com/imahjoub/STM32L432_FlashMaster).
+
 # Hardware Setup
 
 The hardware setup is pictured in the image below.
@@ -83,6 +89,17 @@ data array used for intermediate storage in the $\pi$ calculation.
 
 The output pin connections from the board to the SRAM chip
 are shown in the table below.
+
+| NUCLEO PIN    | SRAM PIN  | SPI Function               |
+| ------------- | --------- | -------------------------- |
+| `PA11`        | $1$       | `CE` (chip-select-not)       |
+| `PA10`        | $2$       | `SO` (chip-serial-out)       |
+| `PA09`        | $6$       | `CLK` (chip-serial-clock)    |
+| `PA08`        | $5$       | `SI` (chip-serial-in)        |
+
+The output pin connections from the board to the SparkFund SerLCD
+are shown in the table below. The SerLCD is driven with SPI communication
+with another instance of the all-software SPI driver.
 
 | NUCLEO PIN    | SRAM PIN  | SPI Function               |
 | ------------- | --------- | -------------------------- |
