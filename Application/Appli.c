@@ -1,8 +1,8 @@
 // *****************************************************************************
 // Filename    : Appli.c
-// 
+//
 // Core        : STM32F100RB Cortex(R)-M3
-// 
+//
 // Board       : STM32VLDISCOVERY
 //
 // Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
@@ -10,15 +10,16 @@
 // Author      : Chalandi Amine
 //
 // Owner       : Chalandi Amine
-// 
+//
 // Date        : 04.09.2017
-// 
+//
 // Description : Main function
 //
 // License     : GNU General Public License v3.0
-// 
+//
 // *****************************************************************************
 
+#include <Cdd/CddSerLCD/CddSerLCD.h>
 #include <OsAPIs.h>
 #include <TCB.h>
 
@@ -77,6 +78,9 @@ TASK(T1)
 
 TASK(Idle)
 {
+  CddSerLCD_Init();
+  CddSerLCD_WriteLine("Hello", 5U, 0U);
+
   for(;;)
   {
     extern int pi_main(void);

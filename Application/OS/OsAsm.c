@@ -34,8 +34,12 @@
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
 #if defined(__GNUC__) && !defined(__CC_ARM)
+__attribute__((naked, used, noinline)) void OsDispatcher(void);
+
 __attribute__((naked, used, noinline)) void OsDispatcher(void)
 #elif defined(__CC_ARM)
+__asm void OsDispatcher(void);
+
 __asm void OsDispatcher(void)
 #else
 #error Error: Compiler inline assembly dialect is not supported
@@ -79,8 +83,12 @@ __asm void OsDispatcher(void)
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
 #if defined(__GNUC__) && !defined(__CC_ARM)
+__attribute__((naked, used, noinline)) void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr);
+
 __attribute__((naked, used, noinline)) void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr)
 #elif defined(__CC_ARM)
+__asm void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr);
+
 __asm void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr)
 #else
 #error Error: Compiler inline assembly dialect is not supported
@@ -108,8 +116,12 @@ __asm void OsGetCurrentSP(volatile unsigned int* CurrentSpPtr)
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
 #if defined(__GNUC__) && !defined(__CC_ARM)
+__attribute__((naked, used, noinline)) void OsGetPSR(volatile unsigned int* CurrentPsr);
+
 __attribute__((naked, used, noinline)) void OsGetPSR(volatile unsigned int* CurrentPsr)
 #elif defined(__CC_ARM)
+__asm void OsGetPSR(volatile unsigned int* CurrentPsr);
+
 __asm void OsGetPSR(volatile unsigned int* CurrentPsr)
 #else
 #error Error: Compiler inline assembly dialect is not supported
@@ -139,8 +151,12 @@ __asm void OsGetPSR(volatile unsigned int* CurrentPsr)
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
 #if defined(__GNUC__) && !defined(__CC_ARM)
+__attribute__((naked, used, noinline)) void OsCat2IsrWrapper(void);
+
 __attribute__((naked, used, noinline)) void OsCat2IsrWrapper(void)
 #elif defined(__CC_ARM)
+__asm void OsCat2IsrWrapper(void);
+
 __asm void OsCat2IsrWrapper(void)
 #else
 #error Error: Compiler inline assembly dialect is not supported

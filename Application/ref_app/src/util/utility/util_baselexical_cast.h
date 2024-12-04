@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2020 - 2022.
+//  Copyright Christopher Kormanyos 2020 - 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,7 +29,7 @@
 
   template<typename OutputIterator,
            const bool UpperCase>
-  struct baselexical_cast_helper<OutputIterator, UpperCase, static_cast<std::uint_fast8_t>(UINT8_C(16))> // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+  struct baselexical_cast_helper<OutputIterator, UpperCase, static_cast<std::uint_fast8_t>(UINT8_C(16))>
   {
   private:
     using output_value_type = typename std::iterator_traits<OutputIterator>::value_type;
@@ -37,7 +37,7 @@
   public:
     static auto extract(output_value_type c) noexcept -> output_value_type
     {
-      if(c <= static_cast<output_value_type>(9)) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+      if(c <= static_cast<output_value_type>(INT8_C(9)))
       {
         c =
           static_cast<output_value_type>
@@ -45,13 +45,13 @@
             c + static_cast<output_value_type>('0')
           );
       }
-      else if((c >= static_cast<output_value_type>(0xA)) && (c <= static_cast<output_value_type>(0xF))) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+      else if((c >= static_cast<output_value_type>(0xA)) && (c <= static_cast<output_value_type>(INT8_C(0xF)))) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
       {
         c =
           static_cast<output_value_type>
           (
               static_cast<output_value_type>(UpperCase ? static_cast<output_value_type>('A') : static_cast<output_value_type>('a'))
-            + static_cast<output_value_type>(c - static_cast<output_value_type>(0xA)) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+            + static_cast<output_value_type>(c - static_cast<output_value_type>(INT8_C(0xA)))
           );
       }
 
@@ -61,7 +61,7 @@
 
   template<typename OutputIterator,
            const bool UpperCase>
-  struct baselexical_cast_helper<OutputIterator, UpperCase, static_cast<std::uint_fast8_t>(UINT8_C(10))> // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+  struct baselexical_cast_helper<OutputIterator, UpperCase, static_cast<std::uint_fast8_t>(UINT8_C(10))>
   {
   private:
     using output_value_type = typename std::iterator_traits<OutputIterator>::value_type;
@@ -69,7 +69,7 @@
   public:
     static auto extract(output_value_type c) noexcept -> output_value_type
     {
-      if(c <= static_cast<output_value_type>(9)) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+      if(c <= static_cast<output_value_type>(INT8_C(9)))
       {
         c =
           static_cast<output_value_type>
@@ -84,10 +84,12 @@
 
   template<typename UnsignedIntegerType,
            typename OutputIterator,
-           const std::uint_fast8_t BaseRepresentation = static_cast<std::uint_fast8_t>(UINT8_C(10)), // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+           const std::uint_fast8_t BaseRepresentation = static_cast<std::uint_fast8_t>(UINT8_C(10)),
            const bool UpperCase = true>
-  auto baselexical_cast(const UnsignedIntegerType& u, OutputIterator out) -> OutputIterator
+  auto baselexical_cast(const UnsignedIntegerType& u, OutputIterator out, OutputIterator out_dummy) -> OutputIterator
   {
+    static_cast<void>(out_dummy);
+
     using unsigned_integer_type = UnsignedIntegerType;
     using output_value_type     = typename std::iterator_traits<OutputIterator>::value_type;
 
@@ -131,7 +133,16 @@
         }
       }
 
+      #if (defined(__GNUC__) && !defined(__clang__)&& (__GNUC__ > 12))
+      #pragma GCC diagnostic push
+      #pragma GCC diagnostic ignored "-Wstringop-overflow="
+      #endif
+
       std::reverse(out_first, out + static_cast<std::size_t>(UINT8_C(1)));
+
+      #if (defined(__GNUC__) && !defined(__clang__)&& (__GNUC__ > 12))
+      #pragma GCC diagnostic pop
+      #endif
     }
 
     return out + static_cast<std::size_t>(UINT8_C(1));

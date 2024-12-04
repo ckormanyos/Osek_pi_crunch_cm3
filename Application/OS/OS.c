@@ -24,7 +24,6 @@
 #include <TCB.h>
 #include <SysTickTimer.h>
 
-
 //------------------------------------------------------------------------------------------------------------------
 // Static function prototypes
 //------------------------------------------------------------------------------------------------------------------
@@ -259,6 +258,8 @@ static void OS_StartTimer(void)
 ///
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
+uint32 OS_Dispatcher(uint32 StackPtr);
+
 uint32 OS_Dispatcher(uint32 StackPtr)
 {
   /* Save the current stack pointer of the running task before switching the context */
@@ -425,6 +426,8 @@ ISR(SysTickTimer)
 ///
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
+void OsStoreStackPointer(uint32 StackPtrValue);
+
 void OsStoreStackPointer(uint32 StackPtrValue)
 {
   OCB_Cfg.OsIsrInterruptLevel = 1;
@@ -448,6 +451,8 @@ void OsStoreStackPointer(uint32 StackPtrValue)
 ///
 /// \return uint32 : saved stack pointer
 //------------------------------------------------------------------------------------------------------------------
+uint32 OsGetSavedStackPointer(void);
+
 uint32 OsGetSavedStackPointer(void)
 {
   OCB_Cfg.OsIsrInterruptLevel = 0;
@@ -471,6 +476,8 @@ uint32 OsGetSavedStackPointer(void)
 ///
 /// \return uint32 : The new stack pointer after switching the context otherwise the last saved stack pointer
 //------------------------------------------------------------------------------------------------------------------
+uint32 OsIsrCallDispatch(uint32 StackPtr);
+
 uint32 OsIsrCallDispatch(uint32 StackPtr)
 {
   if(OCB_Cfg.OsIsrCallDispatcher == 1)
@@ -557,6 +564,8 @@ static void OS_IdleLoop(void)
 ///
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
+void OsRunCat2Isr(void);
+
 void OsRunCat2Isr(void)
 {
   uint32 CurrentPsr = 0;

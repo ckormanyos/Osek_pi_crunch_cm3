@@ -43,12 +43,11 @@ endif
 
 PRJ_NAME   = Osek_pi_crunch_cm3
 
-OUTPUT_DIR = $(CURDIR)/Output
-OBJ_DIR    = $(CURDIR)/Tmp/Obj
-SRC_DIR    = $(CURDIR)
+OUTPUT_DIR := $(CURDIR)/Output
+OBJ_DIR    := $(CURDIR)/Tmp/Obj
+SRC_DIR    := $(CURDIR)
 
-CC_ERR_FORMAT_SCRIPT = CompilerErrorFormater.py
-LD_SCRIPT            = $(SRC_DIR)/Memory_Map.ld
+LD_SCRIPT  := $(SRC_DIR)/Memory_Map.ld
 
 ############################################################################################
 # Toolchain
@@ -128,6 +127,7 @@ OPS_BASE     = -Wall                                                          \
                -Wsign-conversion                                              \
                -Wshadow                                                       \
                -Wno-variadic-macros                                           \
+               -Wmissing-declarations                                         \
                -Os                                                            \
                -mcpu=cortex-m3                                                \
                -mtune=cortex-m3                                               \
@@ -141,48 +141,49 @@ OPS_BASE     = -Wall                                                          \
                -DPI_CRUNCH_METAL_PI_SPIGOT_DIGITS=$(PI_SPIGOT_DIGITS)
 
 
-COPS         = -x c                                                 \
-               -fno-inline-functions                                \
-               $(OPS_BASE)                                          \
+COPS         = -x c                                                           \
+               -fno-inline-functions                                          \
+               -Wmissing-prototypes                                           \
+               $(OPS_BASE)                                                    \
                -std=c17
 
 ############################################################################################
 # C++ Compiler flags
 ############################################################################################
 
-CPPOPS       = -x c++                                               \
-               -std=c++14                                           \
-               $(OPS_BASE)                                          \
-               -fno-rtti                                            \
-               -fno-use-cxa-atexit                                  \
-               -fno-nonansi-builtins                                \
-               -fno-threadsafe-statics                              \
-               -fno-enforce-eh-specs                                \
-               -finline-functions                                   \
-               -finline-limit=32                                    \
-               -ftemplate-depth=128                                 \
+CPPOPS       = -x c++                                                         \
+               -std=c++14                                                     \
+               $(OPS_BASE)                                                    \
+               -fno-rtti                                                      \
+               -fno-use-cxa-atexit                                            \
+               -fno-nonansi-builtins                                          \
+               -fno-threadsafe-statics                                        \
+               -fno-enforce-eh-specs                                          \
+               -finline-functions                                             \
+               -finline-limit=32                                              \
+               -ftemplate-depth=128                                           \
                -Wzero-as-null-pointer-constant
 
 ############################################################################################
 # Assembler flags
 ############################################################################################
 
-ASOPS        = -x assembler                                         \
+ASOPS        = -x assembler                                                   \
                $(OPS_BASE)
 
 ############################################################################################
 # Linker flags
 ############################################################################################
 
-LOPS         = -x none                                              \
-               -nostartfiles                                        \
-               -nostdlib                                            \
-               -specs=nano.specs                                    \
-               -specs=nosys.specs                                   \
-               -e SysStartup_Init                                   \
-               $(OPS_BASE)                                          \
-               -Wl,--print-memory-usage                             \
-               -Wl,-Map,$(OUTPUT_DIR)/$(PRJ_NAME).map               \
+LOPS         = -x none                                                        \
+               -nostartfiles                                                  \
+               -nostdlib                                                      \
+               -specs=nano.specs                                              \
+               -specs=nosys.specs                                             \
+               -e SysStartup_Init                                             \
+               $(OPS_BASE)                                                    \
+               -Wl,--print-memory-usage                                       \
+               -Wl,-Map,$(OUTPUT_DIR)/$(PRJ_NAME).map                         \
                -T $(LD_SCRIPT)
 
 
@@ -199,6 +200,9 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/SysStartup                                            \
              $(SRC_DIR)/Application/MCAL/SysTickTimer                                     \
              $(SRC_DIR)/Application/pi_spigot/pi_spigot                                   \
+             $(SRC_DIR)/Application/pi_spigot/pi_spigot_callback                          \
+             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSerLCD/CddSerLCD                   \
+             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSpi/CddSpi                         \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal                                 \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal_gcc_cxx_completion              \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_gpt                   \
@@ -206,6 +210,7 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_memory_sram           \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_port                  \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_spi                   \
+             $(SRC_DIR)/Application/ref_app/src/util/Util/UtilTimer                       \
              $(SRC_DIR)/Application/OS/OS                                                 \
              $(SRC_DIR)/Application/OS/OsAlarm                                            \
              $(SRC_DIR)/Application/OS/OsEvt                                              \
@@ -221,6 +226,7 @@ C_INCLUDES := $(SRC_DIR)/Application/OS/HwPlatform/STM32                        
               $(SRC_DIR)/Application/MCAL                                                 \
               $(SRC_DIR)/Application                                                      \
               $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100                           \
+              $(SRC_DIR)/Application/ref_app/src/util                                     \
               $(SRC_DIR)/Application/ref_app/src
 
 ############################################################################################
@@ -254,19 +260,19 @@ clean :
 $(OBJ_DIR)/%.o : %.c
 	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@-$(CC) $(COPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
-	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.c:\([0-9]*\),|.c(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(SED) -e 's|:\([0-9]*\):\([0-9]*\):|(\1,\2) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.s
 	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
 	@$(AS) $(ASOPS) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err >$(OBJ_DIR)/$(basename $(@F)).lst
-	@-$(SED) -e 's|:\([0-9]*\):|(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(SED) -e 's|:\([0-9]*\):\([0-9]*\):|(\1,\2) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OBJ_DIR)/%.o : %.cpp
 	@-$(GNUECHO) +++ compile: $(subst \,/,$<) to $(subst \,/,$@)
-	@$(CPP) $(CPPOPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
-	@-$(SED) -e 's|.h:\([0-9]*\),|.h(\1) :|' -e 's|.hpp:\([0-9]*\),|.hpp(\1) :|' -e 's|.cpp:\([0-9]*\),|.cpp(\1) :|' $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(CPP) $(CPPOPS) $(addprefix -I, $(C_INCLUDES)) -c $< -o $(OBJ_DIR)/$(basename $(@F)).o 2> $(OBJ_DIR)/$(basename $(@F)).err
+	@-$(SED) -e 's|:\([0-9]*\):\([0-9]*\):|(\1,\2) :|' $(OBJ_DIR)/$(basename $(@F)).err
 
 $(OUTPUT_DIR)/$(PRJ_NAME).elf : $(FILES_O) $(LD_SCRIPT)
-	@$(LD) $(LOPS) $(FILES_O) -o $(OUTPUT_DIR)/$(PRJ_NAME).elf
-	@$(OBJCOPY) $(OUTPUT_DIR)/$(PRJ_NAME).elf -O ihex $(OUTPUT_DIR)/$(PRJ_NAME).hex
-	@$(NM) --numeric-sort --print-size $(OUTPUT_DIR)/$(PRJ_NAME).elf | $(CPPFILT) > $(OUTPUT_DIR)/$(PRJ_NAME)_cppfilt.txt
+	@-$(LD) $(LOPS) $(FILES_O) -o $(OUTPUT_DIR)/$(PRJ_NAME).elf
+	@-$(OBJCOPY) $(OUTPUT_DIR)/$(PRJ_NAME).elf -O ihex $(OUTPUT_DIR)/$(PRJ_NAME).hex
+	@-$(NM) --numeric-sort --print-size $(OUTPUT_DIR)/$(PRJ_NAME).elf | $(CPPFILT) > $(OUTPUT_DIR)/$(PRJ_NAME)_cppfilt.txt

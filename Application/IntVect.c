@@ -91,7 +91,7 @@ const volatile unsigned int IntVector[128U] =
   (unsigned int)&undefinedHandler,           // 0x004C, rtc irq handler,
   (unsigned int)&undefinedHandler,           // 0x0050, flash irq handler,
   (unsigned int)&undefinedHandler,           // 0x0054, rcc irq handler,
-  (unsigned int)&undefinedHandler,           // 0x0058, exti0 irq handler,&OsTrap,                     
+  (unsigned int)&undefinedHandler,           // 0x0058, exti0 irq handler,&OsTrap,
   (unsigned int)&undefinedHandler,           // 0x005C, exti1 irq handler,
   (unsigned int)&undefinedHandler,           // 0x0060, exti2 irq handler,
   (unsigned int)&undefinedHandler,           // 0x0064, exti3 irq handler,
