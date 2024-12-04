@@ -1,6 +1,6 @@
 #include <Cdd/CddSerLCD/CddSerLCD.h>
 
-#include <Util/utility/util_baselexical_cast.h>
+#include <util/utility/util_baselexical_cast.h>
 
 #include <cstdint>
 
