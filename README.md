@@ -92,21 +92,20 @@ are shown in the table below.
 
 | NUCLEO PIN    | SRAM PIN  | SPI Function               |
 | ------------- | --------- | -------------------------- |
-| `PA11`        | $1$       | `CE` (chip-select-not)       |
-| `PA10`        | $2$       | `SO` (chip-serial-out)       |
-| `PA09`        | $6$       | `CLK` (chip-serial-clock)    |
-| `PA08`        | $5$       | `SI` (chip-serial-in)        |
+| `PA11`        | $1$       | `CE` (chip-select-not)     |
+| `PA10`        | $2$       | `SO` (chip-serial-out)     |
+| `PA09`        | $6$       | `CLK` (chip-serial-clock)  |
+| `PA08`        | $5$       | `SI` (chip-serial-in)      |
 
 The output pin connections from the board to the SparkFund SerLCD
 are shown in the table below. The SerLCD is driven with SPI communication
 with another instance of the all-software SPI driver.
 
-| NUCLEO PIN    | SRAM PIN  | SPI Function               |
-| ------------- | --------- | -------------------------- |
-| `PA11`        | $1$       | `CE` (chip-select-not)       |
-| `PA10`        | $2$       | `SO` (chip-serial-out)       |
-| `PA09`        | $6$       | `CLK` (chip-serial-clock)    |
-| `PA08`        | $5$       | `SI` (chip-serial-in)        |
+| NUCLEO PIN    | SPI Function               |
+| ------------- | -------------------------- |
+| `PB00`        | `SCK` (LCD-serial-clock)   |
+| `PB01`        | `SDI` (LCD-serial-in)      |
+| `PB02`        | `CN` (LCD chip-select-not) |
 
 # Generic Serial SPI SRAM _Bonus_ Driver
 
