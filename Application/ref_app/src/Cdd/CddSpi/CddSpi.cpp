@@ -1,4 +1,5 @@
 
+#include <Cdd/CddSpi/CddSpi.h>
 #include <mcal_spi/mcal_spi_software_port_driver.h>
 
 #include <cstdint>

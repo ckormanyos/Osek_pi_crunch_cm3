@@ -188,8 +188,8 @@ typedef struct
 }
 Isr_t;
 
-#define TASK(x) void Task##x##Func(void)
-#define ISR(x)  void Os##x##Isr(void)
+#define TASK(x) void Task##x##Func(void); void Task##x##Func(void)
+#define ISR(x)  void Os##x##Isr(void); void Os##x##Isr(void)
 #define pTASK(x) &Task##x##Func
 #define STACK(x,y) uint32 Stack_T_##x[(y/4)]; const uint32 Stack_T_##x##_Size = y
 #define TSTACK(x) (uint32)(&Stack_T_##x[((Stack_T_##x##_Size)/4)-1])
