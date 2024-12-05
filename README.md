@@ -62,11 +62,11 @@ SMT32F100RB-NUCLEO board. The board is driven in OS-less, bare-metal mode.
 
 The $\pi$-spigot calculation runs continuously and successively
 in the low-priority idle task (`Idle`). Upon successful calculation completion,
-pin PB9 is toggled. This provides a measure of success viewable
+pin `PB9` is toggled. This provides a measure of success viewable
 with a digital oscilloscope.
 
 Simultaneously task `T1` exercises a perpetual, simple blinky show
-featuring the two user LEDs (green and blue) toggling at $\frac{1}{2}~\text{Hz}$.
+featuring the two user LEDs (green and blue) toggling at approximately $\frac{1}{2}~\text{Hz}$.
 This provides clear visual indication of both system-OK as well as
 numerical correctness of the most-recently finished spigot calculation.
 
@@ -122,6 +122,23 @@ and writing single-byte or multiple-byte streams.
 Using this SRAM driver requires providing an independent
 SPI driver having particular interface functions such as
 `send()`/`send_n()` and `recv()`.
+
+# Runtime and Computational Complexity
+
+The spigot algorithm for $\pi$ has quadratic computional complexity.
+This means that the runtime of the calculation grows quadratically with increasing
+output digit size. The table below summarizes the runtime of the algorithm
+on the embedded target for various output digit sizes.
+
+| Digits-10     | Time [s]       | Ratio to $100$ digits |
+| ------------- | -------------- | --------------------- |
+| $101$         | $0.50$         |      $1$              |
+| $1,001$       | $50$           |      $100$            |
+| $10,001$      | $5,000$        |      $10,000$         |
+| $100,001$     | TBD            |      TBD              |
+
+The runtime increases by a factor of $100$ for every tenfold increase
+in the output digit size, clearly exhibiting quadratic computational complexity.
 
 # Licensing
 
