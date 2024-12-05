@@ -30,12 +30,11 @@ namespace local_cdd_spi
                                                  mcal::reg::gpiob_odr,
                                                  static_cast<std::uint32_t>(UINT32_C(1))>;
 
-  // Pin 6 on SRAM chip.
   using port_pin_sck_type = mcal::port::port_pin<std::uint32_t,
                                                  std::uint32_t,
                                                  mcal::reg::gpiob_odr,
                                                  static_cast<std::uint32_t>(UINT32_C(0))>;
-} // namespace local;
+} // namespace local_cdd_spi;
 
 auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&;
 
@@ -45,7 +44,7 @@ auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&
                                                                    local_cdd_spi::port_pin_sdi_type,
                                                                    local_cdd_spi::port_pin_csn_type,
                                                                    local_cdd_spi::port_pin_sdo_type,
-                                                                   static_cast<std::uint_fast16_t>(UINT8_C(4)),
+                                                                   static_cast<std::uint_fast16_t>(UINT8_C(2)),
                                                                    true>;
 
   static cdd_spi_channel_type com_cdd_spi { };

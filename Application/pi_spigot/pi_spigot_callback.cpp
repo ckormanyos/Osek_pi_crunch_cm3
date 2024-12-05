@@ -25,19 +25,21 @@ auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void;
 
 auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void
 {
-  char p_str[std::size_t { UINT8_C(10) }] =
+  char p_str[std::size_t { UINT8_C(20) }];
+
   {
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'
-  };
+    std::fill(p_str, p_str + sizeof(p_str), char { INT8_C(0) });
 
-  const char* p_end { util::baselexical_cast(pi_output_digits10, p_str, p_str + sizeof(p_str)) };
+    const char* p_end { util::baselexical_cast(pi_output_digits10, p_str, p_str + sizeof(p_str)) };
 
-  CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(0) });
+    CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(0) });
+  }
 
-  std::fill(p_str, p_str + sizeof(p_str), char { INT8_C(0) });
+  {
+    std::fill(p_str, p_str + sizeof(p_str), char { INT8_C(0) });
 
-  p_end = util::baselexical_cast(pi_count_of_calculations(), p_str, p_str + sizeof(p_str));
+    const char* p_end = util::baselexical_cast(pi_count_of_calculations(), p_str, p_str + sizeof(p_str));
 
-  CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(1) });
+    CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(1) });
+  }
 }
-

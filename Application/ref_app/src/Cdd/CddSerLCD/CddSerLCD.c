@@ -15,62 +15,65 @@
 
 static void CddSerLcd_msDelays(const unsigned ms_count)
 {
-  TimerBlockingDelay(ms_count);
+  UtilTimer_BlockingDelay(ms_count);
 }
 
 static void CddSerLcd_ClearLCD(void)
 {
   /* Wait 500ms */
   CddSerLcd_msDelays(500U);
-  /* Chip select enable */
-  CddSpi_CsEnable();
 
   /* Send clear display command */
+  CddSpi_CsEnable();
   CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSerLcd_msDelays(4U);
-  CddSpi_TransferSingleByte(CDD_SERLCD_CLEAR_DISPLAY);
-  CddSerLcd_msDelays(4U);
-
- /* Chip select disable */
   CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
+
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(CDD_SERLCD_CLEAR_DISPLAY);
+  CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
 }
 
-static void CddSerLcd_SetBlueBacklight(void)
+static void CddSerLcd_SetBacklight(void)
 {
-  /* Chip select enable */
+  /* Set Backlight */
   CddSpi_CsEnable();
-
-  /* Set Backlight into Blue */
   CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSerLcd_msDelays(4U);
-  CddSpi_TransferSingleByte(CDD_SERLCD_GREEN_BACKLIGHT);
-  CddSerLcd_msDelays(4U);
-
- /* Chip select disable */
   CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
+
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(CDD_SERLCD_GREEN_BACKLIGHT);
+  CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
 }
 
 static void CddSerLcd_SetLCDSize(void)
 {
   /* Change lines count to 4 */
-  /* Chip select enable */
+
   CddSpi_CsEnable();
   CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSerLcd_msDelays(4U);
-  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_LINES_04);
-  CddSerLcd_msDelays(4U);
- /* Chip select disable */
   CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
+
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_LINES_04);
+  CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
 
   /* Change width count to 20 */
-  /* Chip select enable */
+
   CddSpi_CsEnable();
   CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSerLcd_msDelays(4U);
-  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_WIDTH_20);
-  CddSerLcd_msDelays(4U);
- /* Chip select disable */
   CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
+
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_WIDTH_20);
+  CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
 }
 
 static void CddSerLcd_SelectLine(const size_t LineIndexToUse)
@@ -81,28 +84,24 @@ static void CddSerLcd_SelectLine(const size_t LineIndexToUse)
 
   static const uint8_t IndexToRowTable[4U] = { 0U, 64U, 20U, 84U };
 
- /* Chip select enable */
+  /* Chip select enable */
   CddSpi_CsEnable();
-
   CddSpi_TransferSingleByte(0xFEU);
-  CddSerLcd_msDelays(4U);
-
-  CddSpi_TransferSingleByte(0x80U + IndexToRowTable[LineIndexToUse] + 0x00);
-  CddSerLcd_msDelays(4U);
-
- /* Chip select disable */
   CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
+
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(0x80U + IndexToRowTable[LineIndexToUse] + 0x00);
+  CddSpi_CsDisable();
+  CddSerLcd_msDelays(1U);
 }
 
 void CddSerLCD_Init(void)
 {
-  /* Clear display */
   CddSerLcd_ClearLCD();
 
-  /* Set blue backlight */
-  CddSerLcd_SetBlueBacklight();
+  CddSerLcd_SetBacklight();
 
-  /* Set blue backlight */
   CddSerLcd_SetLCDSize();
 }
 
@@ -130,6 +129,5 @@ void CddSerLCD_WriteLine(const char* StringToPrint, const size_t StringSize, con
     CddSpi_CsDisable();
 
     CddSerLcd_msDelays(1U);
-
   }
 }
