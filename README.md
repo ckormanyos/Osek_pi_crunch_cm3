@@ -76,7 +76,7 @@ The LCD driver software
 in the C-language has been adopted from
 [imahjoub/STM32L432_FlashMaster](https://github.com/imahjoub/STM32L432_FlashMaster).
 
-# Hardware Setup
+## Hardware Setup
 
 The hardware setup is pictured in the image below.
 
@@ -107,7 +107,9 @@ with another instance of the all-software SPI driver.
 | `PB01`        | `SDI` (LCD-serial-in)      |
 | `PB02`        | `CN` (LCD chip-select-not) |
 
-# Generic Serial SPI SRAM _Bonus_ Driver
+# Additional Details
+
+## Generic Serial SPI SRAM _Bonus_ Driver
 
 The serial SRAM driver is a nice _by_-_product_ of this project.
 This driver can be found in the file
@@ -123,7 +125,7 @@ Using this SRAM driver requires providing an independent
 SPI driver having particular interface functions such as
 `send()`/`send_n()` and `recv()`.
 
-# Runtime and Computational Complexity
+## Runtime and Computational Complexity
 
 The spigot algorithm for $\pi$ has quadratic computional complexity.
 This means that the runtime of the calculation grows quadratically with increasing
@@ -140,7 +142,7 @@ on the embedded target for various output digit sizes.
 The runtime increases by a factor of $100$ for every tenfold increase
 in the output digit size, clearly exhibiting quadratic computational complexity.
 
-# Licensing
+## Licensing
 
 The operating system [OSEK](./Application/OS) and timer files in the [MCAL](./Application/MCAL)
 are licensed under [GPL](./gpl-3.0.txt).
