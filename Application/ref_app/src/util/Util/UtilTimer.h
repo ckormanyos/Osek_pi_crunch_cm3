@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-void UtilTimer_BlockingDelay(const uint64_t ms_count);
+void UtilTimer_BlockingDelayMicro(const uint64_t us_count);
 
 #if defined(__cplusplus)
 }

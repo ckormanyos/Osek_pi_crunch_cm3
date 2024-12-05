@@ -91,7 +91,7 @@
     }
 
   public:
-    static constexpr auto input_static_size = input_scale(result_digit());
+    static constexpr std::uint32_t input_static_size { input_scale(result_digit()) };
 
     static constexpr auto get_input_static_size() -> std::uint32_t { return input_static_size; }
 
@@ -117,6 +117,11 @@
                    std::function<void(const std::uint32_t)> pfn_callback_to_report_digits10 = nullptr,
                    ::math::checksums::hash::hash_stream_base* p_hash = nullptr) -> void
     {
+      if(pfn_callback_to_report_digits10 != nullptr)
+      {
+        pfn_callback_to_report_digits10(std::uint32_t { UINT8_C(0) });
+      }
+
       // Use pi_spigot::calculate() to calculate result_digit
       // decimal digits of pi.
 

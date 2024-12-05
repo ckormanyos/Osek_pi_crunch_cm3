@@ -21,9 +21,7 @@
 
 #include <SysTickTimer.h>
 
-#include <stdint.h>
-
-volatile uint64_t SysTickTimer_MicrosecondTick;
+volatile uint64 SysTickTimer_MicrosecondTick;
 
 stStkCtrl* StkCtrl = (stStkCtrl*)STK_CTRL_PTR;
 
@@ -45,7 +43,7 @@ void SysTickTimer_Start(void)
   mcal_gpt_init();
 }
 
-uint64_t SysTickTimer_ConsistentMicrosecondTick(void)
+uint64 SysTickTimer_ConsistentMicrosecondTick(void)
 {
   // Return the system tick using a multiple read to ensure data consistency.
 

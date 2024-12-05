@@ -9,10 +9,10 @@
 #include <util/utility/util_time.h>
 
 extern "C"
-void UtilTimer_BlockingDelay(const uint64_t ms_count)
+void UtilTimer_BlockingDelayMicro(const uint64_t us_count)
 {
   using local_timer_type = util::timer<std::uint64_t>;
   using local_tick_type  = typename local_timer_type::tick_type;
 
-  local_timer_type::blocking_delay(local_timer_type::milliseconds(local_tick_type { ms_count }));
+  local_timer_type::blocking_delay(local_timer_type::microseconds(local_tick_type { us_count }));
 }
