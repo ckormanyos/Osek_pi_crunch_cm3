@@ -13,119 +13,109 @@
 
 #include <Util/UtilTimer.h>
 
-static void CddSerLcd_micro_sec_Delay(const unsigned us_count) { UtilTimer_BlockingDelayMicro((uint64_t) us_count); }
-static void CddSerLcd_milli_sec_Delay(const unsigned ms_count) { UtilTimer_BlockingDelayMicro((uint64_t) ((uint64_t) ms_count * 1000U)); }
+#include <stdint.h>
 
-static void CddSerLcd_ClearLCD(void)
-{
-  /* Wait 500ms */
-  CddSerLcd_milli_sec_Delay(500U);
+#define CDD_SERLCD_BLUE_BACKLIGHT       (uint8_t) UINT8_C(0xD9)
+#define CDD_SERLCD_GREEN_BACKLIGHT      (uint8_t) UINT8_C(0xBB)
+#define CDD_SERLCD_PRIMARY_BACKLIGHT    (uint8_t) UINT8_C(0x9D)
 
-  /* Send clear display command */
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
+#define CDD_SERLCD_SETTING_MODE         (uint8_t) UINT8_C(0x7C)
+#define CDD_SERLCD_CLEAR_DISPLAY        (uint8_t) UINT8_C(0x2D)
 
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_CLEAR_DISPLAY);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-}
+#define CDD_SERLCD_SIZE_WIDTH_20        (uint8_t) UINT8_C(0x03)
+#define CDD_SERLCD_SIZE_LINES_04        (uint8_t) UINT8_C(0x05)
+#define CDD_SERLCD_SIZE_LINES_02        (uint8_t) UINT8_C(0x06)
+#define CDD_SERLCD_SIZE_LINES_01        (uint8_t) UINT8_C(0x07)
 
-static void CddSerLcd_SetBacklight(void)
-{
-  /* Set Backlight */
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_GREEN_BACKLIGHT);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-}
-
-static void CddSerLcd_SetLCDSize(void)
-{
-  /* Change lines count to 4 */
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_LINES_04);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-
-  /* Change width count to 20 */
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SETTING_MODE);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(CDD_SERLCD_SIZE_WIDTH_20);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-}
-
-static void CddSerLcd_SelectLine(const size_t LineIndexToUse)
-{
-  /* To set the active cursor position, send the control character 254 followed by 128 + row + position */
-  /* OpenLCD.write(254); */
-  /* OpenLCD.write(128 + 64 + 9); //Change the position (128) of the cursor to 2nd row (64), position 9 (9) */
-
-  static const uint8_t IndexToRowTable[4U] = { 0U, 64U, 20U, 84U };
-
-  /* Chip select enable */
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(0xFEU);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-
-  CddSpi_CsEnable();
-  CddSpi_TransferSingleByte(0x80U + IndexToRowTable[LineIndexToUse] + 0x00);
-  CddSpi_CsDisable();
-  CddSerLcd_micro_sec_Delay(150U);
-}
+static void CddSerLcd_micro_sec_Delay(const unsigned us_count);
+static void CddSerLcd_milli_sec_Delay(const unsigned ms_count);
+static void CddSerLcd_Transfer(const uint8_t by);
+static void CddSerLcd_SetSetting(const uint8_t setting);
+static void CddSerLcd_ClearLCD(void);
+static void CddSerLcd_SetBacklight(void);
+static void CddSerLcd_SetLCDSize(void);
+static void CddSerLcd_SelectLine(const size_t LineIndexToUse);
 
 void CddSerLCD_Init(void)
 {
   CddSerLcd_ClearLCD();
-
   CddSerLcd_SetBacklight();
-
   CddSerLcd_SetLCDSize();
 }
 
 void CddSerLCD_WriteLine(const char* StringToPrint, const size_t StringSize, const size_t LineIndex)
 {
   // Limit to the maximum width of the display width.
-  const size_t LineIndexToUse = ((LineIndex > (size_t) 3U) ? (size_t) 3U : LineIndex);
+  const size_t LineIndexToUse = ((LineIndex > (size_t) UINT8_C(3)) ? (size_t) UINT8_C(3) : LineIndex);
 
   // Limit to the maximum width of the display width.
-  const size_t SizeToWrite = ((StringSize > (size_t) 20U) ? (size_t) 20U : StringSize);
+  const size_t SizeToWrite = ((StringSize > (size_t) UINT8_C(20)) ? (size_t) UINT8_C(20) : StringSize);
 
   CddSerLcd_SelectLine(LineIndexToUse);
 
-  for(size_t idx = (size_t) 0U; idx < (size_t) 20U; ++idx)
+  for(size_t idx = (size_t) UINT8_C(0); idx < (size_t) UINT8_C(20); ++idx)
   {
     const char CharToWrite = ((idx < SizeToWrite) ? StringToPrint[idx] : ' ');
 
-    /* Chip select enable */
     CddSpi_CsEnable();
-
-    /* Send next character. */
     CddSpi_TransferSingleByte(CharToWrite);
-
-    /* Chip select disable */
     CddSpi_CsDisable();
-
-    CddSerLcd_micro_sec_Delay(150U);
+    CddSerLcd_micro_sec_Delay((unsigned) UINT8_C(150));
   }
+}
+
+static void CddSerLcd_micro_sec_Delay(const unsigned us_count) { UtilTimer_BlockingDelayMicro((uint64_t) us_count); }
+static void CddSerLcd_milli_sec_Delay(const unsigned ms_count) { UtilTimer_BlockingDelayMicro((uint64_t) ((uint64_t) ms_count * 1000U)); }
+
+static void CddSerLcd_Transfer(const uint8_t by)
+{
+  CddSpi_CsEnable();
+  CddSpi_TransferSingleByte(by);
+  CddSpi_CsDisable();
+  CddSerLcd_micro_sec_Delay((unsigned) UINT8_C(150));
+}
+
+static void CddSerLcd_SetSetting(const uint8_t setting)
+{
+  CddSerLcd_Transfer(CDD_SERLCD_SETTING_MODE);
+  CddSerLcd_Transfer(setting);
+}
+
+static void CddSerLcd_ClearLCD(void)
+{
+  CddSerLcd_milli_sec_Delay((unsigned) UINT16_C(500));
+
+  CddSerLcd_SetSetting(CDD_SERLCD_CLEAR_DISPLAY);
+}
+
+static void CddSerLcd_SetBacklight(void)
+{
+  CddSerLcd_SetSetting(CDD_SERLCD_GREEN_BACKLIGHT);
+}
+
+static void CddSerLcd_SetLCDSize(void)
+{
+  CddSerLcd_SetSetting(CDD_SERLCD_SIZE_LINES_04);
+  CddSerLcd_SetSetting(CDD_SERLCD_SIZE_WIDTH_20);
+}
+
+static void CddSerLcd_SelectLine(const size_t LineIndexToUse)
+{
+  // To set the active cursor position, send the control character 254 followed by 128 + row + position.
+  // OpenLCD.write(254);
+
+  // Change the position (128) of the cursor to 2nd row (64), position 9 (9) */
+  // OpenLCD.write(128 + 64 + 9);
+
+  static const uint8_t IndexToRowTable[(size_t) UINT8_C(4)] =
+  {
+    (uint8_t) UINT8_C( 0),
+    (uint8_t) UINT8_C(64),
+    (uint8_t) UINT8_C(20),
+    (uint8_t) UINT8_C(84)
+  };
+
+  CddSerLcd_Transfer((uint8_t) UINT8_C(0xFE));
+
+  CddSerLcd_Transfer((uint8_t) (UINT8_C(0x80) + IndexToRowTable[LineIndexToUse] + UINT8_C(0x00)));
 }
