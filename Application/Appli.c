@@ -79,7 +79,6 @@ TASK(T1)
 TASK(Idle)
 {
   CddSerLCD_Init();
-  CddSerLCD_WriteLine("Hello", 5U, 0U);
 
   for(;;)
   {
