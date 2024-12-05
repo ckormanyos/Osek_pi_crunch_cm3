@@ -138,9 +138,12 @@
       using local_input_iterator_type = InputIteratorType;
       using local_input_value_type    = typename std::iterator_traits<local_input_iterator_type>::value_type;
 
-      // Invalidate the input container values at a few indices.
-      const auto invalidate_size =
-        (std::min)(static_cast<std::uint32_t>(UINT8_C(4)), input_static_size);
+      // Invalidate the input container values at the first 16 indices.
+      const std::uint32_t
+        invalidate_size
+        {
+          (std::min)(static_cast<std::uint32_t>(UINT8_C(16)), input_static_size)
+        };
 
       std::fill(my_pi_in,
                 detail::advance_and_point(my_pi_in, invalidate_size),
@@ -156,7 +159,7 @@
         pfn_callback_to_report_digits10(my_output_count);
       }
 
-      const auto p10 = static_cast<unsigned_large_type>(pow10(loop_digit()));
+      const unsigned_large_type p10 { static_cast<unsigned_large_type>(pow10(loop_digit())) };
 
       // Operation count Mathematica(R), example for loop_digit=9.
       // Sum[Floor[((d - j) (Floor[((10 9)/3)] + 1))/9], {j, 0, Floor[d/9] 9, 9}]
@@ -235,10 +238,11 @@
             static_cast<std::uint32_t>(result_digit() - j)
           );
 
-        auto scale10 = pow10(loop_digit() - static_cast<std::uint32_t>(UINT8_C(1)));
+        std::uint32_t scale10 { pow10(loop_digit() - static_cast<std::uint32_t>(UINT8_C(1))) };
 
-        auto output_chars_as_bytes_hash_array =
-          std::array<std::uint8_t, static_cast<std::size_t>(loop_digit())> { };
+        using output_chars_array_type = std::array<std::uint8_t, static_cast<std::size_t>(loop_digit())>;
+
+        output_chars_array_type output_chars_as_bytes_hash_array { };
 
         for(auto i = static_cast<std::size_t>(UINT8_C(0)); i < static_cast<std::size_t>(n); ++i)
         {
@@ -266,7 +270,19 @@
 
         if(p_hash != nullptr)
         {
-          p_hash->process(output_chars_as_bytes_hash_array.data(), static_cast<typename ::math::checksums::hash::hash_stream_base::count_type>(n));
+          using local_count_type = typename ::math::checksums::hash::hash_stream_base::count_type;
+
+          const local_count_type
+            len
+            {
+              (std::min)
+              (
+                static_cast<local_count_type>(n),
+                static_cast<local_count_type>(std::tuple_size<output_chars_array_type>::value)
+              )
+            };
+
+          p_hash->process(output_chars_as_bytes_hash_array.data(), len);
         }
 
         my_output_count += n;

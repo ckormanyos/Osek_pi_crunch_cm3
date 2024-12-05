@@ -36,6 +36,7 @@
 
 #if !defined(PI_CRUNCH_METAL_DISABLE_IOSTREAM)
 #include <array>
+#include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -117,11 +118,7 @@ auto pi_main() -> int
 
   local::pi_spigot_instance.calculate(local::pi_spigot_input.data(), pi_lcd_progress, &local::pi_spigot_hash);
 
-  std::uint32_t cnt = pi_count_of_calculations();
-
-  ++cnt;
-
-  pi_count_of_calculations() = cnt;
+  ++pi_count_of_calculations();
 
   // Check the hash result of the pi calculation.
   const auto hash_control =
@@ -199,6 +196,8 @@ auto main() -> int
   std::stringstream strm { };
 
   strm << "Begin pi spigot calculation...\n";
+
+  const auto start = std::chrono::high_resolution_clock::now();
   #endif
 
   const int result_pi_main { ::pi_main() };
@@ -207,7 +206,20 @@ auto main() -> int
 
   #if !defined(PI_CRUNCH_METAL_DISABLE_IOSTREAM)
 
+  const auto stop = std::chrono::high_resolution_clock::now();
+
+  const float
+    elapsed
+    {
+      static_cast<float>
+      (
+          static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count())
+        / 1000.0F
+      )
+    };
+
   strm << "digits10:     " << local::pi_spigot_type::result_digit() << '\n'
+       << "time:         " << std::fixed << std::setprecision(2) << elapsed << "s\n"
        << "result_is_ok: " << std::boolalpha << result_is_ok;
 
   std::cout << strm.str() << std::endl;
