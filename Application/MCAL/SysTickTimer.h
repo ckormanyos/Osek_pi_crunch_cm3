@@ -23,6 +23,11 @@
 
 #include <types.h>
 
+#if defined(__cplusplus)
+extern "C"
+{
+#endif
+
 #define SYS_TICK_BASE_REG (unsigned int)(0xE000E010)
 
 #define STK_CTRL   *((volatile unsigned int*)(SYS_TICK_BASE_REG + 0x00))
@@ -46,9 +51,16 @@ stStkCtrl;
 #define SYS_TICK_CLKSRC_AHB   1
 #define SYS_TICK_ENABLE_INT   1
 #define SYS_TICK_ENABLE_TIMER 1
-#define SYS_TICK_1MS          (unsigned int)0x5DC0 - 1
+#define SYS_TICK_1MS          (unsigned int)0x5DC0U - 1U
 
 void SysTickTimer_Init(void);
 void SysTickTimer_Start(void);
+uint64 SysTickTimer_ConsistentMicrosecondTick(void);
+
+extern volatile uint64 SysTickTimer_MicrosecondTick;
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif // SYSTICKTIMER_2017_12_27_H

@@ -18,7 +18,12 @@
 // License     : GNU General Public License v3.0
 //
 // *****************************************************************************
+
 #include <SysTickTimer.h>
+
+#include <stdint.h>
+
+volatile uint64_t SysTickTimer_MicrosecondTick;
 
 stStkCtrl* StkCtrl = (stStkCtrl*)STK_CTRL_PTR;
 
@@ -31,7 +36,43 @@ void SysTickTimer_Init(void)
   StkCtrl->TickInt = SYS_TICK_ENABLE_INT;
 }
 
+extern void mcal_gpt_init(void);
+
 void SysTickTimer_Start(void)
 {
   StkCtrl->Enable = SYS_TICK_ENABLE_TIMER;
+
+  mcal_gpt_init();
+}
+
+uint64_t SysTickTimer_ConsistentMicrosecondTick(void)
+{
+  // Return the system tick using a multiple read to ensure data consistency.
+
+  // Do the first read of the sys-tick counter and the sys-tick
+  // value. Handle reverse counting for sys-tick counter, which is
+  // counting down.
+
+  const uint32 sys_tick_counter_1 = (uint32) ((uint32) SYS_TICK_1MS - (uint32) STK_VAL);
+
+  const uint64 sys_tick_value = SysTickTimer_MicrosecondTick;
+
+  // Do the second read of the sys-tick counter and the sys-tick
+  // value. Handle reverse counting for sys-tick counter, which is
+  // counting down.
+
+  const uint32 sys_tick_counter_2 = (uint32) ((uint32) SYS_TICK_1MS - (uint32) STK_VAL);
+
+  // Perform the consistency check.
+
+  const uint64 sys_tick_consistent_value =
+    (uint64)
+    (
+      (sys_tick_counter_2 >= sys_tick_counter_1)
+        ? (uint64) (sys_tick_value               + sys_tick_counter_1)
+        : (uint64) (SysTickTimer_MicrosecondTick + sys_tick_counter_2)
+    );
+
+  // Perform scaling (without rounding correction).
+  return (uint64) (sys_tick_consistent_value / 24U);
 }

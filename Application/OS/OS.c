@@ -568,6 +568,8 @@ void OsRunCat2Isr(void);
 
 void OsRunCat2Isr(void)
 {
+  SysTickTimer_MicrosecondTick = (uint64) (SysTickTimer_MicrosecondTick + (uint32) (SYS_TICK_1MS + 1U));
+
   uint32 CurrentPsr = 0;
 
   /* Get program status register */
