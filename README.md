@@ -41,8 +41,8 @@ Standard GNUmake/shell-script.
 Build on `*nix*` is easy using an installed `gcc-arm-none-eabi`
 
 ```sh
-cd Osek_pi_crunch_cm3 1000
-./Build.sh
+cd Osek_pi_crunch_cm3
+./Build.sh 1000
 ```
 
 The build results including ELF-file, HEX-mask, MAP-file
