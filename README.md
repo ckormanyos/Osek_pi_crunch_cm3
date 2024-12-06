@@ -41,12 +41,16 @@ Standard GNUmake/shell-script.
 Build on `*nix*` is easy using an installed `gcc-arm-none-eabi`
 
 ```sh
-cd Osek_pi_crunch_cm3
+cd Osek_pi_crunch_cm3 1000
 ./Build.sh
 ```
 
 The build results including ELF-file, HEX-mask, MAP-file
 can be found in the `Output` directory following the GNUmake build.
+
+The number `1000` sets the calculation for $1,001$ decimal
+digits of $\pi$. Values supported include (and are limited to)
+`100`, `1000`, `10000`, `100000`.
 
 If `gcc-arm-none-eabi` is not present, then it can be installed (if needed).
 
@@ -132,14 +136,16 @@ This means that the runtime of the calculation grows quadratically with increasi
 output digit size. The table below summarizes the runtime of the algorithm
 on the embedded target for various output digit sizes.
 
-| Digits-10     | Time [s]       | Ratio to $100$ digits |
-| ------------- | -------------- | --------------------- |
-| $101$         | $0.50$         |      $1$              |
-| $1,001$       | $50$           |      $100$            |
-| $10,001$      | $5,000$        |      $10,000$         |
-| $100,001$     | TBD            |      TBD              |
+| Digits-10     | Time [s]       | Ratio (to $1,001$ digits) |
+| ------------- | -------------- | ------------------------- |
+| $101$         | $0.51^{*}$     |      $0.01$               |
+| $1,001$       | $51$           |      $1$                  |
+| $10,001$      | $5,100$        |      $100$                |
+| $100,001$     | TBD            |      TBD                  |
 
-The runtime increases by a factor of $100$ for every tenfold increase
+$^{*}$Deactivate LCD printing for this shorter time measurement.
+
+The runtime increases by a factor of approximately $100$ for every tenfold increase
 in the output digit size, clearly exhibiting quadratic computational complexity.
 
 ## Licensing

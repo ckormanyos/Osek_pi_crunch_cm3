@@ -5,7 +5,7 @@
 // 
 // Board       : STM32VLDISCOVERY
 //
-// Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
+// Compiler    : gcc-arm-none-eabi (GCC) or ARM(R) Compiler v5.06 for uVision (Keil)
 //
 // Author      : Chalandi Amine
 //

@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright Amine Chalandi 2017
+//  Copyright Christopher Kormanyos 2023 - 2024
+//  Distributed under the Boost Software License,
+//  Version 1.0. (See accompanying file LICENSE_1_0.txt
+//  or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+
 // *****************************************************************************
 // Filename    : SysTickTimer.h
 // 
@@ -5,7 +13,7 @@
 // 
 // Board       : STM32VLDISCOVERY
 //
-// Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
+// Compiler    : gcc-arm-none-eabi (GCC) or ARM(R) Compiler v5.06 for uVision (Keil)
 //
 // Author      : Chalandi Amine
 //
