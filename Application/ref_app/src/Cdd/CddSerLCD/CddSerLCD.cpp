@@ -8,10 +8,10 @@
 //                                                               //
 ///////////////////////////////////////////////////////////////////
 
-#include <Cdd/CddSpi/CddSpi.h>
-#include <mcal_spi/mcal_spi_software_port_driver.h>
+#include <Cdd/CddSerLCD/CddSerLCD.h>
 
-#include <cstdint>
+#include <mcal_lcd/mcal_lcd_serlcd_sparkfun.h>
+#include <mcal_spi/mcal_spi_software_port_driver.h>
 
 namespace local_cdd_spi
 {
@@ -36,42 +36,44 @@ namespace local_cdd_spi
                                                  static_cast<std::uint32_t>(UINT32_C(0))>;
 } // namespace local_cdd_spi;
 
-auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&;
-
-auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&
+namespace
 {
-  using cdd_spi_channel_type = mcal::spi::spi_software_port_driver<local_cdd_spi::port_pin_sck_type,
-                                                                   local_cdd_spi::port_pin_sdi_type,
-                                                                   local_cdd_spi::port_pin_csn_type,
-                                                                   local_cdd_spi::port_pin_sdo_type,
-                                                                   static_cast<std::uint_fast16_t>(UINT8_C(2)),
-                                                                   true>;
+  auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&;
+  auto cdd_serlcd() -> mcal::lcd::lcd_serlcd_sparkfun&;
 
-  static cdd_spi_channel_type com_cdd_spi { };
+  auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&
+  {
+    using cdd_spi_channel_type = mcal::spi::spi_software_port_driver<local_cdd_spi::port_pin_sck_type,
+                                                                     local_cdd_spi::port_pin_sdi_type,
+                                                                     local_cdd_spi::port_pin_csn_type,
+                                                                     local_cdd_spi::port_pin_sdo_type,
+                                                                     static_cast<std::uint_fast16_t>(UINT8_C(2)),
+                                                                     true>;
 
-  return com_cdd_spi;
+    static cdd_spi_channel_type com_cdd_spi { };
+
+    return com_cdd_spi;
+  }
+
+  auto cdd_serlcd() -> mcal::lcd::lcd_serlcd_sparkfun&
+  {
+    static mcal::lcd::lcd_serlcd_sparkfun my_lcd(cdd_spi_channel());
+
+    return my_lcd;
+  }
 }
 
 extern "C"
-uint8_t CddSpi_TransferSingleByte(const uint8_t byte_to_transfer)
+void CddSerLCD_Init(void)
 {
-  static_cast<void>(cdd_spi_channel().send(byte_to_transfer));
-
-  std::uint8_t byte_to_recv { };
-
-  static_cast<void>(cdd_spi_channel().recv(byte_to_recv));
-
-  return byte_to_recv;
+  static_cast<void>(cdd_serlcd().init());
 }
 
 extern "C"
-void CddSpi_CsEnable()
+void CddSerLCD_WriteLine(const char* StringToPrint, const size_t StringSize, const size_t LineIndex)
 {
-  cdd_spi_channel().select();
-}
-
-extern "C"
-void CddSpi_CsDisable()
-{
-  cdd_spi_channel().deselect();
+  static_cast<void>
+  (
+    cdd_serlcd().write(StringToPrint, StringSize, static_cast<std::uint_fast8_t>(LineIndex))
+  );
 }

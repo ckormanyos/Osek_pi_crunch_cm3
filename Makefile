@@ -202,7 +202,6 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/pi_spigot/pi_spigot                                   \
              $(SRC_DIR)/Application/pi_spigot/pi_spigot_callback                          \
              $(SRC_DIR)/Application/ref_app/src/Cdd/CddSerLCD/CddSerLCD                   \
-             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSpi/CddSpi                         \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal                                 \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal_gcc_cxx_completion              \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_gpt                   \

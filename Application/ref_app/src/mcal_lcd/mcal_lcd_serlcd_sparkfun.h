@@ -13,9 +13,6 @@
   #include <Util/utility/util_communication.h>
   #include <util/utility/util_time.h>
 
-  #include <algorithm>
-  #include <cstring>
-
   #if(__cplusplus >= 201703L)
   namespace mcal::lcd {
   #else
@@ -26,6 +23,19 @@
   {
   private:
     using timer_type = util::timer<std::uint32_t>;
+    using tick_type = typename timer_type::tick_type;
+
+    static constexpr std::uint8_t CDD_SERLCD_BLUE_BACKLIGHT      { (uint8_t) UINT8_C(0xD9) };
+    static constexpr std::uint8_t CDD_SERLCD_GREEN_BACKLIGHT     { (uint8_t) UINT8_C(0xBB) };
+    static constexpr std::uint8_t CDD_SERLCD_PRIMARY_BACKLIGHT   { (uint8_t) UINT8_C(0x9D) };
+
+    static constexpr std::uint8_t CDD_SERLCD_SETTING_MODE        { (uint8_t) UINT8_C(0x7C) };
+    static constexpr std::uint8_t CDD_SERLCD_CLEAR_DISPLAY       { (uint8_t) UINT8_C(0x2D) };
+
+    static constexpr std::uint8_t CDD_SERLCD_SIZE_WIDTH_20       { (uint8_t) UINT8_C(0x03) };
+    static constexpr std::uint8_t CDD_SERLCD_SIZE_LINES_04       { (uint8_t) UINT8_C(0x05) };
+    static constexpr std::uint8_t CDD_SERLCD_SIZE_LINES_02       { (uint8_t) UINT8_C(0x06) };
+    static constexpr std::uint8_t CDD_SERLCD_SIZE_LINES_01       { (uint8_t) UINT8_C(0x07) };
 
   public:
     explicit lcd_serlcd_sparkfun(util::communication_buffer_depth_one_byte& com)
@@ -37,16 +47,32 @@
 
     auto init(void) -> bool override
     {
+      blocking_delay(timer_type::milliseconds(tick_type { UINT16_C(500) }));
+
+      CddSerLcd_Setting(CDD_SERLCD_CLEAR_DISPLAY);
+      CddSerLcd_Setting(CDD_SERLCD_GREEN_BACKLIGHT);
+      CddSerLcd_Setting(CDD_SERLCD_SIZE_LINES_04);
+      CddSerLcd_Setting(CDD_SERLCD_SIZE_WIDTH_20);
+
       return true;
     }
 
-    auto write(const char* pstr,
-               const std::size_t length,
-               const std::uint_fast8_t line_index) -> bool override
+    auto write(const char* StringToPrint, const std::size_t StringSize, const std::uint_fast8_t LineIndex) -> bool override
     {
-      static_cast<void>(pstr);
-      static_cast<void>(length);
-      static_cast<void>(line_index);
+      // Limit to the maximum width of the display width.
+      const size_t LineIndexToUse = ((LineIndex > (size_t) UINT8_C(3)) ? (size_t) UINT8_C(3) : LineIndex);
+
+      // Limit to the maximum width of the display width.
+      const size_t SizeToWrite = ((StringSize > (size_t) UINT8_C(20)) ? (size_t) UINT8_C(20) : StringSize);
+
+      CddSerLcd_SelectLine(LineIndexToUse);
+
+      for(size_t idx = (size_t) UINT8_C(0); idx < (size_t) UINT8_C(20); ++idx)
+      {
+        const char CharToWrite = ((idx < SizeToWrite) ? StringToPrint[idx] : ' ');
+
+        CddSerLcd_Transfer(CharToWrite);
+      }
 
       return true;
     }
@@ -54,16 +80,44 @@
   private:
     util::communication_buffer_depth_one_byte& my_com;
 
-    static void blocking_delay(const typename timer_type::tick_type blocking_delay_value)
+    static void blocking_delay(const tick_type blocking_delay_value)
     {
       timer_type::blocking_delay(blocking_delay_value);
     }
 
-    auto set_line_index(const std::uint8_t index) -> bool override
+    void CddSerLcd_Transfer(const uint8_t by)
     {
-      static_cast<void>(index);
+      my_com.select();
+      static_cast<void>(my_com.send(by));
+      my_com.deselect();
+      blocking_delay(timer_type::microseconds(tick_type { UINT8_C(150) }));
+    }
 
-      return true;
+    void CddSerLcd_Setting(const uint8_t setting)
+    {
+      CddSerLcd_Transfer(CDD_SERLCD_SETTING_MODE);
+      CddSerLcd_Transfer(setting);
+    }
+
+    void CddSerLcd_SelectLine(const size_t LineIndexToUse)
+    {
+      // To set the active cursor position, send the control character 254 followed by 128 + row + position.
+      // OpenLCD.write(254);
+
+      // Change the position (128) of the cursor to 2nd row (64), position 9 (9) */
+      // OpenLCD.write(128 + 64 + 9);
+
+      static const uint8_t IndexToRowTable[(size_t) UINT8_C(4)] =
+      {
+        (uint8_t) UINT8_C( 0),
+        (uint8_t) UINT8_C(64),
+        (uint8_t) UINT8_C(20),
+        (uint8_t) UINT8_C(84)
+      };
+
+      CddSerLcd_Transfer((uint8_t) UINT8_C(0xFE));
+
+      CddSerLcd_Transfer((uint8_t) (UINT8_C(0x80) + IndexToRowTable[LineIndexToUse] + UINT8_C(0x00)));
     }
   };
 
