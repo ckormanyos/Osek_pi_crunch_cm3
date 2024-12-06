@@ -1,4 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
+//  Copyright Iliass Mahjoub 2023 - 2024
 //  Copyright Christopher Kormanyos 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -60,14 +61,14 @@
     auto write(const char* StringToPrint, const std::size_t StringSize, const std::uint_fast8_t LineIndex) -> bool override
     {
       // Limit to the maximum width of the display width.
-      const size_t LineIndexToUse = ((LineIndex > (size_t) UINT8_C(3)) ? (size_t) UINT8_C(3) : LineIndex);
+      const size_t LineIndexToUse = ((LineIndex > std::size_t { UINT8_C(3) }) ? std::size_t { UINT8_C(3) } : LineIndex);
 
       // Limit to the maximum width of the display width.
-      const size_t SizeToWrite = ((StringSize > (size_t) UINT8_C(20)) ? (size_t) UINT8_C(20) : StringSize);
+      const size_t SizeToWrite = ((StringSize > std::size_t { UINT8_C(20)}) ? std::size_t { UINT8_C(20) } : StringSize);
 
       CddSerLcd_SelectLine(LineIndexToUse);
 
-      for(size_t idx = (size_t) UINT8_C(0); idx < (size_t) UINT8_C(20); ++idx)
+      for(std::size_t idx { UINT8_C(0) }; idx < std::size_t { UINT8_C(20) }; ++idx)
       {
         const char CharToWrite = ((idx < SizeToWrite) ? StringToPrint[idx] : ' ');
 
@@ -107,17 +108,26 @@
       // Change the position (128) of the cursor to 2nd row (64), position 9 (9) */
       // OpenLCD.write(128 + 64 + 9);
 
-      static const uint8_t IndexToRowTable[(size_t) UINT8_C(4)] =
+      constexpr uint8_t IndexToRowTable[std::size_t { UINT8_C(4) }] =
       {
-        (uint8_t) UINT8_C( 0),
-        (uint8_t) UINT8_C(64),
-        (uint8_t) UINT8_C(20),
-        (uint8_t) UINT8_C(84)
+        std::uint8_t { UINT8_C( 0) },
+        std::uint8_t { UINT8_C(64) },
+        std::uint8_t { UINT8_C(20) },
+        std::uint8_t { UINT8_C(84) }
       };
 
-      CddSerLcd_Transfer((uint8_t) UINT8_C(0xFE));
+      CddSerLcd_Transfer(std::uint8_t { UINT8_C(0xFE) });
 
-      CddSerLcd_Transfer((uint8_t) (UINT8_C(0x80) + IndexToRowTable[LineIndexToUse] + UINT8_C(0x00)));
+      const std::uint8_t
+        by_row
+        {
+          static_cast<std::uint8_t>
+          (
+            UINT8_C(0x80) + IndexToRowTable[LineIndexToUse] + UINT8_C(0x00)
+          )
+        };
+
+      CddSerLcd_Transfer(by_row);
     }
   };
 

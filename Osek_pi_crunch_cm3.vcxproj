@@ -48,7 +48,6 @@
     <ClCompile Include="Application\OS\TCB.c" />
     <ClCompile Include="Application\pi_spigot\pi_spigot.cpp" />
     <ClCompile Include="Application\pi_spigot\pi_spigot_callback.cpp" />
-    <ClCompile Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\mcal.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\mcal_gcc_cxx_completion.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp" />
@@ -69,7 +68,6 @@
     <ClInclude Include="Application\OS\OsTypes.h" />
     <ClInclude Include="Application\OS\TCB.h" />
     <ClInclude Include="Application\pi_calc_cfg.h" />
-    <ClInclude Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_base.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_detail.h" />
     <ClInclude Include="Application\ref_app\src\math\checksums\hash\hash_sha1.h" />
@@ -83,6 +81,7 @@
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_cpu.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_irq.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_lcd.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_led.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port.h" />
