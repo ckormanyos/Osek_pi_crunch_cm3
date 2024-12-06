@@ -48,9 +48,12 @@ cd Osek_pi_crunch_cm3 1000
 The build results including ELF-file, HEX-mask, MAP-file
 can be found in the `Output` directory following the GNUmake build.
 
-The number `1000` sets the calculation for $1,001$ decimal
-digits of $\pi$. Values supported include (and are limited to)
-`100`, `1000`, `10000`, `100000`.
+The number `1000` sets the length of the calculation result of $\pi$
+to $1,001$ decimal digits. The length values supported include
+(and are limited to) `100`, `1000`, `10000`, `100000` for respectively
+higher digit counts up to $10^{5}$.
+
+### Install `gcc-arm-none-eabi` on `*nix` if needed
 
 If `gcc-arm-none-eabi` is not present, then it can be installed (if needed).
 
@@ -145,9 +148,9 @@ on the embedded target for various output digit sizes.
 
 | Digits-10     | Time [s]       | Ratio (to $1,001$ digits) |
 | ------------- | -------------- | ------------------------- |
-| $101$         | $0.51^{*}$     |      $0.01$               |
-| $1,001$       | $51$           |      $1$                  |
-| $10,001$      | $5,100$        |      $100$                |
+| $101$         | $0.50^{*}$     |      $0.01$               |
+| $1,001$       | $50$           |      $1$                  |
+| $10,001$      | $5,000$        |      $100$                |
 | $100,001$     | TBD            |      TBD                  |
 
 $^{*}$ Deactivate LCD printing for this shorter time measurement.
