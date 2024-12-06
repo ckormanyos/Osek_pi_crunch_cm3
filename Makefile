@@ -209,7 +209,6 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_memory_sram           \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_port                  \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_spi                   \
-             $(SRC_DIR)/Application/ref_app/src/util/Util/UtilTimer                       \
              $(SRC_DIR)/Application/OS/OS                                                 \
              $(SRC_DIR)/Application/OS/OsAlarm                                            \
              $(SRC_DIR)/Application/OS/OsEvt                                              \

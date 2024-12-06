@@ -73,9 +73,6 @@
     <Filter Include="Application\ref_app\src\Cdd\CddSerLCD">
       <UniqueIdentifier>{a76d8c25-e857-48b1-9e27-4aabff542d77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\ref_app\src\util\Util">
-      <UniqueIdentifier>{247014a3-8475-4cee-9587-083c10a33a19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\ref_app\src\mcal_lcd">
       <UniqueIdentifier>{6a7cbffa-e735-4e7f-8bf6-8bca608f51ae}</UniqueIdentifier>
     </Filter>
@@ -140,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.cpp">
       <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ref_app\src\util\Util\UtilTimer.cpp">
-      <Filter>Application\ref_app\src\util\Util</Filter>
     </ClCompile>
     <ClCompile Include="Application\pi_spigot\pi_spigot_callback.cpp">
       <Filter>Application\pi_spigot</Filter>
@@ -310,9 +304,6 @@
     </ClInclude>
     <ClInclude Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.h">
       <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ref_app\src\util\Util\UtilTimer.h">
-      <Filter>Application\ref_app\src\util\Util</Filter>
     </ClInclude>
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_buffered_instance.h">
       <Filter>Application\ref_app\src\mcal_lcd</Filter>

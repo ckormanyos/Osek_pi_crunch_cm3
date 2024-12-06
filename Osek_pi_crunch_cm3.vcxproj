@@ -57,7 +57,6 @@
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_memory_sram.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_port.cpp" />
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.cpp" />
-    <ClCompile Include="Application\ref_app\src\util\Util\UtilTimer.cpp" />
     <ClCompile Include="Application\SysStartup.c" />
   </ItemGroup>
   <ItemGroup>
@@ -119,7 +118,6 @@
     <ClInclude Include="Application\ref_app\src\util\utility\util_time.h" />
     <ClInclude Include="Application\ref_app\src\util\utility\util_two_part_data_manipulation.h" />
     <ClInclude Include="Application\ref_app\src\util\utility\util_utype_helper.h" />
-    <ClInclude Include="Application\ref_app\src\util\Util\UtilTimer.h" />
     <ClInclude Include="Application\types.h" />
   </ItemGroup>
   <ItemGroup>

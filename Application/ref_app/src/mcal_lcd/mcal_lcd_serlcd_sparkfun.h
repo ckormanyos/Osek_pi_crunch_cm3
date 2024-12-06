@@ -10,7 +10,7 @@
 
   #include <mcal_lcd/mcal_lcd_base.h>
 
-  #include <Util/utility/util_communication.h>
+  #include <util/utility/util_communication.h>
   #include <util/utility/util_time.h>
 
   #if(__cplusplus >= 201703L)
