@@ -42,11 +42,18 @@ Build on `*nix*` is easy using an installed `gcc-arm-none-eabi`
 
 ```sh
 cd Osek_pi_crunch_cm3
-./Build.sh
+./Build.sh 1000
 ```
 
 The build results including ELF-file, HEX-mask, MAP-file
 can be found in the `Output` directory following the GNUmake build.
+
+The number `1000` sets the length of the calculation result of $\pi$
+to $1,001$ decimal digits. The length values supported include
+(and are limited to) `100`, `1000`, `10000`, `100000` for respectively
+higher digit counts up to $10^{5}$.
+
+### Install `gcc-arm-none-eabi` on `*nix` if needed
 
 If `gcc-arm-none-eabi` is not present, then it can be installed (if needed).
 
@@ -82,6 +89,13 @@ The hardware setup is pictured in the image below.
 
 ![](./images/Osek_pi_crunch_cm3.jpg)
 
+Additional images show close-ups of the peripheral circuitry
+and the serial SRAM connections.
+
+![](./images/peripheral_overview.jpg)
+
+![](./images/serial_sram.jpg)
+
 Bit banging is used to implement an all-software, SPI-compatible
 driver which controls the external SRAM memory chip. A significant
 amount of external SRAM is needed to hold the potentially very large
@@ -90,29 +104,29 @@ data array used for intermediate storage in the $\pi$ calculation.
 The output pin connections from the board to the SRAM chip
 are shown in the table below.
 
-| NUCLEO PIN    | SRAM PIN  | SPI Function               |
-| ------------- | --------- | -------------------------- |
-| `PA11`        | $1$       | `CE` (chip-select-not)     |
-| `PA10`        | $2$       | `SO` (chip-serial-out)     |
-| `PA09`        | $6$       | `CLK` (chip-serial-clock)  |
-| `PA08`        | $5$       | `SI` (chip-serial-in)      |
+| NUCLEO PIN    | SRAM PIN  | SPI Function                 |
+| ------------- | --------- | ---------------------------- |
+| `PA11`        | $1$       | `CE` (SRAM-chip-select-not)  |
+| `PA10`        | $2$       | `SO` (SRAM-serial-out)       |
+| `PA09`        | $6$       | `CLK` (SRAM-serial-clock)    |
+| `PA08`        | $5$       | `SI` (SRAM-serial-in)        |
 
 The output pin connections from the board to the SparkFund SerLCD
 are shown in the table below. The SerLCD is driven with SPI communication
 with another instance of the all-software SPI driver.
 
-| NUCLEO PIN    | SPI Function               |
-| ------------- | -------------------------- |
-| `PB00`        | `SCK` (LCD-serial-clock)   |
-| `PB01`        | `SDI` (LCD-serial-in)      |
-| `PB02`        | `CN` (LCD chip-select-not) |
+| NUCLEO PIN    | SPI Function                |
+| ------------- | --------------------------- |
+| `PB00`        | `SCK` (LCD-serial-clock)    |
+| `PB01`        | `SDI` (LCD-serial-in)       |
+| `PB02`        | `CN` (LCD chip-select-not)  |
 
 # Additional Details
 
-## Generic Serial SPI SRAM _Bonus_ Driver
+## Generic Serial SPI SRAM Driver
 
-The serial SRAM driver is a nice _by_-_product_ of this project.
-This driver can be found in the file
+The serial SRAM driver is a nice, semi-intentional _by_-_product_
+of this project. This driver can be found in the file
 [mcal_memory_sram_generic_spi.h](./Application/ref_app/src/mcal_memory/mcal_memory_sram_generic_spi.h).
 It has been written in C++14 utilizing a fully generic,
 multi-chip, variable-page-size, template form.
@@ -132,14 +146,16 @@ This means that the runtime of the calculation grows quadratically with increasi
 output digit size. The table below summarizes the runtime of the algorithm
 on the embedded target for various output digit sizes.
 
-| Digits-10     | Time [s]       | Ratio to $100$ digits |
-| ------------- | -------------- | --------------------- |
-| $101$         | $0.50$         |      $1$              |
-| $1,001$       | $50$           |      $100$            |
-| $10,001$      | $5,000$        |      $10,000$         |
-| $100,001$     | TBD            |      TBD              |
+| Digits-10     | Time [s]       | Ratio (to $1,001$ digits) |
+| ------------- | -------------- | ------------------------- |
+| $101$         | $0.50^{*}$     |      $0.01$               |
+| $1,001$       | $50$           |      $1$                  |
+| $10,001$      | $5,000$        |      $100$                |
+| $100,001$     | TBD            |      TBD                  |
 
-The runtime increases by a factor of $100$ for every tenfold increase
+$^{*}$ Deactivate LCD printing for this shorter time measurement.
+
+The runtime increases by a factor of approximately $100$ for every tenfold increase
 in the output digit size, clearly exhibiting quadratic computational complexity.
 
 ## Licensing

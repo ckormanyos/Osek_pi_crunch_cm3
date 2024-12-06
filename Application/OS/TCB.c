@@ -19,7 +19,7 @@
 
 #include <TCB.h>
 
-#if !defined(__GNUC__)
+#if defined(__CC_ARM)
 #pragma diag_suppress 1296,1,191,188
 #endif
 

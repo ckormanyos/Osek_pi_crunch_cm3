@@ -5,7 +5,7 @@
 // 
 // Board       : STM32VLDISCOVERY
 //
-// Compiler    : ARM(R) Compiler v5.06 for uVision (Keil)
+// Compiler    : gcc-arm-none-eabi (GCC) or ARM(R) Compiler v5.06 for uVision (Keil)
 //
 // Author      : Chalandi Amine
 //
@@ -47,7 +47,6 @@ void HardFaultdHandler(void);
 
 #if defined(__GNUC__) && !defined(__CC_ARM)
 #elif defined(__CC_ARM)
-/* Disable the warning D-1296 */
 #pragma diag_suppress 1296
 #else
 #error Error: Compiler startup-code dialect is not supported

@@ -27,10 +27,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='target stm32f100|x64'">
-    <NMakeBuildCommandLine>.\Build.bat 10000 all</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>.\Build.bat 1000 all</NMakeBuildCommandLine>
     <NMakeOutput>Osek_pi_crunch_cm3.exe</NMakeOutput>
-    <NMakeCleanCommandLine>.\Build.bat 10000 clean</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>.\Build.bat 10000 all</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>.\Build.bat 1000 clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>.\Build.bat 1000 all</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>__GNUC__=13;PI_CRUNCH_METAL_DISABLE_IOSTREAM;__attribute__()=</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath>$(SolutionDir)/Application/OS/HwPlatform/STM32;$(SolutionDir)/Application/OS;$(SolutionDir)/Application/MCAL;$(SolutionDir)/Application;$(SolutionDir)/Application/ref_app/src/mcal/stm32f100;$(SolutionDir)/Application/ref_app/src/util;$(SolutionDir)/Application/ref_app/src</NMakeIncludeSearchPath>
   </PropertyGroup>
@@ -91,6 +91,7 @@
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_base.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_buffered_instance.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_console.h" />
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_generic_device.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_generic_st7066.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_serlcd_sparkfun.h" />
     <ClInclude Include="Application\ref_app\src\mcal_led\mcal_led_base.h" />

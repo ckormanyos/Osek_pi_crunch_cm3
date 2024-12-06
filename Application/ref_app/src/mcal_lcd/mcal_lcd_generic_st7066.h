@@ -8,7 +8,7 @@
 #ifndef MCAL_LCD_GENERIC_ST7066_2020_05_07_H // NOLINT(llvm-header-guard)
   #define MCAL_LCD_GENERIC_ST7066_2020_05_07_H
 
-  #include <mcal_lcd/mcal_lcd_base.h>
+  #include <mcal_lcd/mcal_lcd_generic_device.h>
 
   #include <util/utility/util_time.h>
 
@@ -33,11 +33,8 @@
            typename port_pin_db6_type,
            typename port_pin_db7_type,
            const std::uint_fast8_t lcd_line_width = 16U>
-  class lcd_generic_st7066 final : public mcal::lcd::lcd_base
+  class lcd_generic_st7066 final : public mcal::lcd::lcd_generic_device
   {
-  private:
-    using timer_type = util::timer<std::uint32_t>;
-
   public:
     lcd_generic_st7066() = default;
 
@@ -104,11 +101,6 @@
     }
 
   private:
-    static void blocking_delay(const typename timer_type::tick_type blocking_delay_value)
-    {
-      timer_type::blocking_delay(blocking_delay_value);
-    }
-
     auto write(const std::uint8_t i) -> void
     {
       P1_set(i);                                        // P1 = i;   // Put data on the output Port
