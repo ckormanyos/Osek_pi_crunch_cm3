@@ -67,17 +67,8 @@
     <Filter Include="_doc">
       <UniqueIdentifier>{f5dbb060-51fc-432c-aeba-3b48da452814}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\ref_app\src\Cdd">
-      <UniqueIdentifier>{c7c86512-4162-480e-92ae-58e694948a81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ref_app\src\Cdd\CddSerLCD">
-      <UniqueIdentifier>{a76d8c25-e857-48b1-9e27-4aabff542d77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ref_app\src\Cdd\CddSpi">
-      <UniqueIdentifier>{3734e954-a6e0-40a6-ac07-d9c9e2368025}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ref_app\src\util\Util">
-      <UniqueIdentifier>{247014a3-8475-4cee-9587-083c10a33a19}</UniqueIdentifier>
+    <Filter Include="Application\ref_app\src\mcal_lcd">
+      <UniqueIdentifier>{6a7cbffa-e735-4e7f-8bf6-8bca608f51ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -137,15 +128,6 @@
     </ClCompile>
     <ClCompile Include="Application\ref_app\src\mcal\stm32f100\mcal_gpt.cpp">
       <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.c">
-      <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.cpp">
-      <Filter>Application\ref_app\src\Cdd\CddSpi</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ref_app\src\util\Util\UtilTimer.cpp">
-      <Filter>Application\ref_app\src\util\Util</Filter>
     </ClCompile>
     <ClCompile Include="Application\pi_spigot\pi_spigot_callback.cpp">
       <Filter>Application\pi_spigot</Filter>
@@ -311,14 +293,23 @@
     <ClInclude Include="Application\ref_app\src\util\utility\util_baselexical_cast.h">
       <Filter>Application\ref_app\src\util\utility</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ref_app\src\Cdd\CddSerLCD\CddSerLCD.h">
-      <Filter>Application\ref_app\src\Cdd\CddSerLCD</Filter>
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_buffered_instance.h">
+      <Filter>Application\ref_app\src\mcal_lcd</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ref_app\src\Cdd\CddSpi\CddSpi.h">
-      <Filter>Application\ref_app\src\Cdd\CddSpi</Filter>
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_console.h">
+      <Filter>Application\ref_app\src\mcal_lcd</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ref_app\src\util\Util\UtilTimer.h">
-      <Filter>Application\ref_app\src\util\Util</Filter>
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_generic_st7066.h">
+      <Filter>Application\ref_app\src\mcal_lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_base.h">
+      <Filter>Application\ref_app\src\mcal_lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_serlcd_sparkfun.h">
+      <Filter>Application\ref_app\src\mcal_lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_lcd.h">
+      <Filter>Application\ref_app\src\mcal\stm32f100</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

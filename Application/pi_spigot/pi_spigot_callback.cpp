@@ -7,7 +7,6 @@
 //                                                               //
 ///////////////////////////////////////////////////////////////////
 
-#include <Cdd/CddSerLCD/CddSerLCD.h>
 #include <util/utility/util_baselexical_cast.h>
 
 #include <cstdint>
@@ -21,6 +20,11 @@ auto pi_count_of_calculations() -> std::uint32_t&
   return my_count;
 }
 
+extern "C"
+{
+  extern void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex);
+}
+
 auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void;
 
 auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void
@@ -32,7 +36,7 @@ auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void
 
     const char* p_end { util::baselexical_cast(pi_output_digits10, p_str, p_str + sizeof(p_str)) };
 
-    CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(0) });
+    ::mcal_lcd_write_line(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(0) });
   }
 
   {
@@ -40,6 +44,6 @@ auto pi_lcd_progress(const std::uint32_t pi_output_digits10) -> void
 
     const char* p_end = util::baselexical_cast(pi_count_of_calculations(), p_str, p_str + sizeof(p_str));
 
-    CddSerLCD_WriteLine(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(1) });
+    ::mcal_lcd_write_line(p_str, static_cast<std::size_t>(p_end - p_str), std::size_t { UINT8_C(1) });
   }
 }

@@ -1,22 +1,21 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2007 - 2023.
+//  Copyright Christopher Kormanyos 2020 - 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MCAL_LED_2010_09_14_H
-  #define MCAL_LED_2010_09_14_H
+#ifndef MCAL_LCD_2024_12_06_H
+  #define MCAL_LCD_2024_12_06_H
 
-  #include <mcal_led/mcal_led_base.h>
+  #include <mcal_lcd/mcal_lcd_base.h>
 
   namespace mcal
   {
-    namespace led
+    namespace lcd
     {
-      auto led0() -> led_base&;
-      auto led1() -> led_base&;
+      auto lcd0() -> lcd_base&;
     }
   }
 
-#endif // MCAL_LED_2010_09_14_H
+#endif // MCAL_LCD_2024_12_06_H

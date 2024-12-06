@@ -6,42 +6,86 @@
 //
 
 #include <mcal_lcd.h>
-#include <mcal_lcd_st7066u_newhaven_0216k1z.h>
+#include <mcal_lcd/mcal_lcd_serlcd_sparkfun.h>
 #include <mcal_port.h>
 
-void mcal::lcd::init(const config_type*)
+///////////////////////////////////////////////////////////////////
+//                                                               //
+//  Copyright Iliass Mahjoub 2023 - 2024.                        //
+//  Copyright Christopher Kormanyos 2024.                        //
+//  Distributed under the Boost Software License,                //
+//  Version 1.0. (See accompanying file LICENSE_1_0.txt          //
+//  or copy at http://www.boost.org/LICENSE_1_0.txt)             //
+//                                                               //
+///////////////////////////////////////////////////////////////////
+
+#include <mcal_lcd/mcal_lcd_serlcd_sparkfun.h>
+#include <mcal_spi/mcal_spi_software_port_driver.h>
+
+namespace local_cdd_spi
 {
-  static_cast<void>(lcd0().init());
+  using port_pin_csn_type = mcal::port::port_pin<std::uint32_t,
+                                                 std::uint32_t,
+                                                 mcal::reg::gpiob_odr,
+                                                 static_cast<std::uint32_t>(UINT32_C(2))>;
+
+  using port_pin_sdo_type = mcal::port::port_pin<std::uint32_t,
+                                                 std::uint32_t,
+                                                 mcal::reg::gpiob_odr,
+                                                 static_cast<std::uint32_t>(UINT32_C(7))>;
+
+  using port_pin_sdi_type = mcal::port::port_pin<std::uint32_t,
+                                                 std::uint32_t,
+                                                 mcal::reg::gpiob_odr,
+                                                 static_cast<std::uint32_t>(UINT32_C(1))>;
+
+  using port_pin_sck_type = mcal::port::port_pin<std::uint32_t,
+                                                 std::uint32_t,
+                                                 mcal::reg::gpiob_odr,
+                                                 static_cast<std::uint32_t>(UINT32_C(0))>;
+} // namespace local_cdd_spi;
+
+namespace
+{
+  auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&;
+
+  auto cdd_spi_channel() -> util::communication_buffer_depth_one_byte&
+  {
+    using cdd_spi_channel_type = mcal::spi::spi_software_port_driver<local_cdd_spi::port_pin_sck_type,
+                                                                     local_cdd_spi::port_pin_sdi_type,
+                                                                     local_cdd_spi::port_pin_csn_type,
+                                                                     local_cdd_spi::port_pin_sdo_type,
+                                                                     static_cast<std::uint_fast16_t>(UINT8_C(2)),
+                                                                     true>;
+
+    static cdd_spi_channel_type com_cdd_spi { };
+
+    return com_cdd_spi;
+  }
 }
 
-mcal::lcd::lcd_base& mcal::lcd::lcd0()
+auto mcal::lcd::lcd0() -> mcal::lcd::lcd_base&
 {
-  // LCD port pin expander configuration.
-  using mcal_lcd_port_pin_expander_port_pin_rs__type = mcal::port::port_pin_expander< 5U>;
-  using mcal_lcd_port_pin_expander_port_pin_rw__type = mcal::port::port_pin_expander< 6U>;
-  using mcal_lcd_port_pin_expander_port_pin_e___type = mcal::port::port_pin_expander< 7U>;
-  using mcal_lcd_port_pin_expander_port_pin_db0_type = mcal::port::port_pin_expander< 8U>;
-  using mcal_lcd_port_pin_expander_port_pin_db1_type = mcal::port::port_pin_expander< 9U>;
-  using mcal_lcd_port_pin_expander_port_pin_db2_type = mcal::port::port_pin_expander<10U>;
-  using mcal_lcd_port_pin_expander_port_pin_db3_type = mcal::port::port_pin_expander<11U>;
-  using mcal_lcd_port_pin_expander_port_pin_db4_type = mcal::port::port_pin_expander<12U>;
-  using mcal_lcd_port_pin_expander_port_pin_db5_type = mcal::port::port_pin_expander<13U>;
-  using mcal_lcd_port_pin_expander_port_pin_db6_type = mcal::port::port_pin_expander<14U>;
-  using mcal_lcd_port_pin_expander_port_pin_db7_type = mcal::port::port_pin_expander<15U>;
+  static mcal::lcd::lcd_serlcd_sparkfun my_lcd(cdd_spi_channel());
 
-  using mcal_lcd0_type = mcal::lcd::lcd_st7066u_newhaven_0216k1z<mcal_lcd_port_pin_expander_port_pin_rs__type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_rw__type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_e___type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db0_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db1_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db2_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db3_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db4_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db5_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db6_type,
-                                                                    mcal_lcd_port_pin_expander_port_pin_db7_type>;
+  return my_lcd;
+}
 
-  static mcal_lcd0_type lc0;
+extern "C"
+{
+  void mcal_lcd_init(void);
+  void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex);
 
-  return lc0;
+  void mcal_lcd_init(void)
+  {
+    static_cast<void>(mcal::lcd::lcd0().init());
+  }
+
+  void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex)
+  {
+    static_cast<void>
+    (
+      mcal::lcd::lcd0().write(StringToPrint, StringSize, static_cast<std::uint_fast8_t>(LineIndex))
+    );
+  }
 }

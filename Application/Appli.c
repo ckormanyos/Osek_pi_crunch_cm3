@@ -19,7 +19,6 @@
 //
 // *****************************************************************************
 
-#include <Cdd/CddSerLCD/CddSerLCD.h>
 #include <OsAPIs.h>
 #include <TCB.h>
 
@@ -78,7 +77,9 @@ TASK(T1)
 
 TASK(Idle)
 {
-  CddSerLCD_Init();
+  extern void mcal_lcd_init(void);
+
+  mcal_lcd_init();
 
   for(;;)
   {

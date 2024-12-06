@@ -201,16 +201,14 @@ SRC_FILES := $(SRC_DIR)/Application/Appli                                       
              $(SRC_DIR)/Application/MCAL/SysTickTimer                                     \
              $(SRC_DIR)/Application/pi_spigot/pi_spigot                                   \
              $(SRC_DIR)/Application/pi_spigot/pi_spigot_callback                          \
-             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSerLCD/CddSerLCD                   \
-             $(SRC_DIR)/Application/ref_app/src/Cdd/CddSpi/CddSpi                         \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal                                 \
              $(SRC_DIR)/Application/ref_app/src/mcal/mcal_gcc_cxx_completion              \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_gpt                   \
+             $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_lcd                   \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_led                   \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_memory_sram           \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_port                  \
              $(SRC_DIR)/Application/ref_app/src/mcal/stm32f100/mcal_spi                   \
-             $(SRC_DIR)/Application/ref_app/src/util/Util/UtilTimer                       \
              $(SRC_DIR)/Application/OS/OS                                                 \
              $(SRC_DIR)/Application/OS/OsAlarm                                            \
              $(SRC_DIR)/Application/OS/OsEvt                                              \

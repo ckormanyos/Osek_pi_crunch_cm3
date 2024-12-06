@@ -34,6 +34,8 @@
     constexpr explicit mcal_memory_sram_generic_spi(util::communication_buffer_depth_one_byte& com)
       : my_com(com) { }
 
+    mcal_memory_sram_generic_spi() = delete;
+
     ~mcal_memory_sram_generic_spi() = default;
 
     auto read(const std::uint32_t address, std::uint8_t* p_byte_to_read) -> bool
@@ -222,8 +224,6 @@
 
   private:
     util::communication_buffer_depth_one_byte& my_com;
-
-    mcal_memory_sram_generic_spi() = delete;
 
     static constexpr auto byte_size_total() noexcept -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(ByteSizeTotal); }
 

@@ -103,7 +103,7 @@ static void SysStartup_InitSystemClock(void);
 //=============================================================================
 // extern function prototype
 //=============================================================================
-int main(void)__attribute__((weak));
+int main(void) __attribute__((weak));
 
 //=============================================================================
 // macros
@@ -293,7 +293,7 @@ static void SysStartup_RunApplication(void)
     ENABLE_INTERRUPTS();
 
     /* Call the main function */
-    (void)main();
+    (void) main();
   }
 
   SysStartup_Unexpected_Exit(); /* Catch unexpected exit from main or if main dosent exist */
@@ -308,7 +308,7 @@ static void SysStartup_RunApplication(void)
 //-----------------------------------------------------------------------------
 static void SysStartup_Unexpected_Exit(void)
 {
-  for(;;);
+  for(;;) { ; }
 }
 
 //-----------------------------------------------------------------------------
@@ -326,11 +326,11 @@ static void SysStartup_InitSystemClock(void)
   #define RCC_CFG (*((volatile unsigned int *)(RCC_BASE + 0x04u)))
 
   /* Setup the PLL prescaler to x6 (max 24 MHz) */
-  RCC_CFG = 0x00100000UL;
+  RCC_CFG = (unsigned int) 0x00100000UL;
 
   /* Enable the PLL */
-  RCC_CR |= (unsigned long) (1UL<<24);
+  RCC_CR |= (unsigned int) (1ULL << 24U);
 
   /* Set PLL (24 MHz) as system clock */
-  RCC_CFG |= 0x00000002UL;
+  RCC_CFG |= (unsigned int) 0x00000002UL;
 }
