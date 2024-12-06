@@ -8,14 +8,17 @@
 #ifndef MCAL_LCD_2024_12_06_H
   #define MCAL_LCD_2024_12_06_H
 
-  #include <mcal_lcd/mcal_lcd_base.h>
+  #include <stddef.h>
 
-  namespace mcal
+  #if defined(__cplusplus)
+  extern "C"
   {
-    namespace lcd
-    {
-      auto lcd0() -> lcd_base&;
-    }
+  #endif
+
+  void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex);
+
+  #if defined(__cplusplus)
   }
+  #endif
 
 #endif // MCAL_LCD_2024_12_06_H

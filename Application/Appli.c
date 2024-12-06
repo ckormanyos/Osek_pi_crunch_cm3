@@ -77,10 +77,6 @@ TASK(T1)
 
 TASK(Idle)
 {
-  extern void mcal_lcd_init(void);
-
-  mcal_lcd_init();
-
   for(;;)
   {
     extern int pi_main(void);
