@@ -86,6 +86,13 @@ The hardware setup is pictured in the image below.
 
 ![](./images/Osek_pi_crunch_cm3.jpg)
 
+Additional iages show close-ups of the peripheral circuitry
+and the serial SRAM connections.
+
+![](./images/peripheral_overview.jpg)
+
+![](./images/serial_sram.jpg)
+
 Bit banging is used to implement an all-software, SPI-compatible
 driver which controls the external SRAM memory chip. A significant
 amount of external SRAM is needed to hold the potentially very large
