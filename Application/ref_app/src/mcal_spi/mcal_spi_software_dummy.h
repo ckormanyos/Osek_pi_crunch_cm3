@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2020 - 2023.
+//  Copyright Christopher Kormanyos 2020 - 2024
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,50 +12,45 @@
 
   namespace mcal { namespace spi {
 
-  class spi_software_dummy : public ::util::communication_buffer_depth_one_byte
+  class spi_software_dummy : public ::util::communication_base
   {
   private:
-    using base_class_type = ::util::communication_buffer_depth_one_byte;
+    using base_class_type = ::util::communication_base;
 
   public:
     // This class implements a dummy SPI with no real functionality.
 
-    spi_software_dummy() = default;
+    spi_software_dummy() = delete;
 
-    ~spi_software_dummy() override = default;
+    ~spi_software_dummy() = delete;
 
-    auto send(const std::uint8_t byte_to_send) -> bool override
+    static auto init() -> void { }
+
+    static auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool
     {
       static_cast<void>(byte_to_send);
 
-      base_class_type::recv_buffer = 0U;
+      byte_to_recv = std::uint8_t { UINT8_C(0) };
 
       return true;
     }
 
-    auto send_n(base_class_type::send_iterator_type first,
-                base_class_type::send_iterator_type last) -> bool override
+    static auto send_n(base_class_type::send_iterator_type first,
+                       base_class_type::send_iterator_type last,
+                       std::uint8_t& byte_to_recv) -> bool
     {
       while(first != last)
       {
         const auto byte_to_send = static_cast<base_class_type::buffer_value_type>(*first++);
 
-        static_cast<void>(send(byte_to_send));
+        static_cast<void>(send(byte_to_send, byte_to_recv));
       }
 
       return true;
     }
 
-    auto recv(std::uint8_t& byte_to_recv) -> bool override
-    {
-      // Read the (single byte from the) receive buffer.
-      byte_to_recv = base_class_type::recv_buffer;
-
-      return true;
-    }
-
-    auto   select() -> void override { }
-    auto deselect() -> void override { }
+    static auto   select() -> void { }
+    static auto deselect() -> void { }
   };
 
   } // namespace spi

@@ -18,10 +18,13 @@
   namespace mcal { namespace memory { namespace sram {
 
   template<const mcal_sram_uintptr_t ByteSizeTotal,
-           const mcal_sram_uintptr_t PageGranularity>
+           const mcal_sram_uintptr_t PageGranularity,
+           typename CommunicationType>
   class mcal_memory_sram_generic_spi : private util::noncopyable
   {
   public:
+    using communication_type = CommunicationType;
+
     // instruction   instruction    HEX       instruction
     //    name          format      code      description
     //
@@ -31,10 +34,7 @@
     static constexpr auto read_cmd  = static_cast<std::uint8_t>(UINT8_C(0x03));
     static constexpr auto write_cmd = static_cast<std::uint8_t>(UINT8_C(0x02));
 
-    constexpr explicit mcal_memory_sram_generic_spi(util::communication_buffer_depth_one_byte& com)
-      : my_com(com) { }
-
-    mcal_memory_sram_generic_spi() = delete;
+    mcal_memory_sram_generic_spi() = default;
 
     ~mcal_memory_sram_generic_spi() = default;
 
@@ -60,11 +60,9 @@
           static_cast<std::uint8_t>(UINT8_C(0xFF))
         };
 
-      my_com.select();
-      static_cast<void>(my_com.send_n(cmd.cbegin(), cmd.cend()));
-      my_com.deselect();
-
-      *p_byte_to_read = my_com.recv_buffer;
+      communication_type::select();
+      static_cast<void>(communication_type::send_n(cmd.cbegin(), cmd.cend(), *p_byte_to_read));
+      communication_type::deselect();
 
       return true;
     }
@@ -109,15 +107,18 @@
               static_cast<std::uint8_t>(addr_chan >>  0U)
             };
 
-          my_com.select();
-          static_cast<void>(my_com.send_n(cmd.cbegin(), cmd.end()));
+          std::uint8_t dummy_byte_to_read { };
+
+          communication_type::select();
+
+          static_cast<void>(communication_type::send_n(cmd.cbegin(), cmd.end(), dummy_byte_to_read));
 
           for(auto i = static_cast<std::size_t>(UINT8_C(0)); i < count; ++i)
           {
-            static_cast<void>(my_com.send(static_cast<std::uint8_t>(UINT8_C(0xFF))));
-            *(p_data_to_read + i) = my_com.recv_buffer;
+            static_cast<void>(communication_type::send(static_cast<std::uint8_t>(UINT8_C(0xFF)), *(p_data_to_read + i)));
           }
-          my_com.deselect();
+
+          communication_type::deselect();
         }
         else
         {
@@ -155,9 +156,11 @@
           *p_byte_to_write
         };
 
-      my_com.select();
-      static_cast<void>(my_com.send_n(cmd.cbegin(), cmd.cend()));
-      my_com.deselect();
+      std::uint8_t dummy_byte_to_read { };
+
+      communication_type::select();
+      static_cast<void>(communication_type::send_n(cmd.cbegin(), cmd.cend(), dummy_byte_to_read));
+      communication_type::deselect();
 
       return true;
     }
@@ -199,14 +202,18 @@
               static_cast<std::uint8_t>(addr_chan >>  0U)
             };
 
-          my_com.select();
-          static_cast<void>(my_com.send_n(cmd.cbegin(), cmd.cend()));
+          std::uint8_t dummy_byte_to_read { };
+
+          communication_type::select();
+
+          static_cast<void>(communication_type::send_n(cmd.cbegin(), cmd.cend(), dummy_byte_to_read));
 
           for(auto i = static_cast<std::size_t>(UINT8_C(0)); i < count; ++i)
           {
-            static_cast<void>(my_com.send(*(p_data_to_write + i)));
+            static_cast<void>(communication_type::send(*(p_data_to_write + i), dummy_byte_to_read));
           }
-          my_com.deselect();
+
+          communication_type::deselect();
         }
         else
         {
@@ -223,8 +230,6 @@
     }
 
   private:
-    util::communication_buffer_depth_one_byte& my_com;
-
     static constexpr auto byte_size_total() noexcept -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(ByteSizeTotal); }
 
     static constexpr auto page_granularity() noexcept -> mcal_sram_uintptr_t { return static_cast<mcal_sram_uintptr_t>(PageGranularity); }

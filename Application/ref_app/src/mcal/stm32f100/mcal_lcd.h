@@ -15,6 +15,7 @@
   {
   #endif
 
+  void mcal_lcd_init(void);
   void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex);
 
   #if defined(__cplusplus)

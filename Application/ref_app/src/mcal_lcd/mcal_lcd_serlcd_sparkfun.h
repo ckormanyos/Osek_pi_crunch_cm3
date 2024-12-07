@@ -20,9 +20,12 @@
   namespace mcal { namespace lcd { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
+  template<typename CommunicationType>
   class lcd_serlcd_sparkfun final : public mcal::lcd::lcd_generic_device
   {
   private:
+    using communication_type = CommunicationType;
+
     static constexpr std::uint8_t serlcd_blue_backlight      { (uint8_t) UINT8_C(0xD9) };
     static constexpr std::uint8_t serlcd_green_backlight     { (uint8_t) UINT8_C(0xBB) };
     static constexpr std::uint8_t serlcd_primary_backlight   { (uint8_t) UINT8_C(0x9D) };
@@ -36,10 +39,7 @@
     static constexpr std::uint8_t serlcd_size_lines_01       { (uint8_t) UINT8_C(0x07) };
 
   public:
-    explicit lcd_serlcd_sparkfun(util::communication_buffer_depth_one_byte& com)
-      : my_com(com) { }
-
-    lcd_serlcd_sparkfun() = delete;
+    lcd_serlcd_sparkfun() = default;
 
     ~lcd_serlcd_sparkfun() override = default;
 
@@ -86,13 +86,13 @@
     }
 
   private:
-    util::communication_buffer_depth_one_byte& my_com;
-
     void transfer(const std::uint8_t byte_to_send)
     {
-      my_com.select();
-      static_cast<void>(my_com.send(byte_to_send));
-      my_com.deselect();
+      std::uint8_t dummy_byte_to_recv { };
+
+      communication_type::select();
+      static_cast<void>(communication_type::send(byte_to_send, dummy_byte_to_recv));
+      communication_type::deselect();
       blocking_delay(timer_type::microseconds(tick_type { UINT8_C(150) }));
     }
 

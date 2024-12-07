@@ -88,6 +88,7 @@
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_port_pin_dummy.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_reg.h" />
     <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_spi.h" />
+    <ClInclude Include="Application\ref_app\src\mcal\stm32f100\mcal_spi_types.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_base.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_buffered_instance.h" />
     <ClInclude Include="Application\ref_app\src\mcal_lcd\mcal_lcd_console.h" />
