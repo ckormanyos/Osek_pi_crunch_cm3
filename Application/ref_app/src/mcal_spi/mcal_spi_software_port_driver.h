@@ -43,11 +43,11 @@
     using base_class_type = ::util::communication_base;
 
   public:
-    spi_software_port_driver() = default;
+    spi_software_port_driver() = delete;
 
-    ~spi_software_port_driver() override = default;
+    ~spi_software_port_driver() = delete;
 
-    auto init() -> void override
+    static auto init() -> void
     {
       port_pin_csn__type::set_pin_high();
       port_pin_sck__type::set_pin_low();
@@ -59,7 +59,7 @@
       port_pin_miso_type::set_direction_input();
     }
 
-    auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool override
+    static auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool
     {
       using value_type = typename base_class_type::buffer_value_type;
 
@@ -95,9 +95,9 @@
       return true;
     }
 
-    auto send_n(base_class_type::send_iterator_type first,
-                base_class_type::send_iterator_type last,
-                std::uint8_t& byte_to_recv) -> bool override
+    static auto send_n(base_class_type::send_iterator_type first,
+                       base_class_type::send_iterator_type last,
+                       std::uint8_t& byte_to_recv) -> bool
     {
       while(first != last)
       {
@@ -109,14 +109,14 @@
       return true;
     }
 
-    auto select() -> void override
+    static auto select() -> void
     {
       mcal::helper::disable_all_interrupts<has_disable_enable_interrupts>();
 
       port_pin_csn__type::set_pin_low();
     }
 
-    auto deselect() -> void override
+    static auto deselect() -> void
     {
       port_pin_csn__type::set_pin_high();
 
@@ -136,7 +136,12 @@
                                  has_disable_enable_interrupts> : public util::communication_base
   {
   public:
-    spi_software_port_driver()
+
+    spi_software_port_driver() override = delete;
+
+    ~spi_software_port_driver() override = delete;
+
+    static auto init() -> void
     {
       port_pin_csn__type::set_pin_high();
       port_pin_sck__type::set_pin_low();
@@ -147,9 +152,7 @@
       port_pin_mosi_type::set_direction_output();
     }
 
-    ~spi_software_port_driver() override = default;
-
-    auto send(const std::uint8_t byte_to_send) -> bool override
+    static auto send(const std::uint8_t byte_to_send) -> bool
     {
       const std::uint_fast8_t by { static_cast<std::uint_fast8_t>(byte_to_send) };
 
@@ -165,14 +168,14 @@
       return true;
     }
 
-    auto select() -> void override
+    static auto select() -> void
     {
       mcal::helper::disable_all_interrupts<has_disable_enable_interrupts>();
 
       port_pin_csn__type::set_pin_low();
     }
 
-    auto deselect() -> void override
+    static auto deselect() -> void
     {
       port_pin_csn__type::set_pin_high();
 

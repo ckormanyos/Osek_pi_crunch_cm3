@@ -20,13 +20,13 @@
   public:
     // This class implements a dummy SPI with no real functionality.
 
-    spi_software_dummy() = default;
+    spi_software_dummy() = delete;
 
-    ~spi_software_dummy() override = default;
+    ~spi_software_dummy() = delete;
 
-    auto init() -> void override { }
+    static auto init() -> void { }
 
-    auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool override
+    static auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool
     {
       static_cast<void>(byte_to_send);
 
@@ -35,9 +35,9 @@
       return true;
     }
 
-    auto send_n(base_class_type::send_iterator_type first,
-                base_class_type::send_iterator_type last,
-                std::uint8_t& byte_to_recv) -> bool override
+    static auto send_n(base_class_type::send_iterator_type first,
+                       base_class_type::send_iterator_type last,
+                       std::uint8_t& byte_to_recv) -> bool
     {
       while(first != last)
       {
@@ -49,8 +49,8 @@
       return true;
     }
 
-    auto   select() -> void override { }
-    auto deselect() -> void override { }
+    static auto   select() -> void { }
+    static auto deselect() -> void { }
   };
 
   } // namespace spi

@@ -14,9 +14,7 @@
 
   using config_type = void;
 
-  inline auto init(const config_type*) -> void { }
-
-  auto spi_sram() -> util::communication_base&;
+  auto init(const config_type*) -> void;
 
   } }
 
