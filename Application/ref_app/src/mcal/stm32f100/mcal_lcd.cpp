@@ -61,6 +61,13 @@ namespace local_lcd
 
 extern "C"
 {
+  void mcal_spi_spi_lcd_init(void);
+
+  void mcal_spi_spi_lcd_init(void)
+  {
+    local_lcd::spi_lcd().init();
+  }
+
   void mcal_lcd_init(void)
   {
     static const bool is_init { local_lcd::lcd_sparkfun().init() };

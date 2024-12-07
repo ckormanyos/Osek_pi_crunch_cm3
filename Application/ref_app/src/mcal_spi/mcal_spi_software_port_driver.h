@@ -43,7 +43,11 @@
     using base_class_type = ::util::communication_base;
 
   public:
-    spi_software_port_driver()
+    spi_software_port_driver() = default;
+
+    ~spi_software_port_driver() override = default;
+
+    auto init() -> void override
     {
       port_pin_csn__type::set_pin_high();
       port_pin_sck__type::set_pin_low();
@@ -54,8 +58,6 @@
       port_pin_mosi_type::set_direction_output();
       port_pin_miso_type::set_direction_input();
     }
-
-    ~spi_software_port_driver() override = default;
 
     auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool override
     {

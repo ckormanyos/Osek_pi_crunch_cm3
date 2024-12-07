@@ -11,7 +11,7 @@
 
 auto mcal::memory::sram::mcal_memory_sram_device() -> mcal::memory::sram::mcal_memory_sram_device_type&
 {
-  static mcal_memory_sram_device_type my_device(mcal::spi::spi_channels());
+  static mcal_memory_sram_device_type my_device(mcal::spi::spi_sram());
 
   return my_device;
 }

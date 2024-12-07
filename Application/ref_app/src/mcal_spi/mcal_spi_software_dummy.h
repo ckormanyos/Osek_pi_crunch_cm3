@@ -24,6 +24,8 @@
 
     ~spi_software_dummy() override = default;
 
+    auto init() -> void override { }
+
     auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool override
     {
       static_cast<void>(byte_to_send);

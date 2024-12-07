@@ -77,8 +77,12 @@ TASK(T1)
 
 TASK(Idle)
 {
+  extern void mcal_spi_spi_sram_init(void);
+  extern void mcal_spi_spi_lcd_init(void);
   extern void mcal_lcd_init(void);
 
+  mcal_spi_spi_sram_init();
+  mcal_spi_spi_lcd_init();
   mcal_lcd_init();
 
   for(;;)

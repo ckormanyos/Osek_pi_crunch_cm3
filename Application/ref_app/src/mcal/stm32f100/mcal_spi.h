@@ -16,7 +16,7 @@
 
   inline auto init(const config_type*) -> void { }
 
-  auto spi_channels() -> util::communication_base&;
+  auto spi_sram() -> util::communication_base&;
 
   } }
 

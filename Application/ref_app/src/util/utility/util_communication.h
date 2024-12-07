@@ -48,6 +48,8 @@
 
       virtual ~communication_base() = default;
 
+      virtual auto init() -> void = 0;
+
       virtual auto   select() -> void = 0;
       virtual auto deselect() -> void = 0;
 

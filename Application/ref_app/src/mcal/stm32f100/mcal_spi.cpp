@@ -42,9 +42,9 @@ namespace local
                                                   static_cast<std::uint32_t>(UINT32_C(8))>;
 } // namespace local;
 
-auto mcal::spi::spi_channels() -> util::communication_base&
+auto mcal::spi::spi_sram() -> util::communication_base&
 {
-  using mcal_spi_channel0_type =
+  using mcal_spi_sram_type =
     mcal::spi::spi_software_port_driver<local::port_pin_sck__type,
                                         local::port_pin_mosi_type,
                                         local::port_pin_csn0_type,
@@ -52,7 +52,17 @@ auto mcal::spi::spi_channels() -> util::communication_base&
                                         static_cast<std::uint_fast16_t>(UINT8_C(0)),
                                         true>;
 
-  static mcal_spi_channel0_type com0 { };
+  static mcal_spi_sram_type spi0 { };
 
-  return com0;
+  return spi0;
+}
+
+extern "C"
+{
+  void mcal_spi_spi_sram_init(void);
+
+  void mcal_spi_spi_sram_init(void)
+  {
+    mcal::spi::spi_sram().init();
+  }
 }
