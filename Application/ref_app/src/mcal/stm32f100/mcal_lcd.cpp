@@ -16,7 +16,7 @@ namespace local_lcd
 
   auto lcd_sparkfun() -> mcal::lcd::lcd_base&
   {
-    static mcal::lcd::lcd_serlcd_sparkfun<mcal::spi::mcal_spi_lcd_type> my_lcd;
+    static mcal::lcd::lcd_serlcd_sparkfun<mcal::spi::lcd::mcal_spi_lcd_type> my_lcd;
 
     return my_lcd;
   }

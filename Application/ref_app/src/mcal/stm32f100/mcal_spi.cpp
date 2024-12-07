@@ -15,12 +15,12 @@ namespace local
 
   auto mcal_spi_spi_lcd_init() -> void
   {
-    mcal::spi::mcal_spi_lcd_type::init();
+    mcal::spi::lcd::mcal_spi_lcd_type::init();
   }
 
   auto mcal_spi_spi_sram_init() -> void
   {
-    mcal::spi::mcal_spi_sram_type::init();
+    mcal::spi::sram::mcal_spi_sram_type::init();
   }
 } // namespace local
 
