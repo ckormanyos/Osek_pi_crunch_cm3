@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2020 - 2023.
+//  Copyright Christopher Kormanyos 2020 - 2024
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,7 @@
            typename port_pin_miso_type,
            const std::uint_fast16_t nop_count,
            const bool has_disable_enable_interrupts>
-  class spi_software_port_driver : public ::util::communication_buffer_depth_one_byte
+  class spi_software_port_driver : public ::util::communication_base
   {
   private:
     // Consider:
@@ -40,7 +40,7 @@
     //   on (or shortly after) the leading edge of the
     //   clock cycle.
 
-    using base_class_type = ::util::communication_buffer_depth_one_byte;
+    using base_class_type = ::util::communication_base;
 
   public:
     spi_software_port_driver()
@@ -57,11 +57,11 @@
 
     ~spi_software_port_driver() override = default;
 
-    auto send(const std::uint8_t byte_to_send) -> bool override
+    auto send(const std::uint8_t byte_to_send, std::uint8_t& byte_to_recv) -> bool override
     {
       using value_type = typename base_class_type::buffer_value_type;
 
-      base_class_type::recv_buffer = static_cast<value_type>(UINT8_C(0));
+      byte_to_recv = static_cast<value_type>(UINT8_C(0));
 
       for(auto bit_mask  = static_cast<std::uint_fast8_t>(UINT8_C(0x80));
                bit_mask != static_cast<std::uint_fast8_t>(UINT8_C(0));
@@ -80,10 +80,10 @@
 
         if(port_pin_miso_type::read_input_value())
         {
-          base_class_type::recv_buffer =
+          byte_to_recv =
             static_cast<value_type>
             (
-              static_cast<std::uint_fast8_t>(base_class_type::recv_buffer) | bit_mask
+              static_cast<std::uint_fast8_t>(byte_to_recv) | bit_mask
             );
         }
 
@@ -94,22 +94,15 @@
     }
 
     auto send_n(base_class_type::send_iterator_type first,
-                base_class_type::send_iterator_type last) -> bool override
+                base_class_type::send_iterator_type last,
+                std::uint8_t& byte_to_recv) -> bool override
     {
       while(first != last)
       {
         const auto byte_to_send = static_cast<base_class_type::buffer_value_type>(*first++);
 
-        static_cast<void>(send(byte_to_send));
+        static_cast<void>(send(byte_to_send, byte_to_recv));
       }
-
-      return true;
-    }
-
-    auto recv(std::uint8_t& byte_to_recv) -> bool override
-    {
-      // Read the (single byte from the) receive buffer.
-      byte_to_recv = base_class_type::recv_buffer;
 
       return true;
     }
@@ -138,7 +131,7 @@
                                  port_pin_csn__type,
                                  mcal::port::port_pin_dummy,
                                  static_cast<std::uint_fast16_t>(UINT8_C(0)),
-                                 has_disable_enable_interrupts> : public util::communication_buffer_depth_one_byte
+                                 has_disable_enable_interrupts> : public util::communication_base
   {
   public:
     spi_software_port_driver()

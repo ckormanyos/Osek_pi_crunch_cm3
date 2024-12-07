@@ -42,7 +42,7 @@ namespace local
                                                   static_cast<std::uint32_t>(UINT32_C(8))>;
 } // namespace local;
 
-auto mcal::spi::spi_channels() -> util::communication_buffer_depth_one_byte&
+auto mcal::spi::spi_channels() -> util::communication_base&
 {
   using mcal_spi_channel0_type =
     mcal::spi::spi_software_port_driver<local::port_pin_sck__type,

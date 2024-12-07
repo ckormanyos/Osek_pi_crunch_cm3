@@ -36,7 +36,7 @@
     static constexpr std::uint8_t serlcd_size_lines_01       { (uint8_t) UINT8_C(0x07) };
 
   public:
-    explicit lcd_serlcd_sparkfun(util::communication_buffer_depth_one_byte& com)
+    explicit lcd_serlcd_sparkfun(util::communication_base& com)
       : my_com(com) { }
 
     lcd_serlcd_sparkfun() = delete;
@@ -86,12 +86,14 @@
     }
 
   private:
-    util::communication_buffer_depth_one_byte& my_com;
+    util::communication_base& my_com;
 
     void transfer(const std::uint8_t byte_to_send)
     {
+      std::uint8_t dummy_byte_to_recv { };
+
       my_com.select();
-      static_cast<void>(my_com.send(byte_to_send));
+      static_cast<void>(my_com.send(byte_to_send, dummy_byte_to_recv));
       my_com.deselect();
       blocking_delay(timer_type::microseconds(tick_type { UINT8_C(150) }));
     }

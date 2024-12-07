@@ -16,7 +16,7 @@
 
   inline auto init(const config_type*) -> void { }
 
-  auto spi_channels() -> util::communication_buffer_depth_one_byte&;
+  auto spi_channels() -> util::communication_base&;
 
   } }
 

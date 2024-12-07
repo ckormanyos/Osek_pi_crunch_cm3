@@ -33,9 +33,9 @@ namespace local_lcd
                                                  mcal::reg::gpiob_odr,
                                                  static_cast<std::uint32_t>(UINT32_C(0))>;
 
-  auto spi_lcd() -> util::communication_buffer_depth_one_byte&;
+  auto spi_lcd() -> util::communication_base&;
 
-  auto spi_lcd() -> util::communication_buffer_depth_one_byte&
+  auto spi_lcd() -> util::communication_base&
   {
     using spi_lcd_type = mcal::spi::spi_software_port_driver<local_lcd::port_pin_sck_type,
                                                              local_lcd::port_pin_sdi_type,
@@ -48,21 +48,31 @@ namespace local_lcd
 
     return my_spi;
   }
+
+  auto lcd_sparkfun() -> mcal::lcd::lcd_base&;
+
+  auto lcd_sparkfun() -> mcal::lcd::lcd_base&
+  {
+    static mcal::lcd::lcd_serlcd_sparkfun my_lcd(spi_lcd());
+
+    return my_lcd;
+  }
 } // namespace local_lcd;
 
 extern "C"
 {
-  void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex)
+  void mcal_lcd_init(void)
   {
-    static mcal::lcd::lcd_serlcd_sparkfun my_lcd(local_lcd::spi_lcd());
-
-    static const bool is_init { my_lcd.init() };
+    static const bool is_init { local_lcd::lcd_sparkfun().init() };
 
     static_cast<void>(is_init);
+  }
 
+  void mcal_lcd_write_line(const char* StringToPrint, const size_t StringSize, const size_t LineIndex)
+  {
     static_cast<void>
     (
-      my_lcd.write(StringToPrint, StringSize, static_cast<std::uint_fast8_t>(LineIndex))
+      local_lcd::lcd_sparkfun().write(StringToPrint, StringSize, static_cast<std::uint_fast8_t>(LineIndex))
     );
   }
 }
