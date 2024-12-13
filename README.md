@@ -28,11 +28,13 @@ The required memory grows linearly with the digit count.
 Approximately $1.4~\text{Mbyte}$ RAM are needed for the full $10^{5}$
 decimal-digit calculation. Since this is significantly more RAM
 than is available on-chip, a slow external serial SPI SRAM is used
-for storage. The error-intolerant calculation has been purposely made
-even more difficult using error-intolerant peropheral hardware,
-and a slow, bit-banging, all-software SPI-compatible driver.
+for storage.
+
+The complicated and tedious $\pi$ calculation has been purposely
+made even more difficult using this error-intolerant peripheral SRAM
+and its slow, bit-banging, all-software SPI communication.
 This simultaneously provides a challenging stress-stest for the
-underlying implementation software and its OS.
+underlying hardware as well as the implementation software and its OS.
 
 GNU/GCC `gcc-arm-non-eabi` is used for target system
 development on `*nix`. The build system is based on
