@@ -23,7 +23,6 @@
 #include <TCB.h>
 #include <OsAPIs.h>
 
-
 //------------------------------------------------------------------------------------------------------------------
 /// \brief  OS_GetTaskID
 ///
@@ -81,7 +80,7 @@ OsStatusType OS_ActivateTask(OsTaskType TaskID)
 {
   if(TaskID < NB_OF_TASKS)
   {
-    if(OCB_Cfg.pTcb[TaskID]->TaskStatus == SUSPENDED && OCB_Cfg.pTcb[TaskID]->NbOfActiv > 0)
+    if((OCB_Cfg.pTcb[TaskID]->TaskStatus == SUSPENDED) && (OCB_Cfg.pTcb[TaskID]->NbOfActiv > 0))
     {
       OCB_Cfg.pTcb[TaskID]->TaskStatus = PRE_READY;
 
@@ -128,8 +127,8 @@ OsStatusType OS_ActivateTask(OsTaskType TaskID)
 //------------------------------------------------------------------------------------------------------------------
 OsStatusType OS_TerminateTask(void)
 {
-  if(  OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0 &&
-      OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio)
+  if(   (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0)
+     && (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio))
   {
     return(E_OS_RESOURCE);
   }
@@ -163,8 +162,8 @@ OsStatusType OS_TerminateTask(void)
 //------------------------------------------------------------------------------------------------------------------
 OsStatusType OS_ChainTask(OsTaskType TaskID)
 {
-  if(  OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0 &&
-      OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio)
+  if(   (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0)
+     && (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio))
   {
     return(E_OS_RESOURCE);
   }
@@ -193,5 +192,3 @@ OsStatusType OS_ChainTask(OsTaskType TaskID)
     return(E_OK);
   }
 }
-
-

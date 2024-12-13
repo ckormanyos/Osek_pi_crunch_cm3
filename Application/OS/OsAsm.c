@@ -54,7 +54,7 @@ __asm void OsDispatcher(void)
   __asm("bl.w OS_Dispatcher");   /* Call the dispatcher to switch the context */
   __asm("mov r13,r0");           /* Setup the new stack pointer               */
   __asm("pop {r4 - r11, lr}");   /* Restore the saved context                 */
-  __asm("cpsie i");               /* Unlock the dispatcher                     */
+  __asm("cpsie i");              /* Unlock the dispatcher                     */
   __asm("bx lr");
 #elif defined(__CC_ARM)
   extern OS_Dispatcher
@@ -65,7 +65,7 @@ __asm void OsDispatcher(void)
   bl.w OS_Dispatcher   /* Call the dispatcher to switch the context */
   mov r13,r0           /* Setup the new stack pointer               */
   pop {r4 - r11, lr}   /* Restore the saved context                 */
-  cpsie i               /* Unlock the dispatcher                     */
+  cpsie i              /* Unlock the dispatcher                     */
   bx lr
 #else
 #error Error: Compiler inline assembly dialect is not supported
@@ -171,7 +171,7 @@ __asm void OsCat2IsrWrapper(void)
   #ifndef OS_NESTED_INT
   __asm("cpsid i");
   #endif
-  __asm("push {r4 - r11, lr}");           /* Save the context in the stack of the current task               */
+  __asm("push {r4 - r11, lr}");          /* Save the context in the stack of the current task                */
   __asm("mov r0,r13");                   /* prepare the input parameter for the function OsStoreStackPointer */
   __asm("bl.w OsStoreStackPointer");     /* Save the stack pointer of the current task                       */
   __asm("bl.w OsRunCat2Isr");            /* Call the ISR (lookup table)                                      */
@@ -194,7 +194,7 @@ __asm void OsCat2IsrWrapper(void)
   #ifndef OS_NESTED_INT
   cpsid i
   #endif
-  push {r4 - r11, lr}           /* Save the context in the stack of the current task               */
+  push {r4 - r11, lr}          /* Save the context in the stack of the current task                */
   mov r0,r13                   /* prepare the input parameter for the function OsStoreStackPointer */
   bl.w OsStoreStackPointer     /* Save the stack pointer of the current task                       */
   bl.w OsRunCat2Isr            /* Call the ISR (lookup table)                                      */

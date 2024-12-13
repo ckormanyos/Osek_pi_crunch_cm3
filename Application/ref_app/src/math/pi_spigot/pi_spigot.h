@@ -164,9 +164,9 @@
       // Operation count Mathematica(R), example for loop_digit=9.
       // Sum[Floor[((d - j) (Floor[((10 9)/3)] + 1))/9], {j, 0, Floor[d/9] 9, 9}]
 
-      for(auto j = static_cast<std::uint32_t>(UINT8_C(0));
-               j < result_digit();
-               j = static_cast<std::uint32_t>(j + loop_digit()))
+      for(std::uint32_t j = { static_cast<std::uint32_t>(UINT8_C(0)) };
+                        j < result_digit();
+                        j = static_cast<std::uint32_t>(static_cast<std::uint32_t>(j + loop_digit())))
       {
         auto val_d = static_cast<unsigned_large_type>(UINT8_C(0));
 
@@ -221,6 +221,13 @@
         // If loop_digit is 4, for instance, then successive groups
         // of digits have a form such as: 3141, 5926, ..., etc.
 
+        // Sequences of consecutive zeros having length as large as or larger
+        // than the loop_digit count will stop successful spigot iteration.
+        // A group of four sequential zeros, for instance, at a point slightly
+        // above 50,000 digits stops iteration for a loop_digit count of 4.
+        // For this reason, we usually use a loop_digit count of 9, which
+        // has been tested on the PC up to 1,000,001 (a million) decimal digits.
+
         const auto p10_loop = static_cast<unsigned_large_type>(pow10(loop_digit()));
 
         const auto next_digits =
@@ -231,20 +238,26 @@
 
         val_c = static_cast<unsigned_small_type>(val_d % p10_loop);
 
-        const auto n =
-          (std::min)
-          (
-            loop_digit(),
-            static_cast<std::uint32_t>(result_digit() - j)
-          );
+        const std::uint_fast8_t
+          n_loop
+          {
+            static_cast<std::uint_fast8_t>
+            (
+              (std::min)
+              (
+                loop_digit(),
+                static_cast<std::uint32_t>(result_digit() - j)
+              )
+            )
+          };
 
-        std::uint32_t scale10 { pow10(loop_digit() - static_cast<std::uint32_t>(UINT8_C(1))) };
+        unsigned_small_type scale10 { pow10(loop_digit() - static_cast<std::uint32_t>(UINT8_C(1))) };
 
         using output_chars_array_type = std::array<std::uint8_t, static_cast<std::size_t>(loop_digit())>;
 
         output_chars_array_type output_chars_as_bytes_hash_array { };
 
-        for(auto i = static_cast<std::size_t>(UINT8_C(0)); i < static_cast<std::size_t>(n); ++i)
+        for(std::uint_fast8_t loop_index { UINT8_C(0) }; loop_index < n_loop; ++loop_index)
         {
           const auto output_value =
             static_cast<std::uint_fast8_t>
@@ -258,7 +271,7 @@
 
           if(p_hash != nullptr)
           {
-            output_chars_as_bytes_hash_array[i] =
+            output_chars_as_bytes_hash_array[static_cast<std::size_t>(loop_index)] =
               static_cast<std::uint8_t>
               (
                 output_value + static_cast<std::uint8_t>(UINT8_C(0x30))
@@ -273,19 +286,19 @@
           using local_count_type = typename ::math::checksums::hash::hash_stream_base::count_type;
 
           const local_count_type
-            len
+            length_to_hash
             {
               (std::min)
               (
-                static_cast<local_count_type>(n),
+                static_cast<local_count_type>(n_loop),
                 static_cast<local_count_type>(std::tuple_size<output_chars_array_type>::value)
               )
             };
 
-          p_hash->process(output_chars_as_bytes_hash_array.data(), len);
+          p_hash->process(output_chars_as_bytes_hash_array.data(), length_to_hash);
         }
 
-        my_output_count += n;
+        my_output_count += n_loop;
 
         if(pfn_callback_to_report_digits10 != nullptr)
         {

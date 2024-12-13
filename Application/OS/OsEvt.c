@@ -37,8 +37,8 @@ OsStatusType OS_GetResource(OsResourceType ResID)
 {
   if(ResID < NB_OF_RESOURCE)
   {
-    if(OCB_Cfg.pRes[ResID]->AuthorizedTask[OCB_Cfg.CurrentTaskIdx] == 1 &&
-       OCB_Cfg.pRes[ResID]->CurrentOccupiedTask == INVALID_TASK)
+    if(   (OCB_Cfg.pRes[ResID]->AuthorizedTask[OCB_Cfg.CurrentTaskIdx] == 1)
+       && (OCB_Cfg.pRes[ResID]->CurrentOccupiedTask == INVALID_TASK))
     {
       /* The resource is available */
 
@@ -243,7 +243,8 @@ OsStatusType OS_GetEvent(OsTaskType TaskID, OsEventMaskRefType Event)
 //------------------------------------------------------------------------------------------------------------------
 OsStatusType OS_WaitEvent(OsEventMaskType Mask)
 {
-  if(OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0 || OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio)
+  if(   (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0)
+     || (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio))
   {
   #if(ERRORHOOK)
     ErrorHook(E_OS_RESOURCE);
