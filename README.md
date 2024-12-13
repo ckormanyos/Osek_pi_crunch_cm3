@@ -25,10 +25,14 @@ of order $N^2$ in this project. The spigot calculation
 such as AGM or fast series.
 
 The required memory grows linearly with the digit count.
-Approximately 1.4 Mbyte RAM are needed for the full $10^{5}$
+Approximately $1.4~\text{Mbyte}$ RAM are needed for the full $10^{5}$
 decimal-digit calculation. Since this is significantly more RAM
 than is available on-chip, a slow external serial SPI SRAM is used
-for storage.
+for storage. The error-intolerant calculation has been purposely made
+even more difficult using error-intolerant peropheral hardware,
+and a slow, bit-banging, all-software SPI-compatible driver.
+This simultaneously provides a challenging stress-stest for the
+underlying implementation software and its OS.
 
 GNU/GCC `gcc-arm-non-eabi` is used for target system
 development on `*nix`. The build system is based on
@@ -148,10 +152,10 @@ on the embedded target for various output digit sizes.
 
 | Digits-10     | Time [s]       | Ratio (to $1,001$ digits) |
 | ------------- | -------------- | ------------------------- |
-| $101$         | $0.50^{*}$     |      $0.01$               |
+| $101$         | $0.51^{*}$     |      $0.01$               |
 | $1,001$       | $50$           |      $1$                  |
 | $10,001$      | $5,000$        |      $100$                |
-| $100,001$     | TBD            |      TBD                  |
+| $100,001$     | $490,000$      |      $9,800$              |
 
 $^{*}$ Deactivate LCD printing for this shorter time measurement.
 

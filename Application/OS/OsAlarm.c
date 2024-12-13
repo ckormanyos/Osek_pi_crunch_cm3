@@ -90,7 +90,9 @@ OsStatusType OS_SetRelAlarm(OsAlarmType AlarmID, OsTickType increment, OsTickTyp
 {
   if(AlarmID < NB_OF_ALARMS)
   {
-    if(cycle == 0 && increment > 0 && OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE)
+    if(   (cycle == 0)
+       && (increment > 0)
+       && (OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE))
     {
       /* One shot alarm */
       OCB_Cfg.pAlarm[AlarmID]->Alarmtype       = ALARM_ONE_SHOT;
@@ -101,7 +103,9 @@ OsStatusType OS_SetRelAlarm(OsAlarmType AlarmID, OsTickType increment, OsTickTyp
       OCB_Cfg.pAlarm[AlarmID]->AlarmCheckPoint = increment + (uint32)OCB_Cfg.OsSysTickCounter;
       return(E_OK);
     }
-    else if (cycle != 0 &&  cycle >= increment && OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE)
+    else if (   (cycle != 0)
+             && (cycle >= increment)
+             && (OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE))
     {
       /* Cyclic alarm */
       OCB_Cfg.pAlarm[AlarmID]->Alarmtype       = ALARM_CYCLIC;
@@ -144,7 +148,9 @@ OsStatusType OS_SetAbsAlarm(OsAlarmType AlarmID, OsTickType start, OsTickType cy
 {
   if(AlarmID < NB_OF_ALARMS)
   {
-    if(cycle == 0 && start > (uint32)OCB_Cfg.OsSysTickCounter && OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE)
+    if(   (cycle == 0)
+       && (start > (uint32)OCB_Cfg.OsSysTickCounter)
+       && (OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE))
     {
       /* One shot alarm */
       OCB_Cfg.pAlarm[AlarmID]->Alarmtype       = ALARM_ONE_SHOT;
@@ -155,7 +161,9 @@ OsStatusType OS_SetAbsAlarm(OsAlarmType AlarmID, OsTickType start, OsTickType cy
       OCB_Cfg.pAlarm[AlarmID]->AlarmCheckPoint = start;
       return(E_OK);
     }
-    else if (cycle != 0 &&  start > (uint32)OCB_Cfg.OsSysTickCounter && OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE)
+    else if (   (cycle != 0)
+             && (start > (uint32)OCB_Cfg.OsSysTickCounter)
+             && (OCB_Cfg.pAlarm[AlarmID]->Status == ALARM_FREE))
     {
       /* Cyclic alarm */
       OCB_Cfg.pAlarm[AlarmID]->Alarmtype       = ALARM_CYCLIC;
@@ -194,7 +202,7 @@ OsStatusType OS_CancelAlarm(OsAlarmType AlarmID)
 {
   if(AlarmID < NB_OF_ALARMS)
   {
-      OCB_Cfg.pAlarm[AlarmID]->Status          = ALARM_FREE;
+      OCB_Cfg.pAlarm[AlarmID]->Status = ALARM_FREE;
       OCB_Cfg.pAlarm[AlarmID]->AlarmCheckPoint = 0;
       return(E_OK);
   }

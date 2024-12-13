@@ -51,7 +51,7 @@ void OS_StartOS(OsAppModeType Mode)
   }
 
   if(NB_OF_TASKS > 0)
-  {    
+  {
     /* INIT TCBs */
     for(int tcbIdx = 0; tcbIdx < NB_OF_TASKS; tcbIdx++)
     {
@@ -107,7 +107,7 @@ void OS_StartOS(OsAppModeType Mode)
   }
 
   /* Infinite loop */
-  for(;;);
+  for(;;) { ; }
 }
 
 
@@ -124,14 +124,14 @@ void OS_StartOS(OsAppModeType Mode)
 //------------------------------------------------------------------------------------------------------------------
 OsStatusType OS_Schedule(void)
 {
-  if(OCB_Cfg.CurrentTaskIdx < NB_OF_TASKS && 
-     OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0 &&
-     OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio &&
-     FALSE == OsIsCat2IntContext())
+  if(   (OCB_Cfg.CurrentTaskIdx < NB_OF_TASKS)
+     && (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->CeilingPrio != 0)
+     && (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio != OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->FixedPrio)
+     && (FALSE == OsIsCat2IntContext()))
   {
     return(E_OS_RESOURCE);
   }
-  else if(TRUE == OsIsInterruptContext() && FALSE == OsIsCat2IntContext()) /* Cat1 Interrupt */
+  else if((TRUE == OsIsInterruptContext()) && (FALSE == OsIsCat2IntContext())) /* Cat1 Interrupt */
   {
     return(E_OS_CALLEVEL);
   }
@@ -145,9 +145,9 @@ OsStatusType OS_Schedule(void)
 
     for(int tcbIdx = 0; tcbIdx < NB_OF_TASKS; tcbIdx++)
     {
-      if(OCB_Cfg.pTcb[tcbIdx]->TaskStatus == PRE_READY || 
-         OCB_Cfg.pTcb[tcbIdx]->TaskStatus == READY     || 
-         OCB_Cfg.pTcb[tcbIdx]->TaskStatus == RUNNING)
+      if(   (OCB_Cfg.pTcb[tcbIdx]->TaskStatus == PRE_READY)
+         || (OCB_Cfg.pTcb[tcbIdx]->TaskStatus == READY)
+         || (OCB_Cfg.pTcb[tcbIdx]->TaskStatus == RUNNING))
       {
         if((sint32)OCB_Cfg.pTcb[tcbIdx]->Prio > HighPrio)
         {
@@ -160,12 +160,11 @@ OsStatusType OS_Schedule(void)
     /* Ending the critical section */
     ENABLE_INTERRUPTS();
 
-    if(OCB_Cfg.CurrentTaskIdx < NB_OF_TASKS && OCB_Cfg.HighPrioReadyTaskIdx < NB_OF_TASKS)
+    if((OCB_Cfg.CurrentTaskIdx < NB_OF_TASKS) && (OCB_Cfg.HighPrioReadyTaskIdx < NB_OF_TASKS))
     {
-      if(HighPrio > (sint32)(OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio) ||
-         OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->TaskStatus == WAITING             ||
-         OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->TaskStatus == SUSPENDED
-        )
+      if(   (HighPrio > (sint32)(OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->Prio))
+         || (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->TaskStatus == WAITING)
+         || (OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->TaskStatus == SUSPENDED))
       {
         /* Call PostTaskHook */
         #if(POSTTASKHOOK)
@@ -287,7 +286,7 @@ uint32 OS_Dispatcher(uint32 StackPtr)
 
       /* Create Stack Frame for the 1st execution */
       uint32 NewStackFramePtr = OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->pstack_top;
-      pFunc   NewThread = OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->function;
+      pFunc  NewThread = OCB_Cfg.pTcb[OCB_Cfg.CurrentTaskIdx]->function;
 
       /* CREATE NEW CONTEXT */
       OsCreateNewContext(NewStackFramePtr, NewThread);
@@ -359,7 +358,7 @@ static void OsCreateNewContext(uint32 StackFramePtr, pFunc TaskFuncPtr)
 ///
 /// \return void
 //------------------------------------------------------------------------------------------------------------------
-ISR(SysTickTimer)  
+ISR(SysTickTimer)
 {
   OCB_Cfg.OsSysTickCounter++;
 
@@ -537,7 +536,7 @@ void OS_ShutdownOS(OsStatusType Error)
     OCB_Cfg.pTcb[tcbIdx]->TaskStatus = SUSPENDED;
   }
 
-  for(;;);
+  for(;;) { ; }
 }
 
 //------------------------------------------------------------------------------------------------------------------
@@ -601,7 +600,7 @@ boolean OsIsInterruptContext(void)
 
   OsGetPSR(&CurrentPsr);
 
-  return((CurrentPsr & EXCEPTION_CODE_MASK) == 0 ? FALSE : TRUE);
+  return (((CurrentPsr & EXCEPTION_CODE_MASK) == 0) ? FALSE : TRUE);
 }
 
 //------------------------------------------------------------------------------------------------------------------
